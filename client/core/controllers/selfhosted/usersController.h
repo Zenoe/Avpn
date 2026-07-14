@@ -52,19 +52,10 @@ private:
     int clientIndexById(const QString &clientId, const QJsonArray &clientsTable);
     void migration(const QByteArray &clientsTableString, QJsonArray &clientsTable);
 
-    ErrorCode revokeOpenVpn(const int row, const DockerContainer container, const ServerCredentials &credentials,
-                            SshSession* sshSession, QJsonArray &clientsTable);
     ErrorCode revokeWireGuard(const int row, const DockerContainer container, const ServerCredentials &credentials,
                               SshSession* sshSession, QJsonArray &clientsTable);
-    ErrorCode revokeXray(const int row, const DockerContainer container, const ServerCredentials &credentials,
-                         SshSession* sshSession, QJsonArray &clientsTable);
-
-    ErrorCode getOpenVpnClients(const DockerContainer container, const ServerCredentials &credentials,
-                                SshSession* sshSession, int &count, QJsonArray &clientsTable);
     ErrorCode getWireGuardClients(const DockerContainer container, const ServerCredentials &credentials,
                                   SshSession* sshSession, int &count, QJsonArray &clientsTable);
-    ErrorCode getXrayClients(const DockerContainer container, const ServerCredentials& credentials,
-                             SshSession* sshSession, int &count, QJsonArray &clientsTable);
 
     ErrorCode wgShow(const DockerContainer container, const ServerCredentials &credentials,
                      SshSession* sshSession, std::vector<WgShowData> &data);

@@ -47,7 +47,6 @@ namespace PageLoader
         PageSettingsKillSwitchExceptions,
 
         PageServiceSftpSettings,
-        PageServiceTorWebsiteSettings,
         PageServiceDnsSettings,
         PageServiceSocksProxySettings,
         PageServiceMtProxySettings,
@@ -66,11 +65,8 @@ namespace PageLoader
         PageSetupWizardApiServicesList,
         PageSetupWizardApiFreeInfo,
 
-        PageProtocolOpenVpnSettings,
-        PageProtocolXraySettings,
         PageProtocolWireGuardSettings,
         PageProtocolAwgSettings,
-        PageProtocolIKev2Settings,
         PageProtocolRaw,
 
         PageProtocolWireGuardClientSettings,
@@ -84,13 +80,6 @@ namespace PageLoader
 
         PageDevMenu,
 
-        PageProtocolXraySnapshots,
-        PageProtocolXrayTransportSettings,
-        PageProtocolXrayXmuxSettings,
-        PageProtocolXrayXPaddingSettings,
-        PageProtocolXrayFlowSettings,
-        PageProtocolXraySecuritySettings,
-        PageProtocolXrayXPaddingBytesSettings,
     };
     Q_ENUM_NS(PageEnum)
 

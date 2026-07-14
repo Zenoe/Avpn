@@ -77,28 +77,11 @@ void CoreController::initModels()
     m_protocolsModel = new ProtocolsModel(this);
     setQmlContextProperty("ProtocolsModel", m_protocolsModel);
 
-    m_openVpnConfigModel = new OpenVpnConfigModel(this);
-    setQmlContextProperty("OpenVpnConfigModel", m_openVpnConfigModel);
-
     m_wireGuardConfigModel = new WireGuardConfigModel(this);
     setQmlContextProperty("WireGuardConfigModel", m_wireGuardConfigModel);
 
     m_awgConfigModel = new AwgConfigModel(this);
     setQmlContextProperty("AwgConfigModel", m_awgConfigModel);
-
-    m_xrayConfigModel = new XrayConfigModel(this);
-    setQmlContextProperty("XrayConfigModel", m_xrayConfigModel);
-
-    m_xrayConfigSnapshotsModel = new XrayConfigSnapshotsModel(m_appSettingsRepository, m_xrayConfigModel, this);
-    setQmlContextProperty("XrayConfigSnapshotsModel", m_xrayConfigSnapshotsModel);
-
-    m_torConfigModel = new TorConfigModel(this);
-    setQmlContextProperty("TorConfigModel", m_torConfigModel);
-
-#ifdef Q_OS_WINDOWS
-    m_ikev2ConfigModel = new Ikev2ConfigModel(this);
-    setQmlContextProperty("Ikev2ConfigModel", m_ikev2ConfigModel);
-#endif
 
     m_sftpConfigModel = new SftpConfigModel(this);
     setQmlContextProperty("SftpConfigModel", m_sftpConfigModel);
@@ -177,10 +160,7 @@ void CoreController::initControllers()
     }
 
     m_installUiController = new InstallUiController(m_installController, m_serversController, m_settingsController, m_protocolsModel, m_usersController,
-                                                     m_awgConfigModel, m_wireGuardConfigModel, m_openVpnConfigModel, m_xrayConfigModel, m_torConfigModel,
-#ifdef Q_OS_WINDOWS
-                                                     m_ikev2ConfigModel,
-#endif
+                                                     m_awgConfigModel, m_wireGuardConfigModel,
                                                      m_sftpConfigModel, m_socks5ConfigModel, m_mtProxyConfigModel, m_telemtConfigModel,
                                                      m_connectionController, this);
     setQmlContextProperty("InstallController", m_installUiController);

@@ -8,8 +8,6 @@
 #include "core/utils/containers/containerUtils.h"
 #include "core/models/protocols/awgProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
-#include "core/models/protocols/openVpnProtocolConfig.h"
-#include "core/models/protocols/xrayProtocolConfig.h"
 
 using namespace ProtocolUtils;
 
@@ -37,10 +35,7 @@ QHash<int, QByteArray> ProtocolsModel::roleNames() const
     roles[IsClientProtocolExistsRole] = "isClientProtocolExists";
     roles[IsWireGuardRole] = "isWireGuard";
     roles[IsAwgRole] = "isAwg";
-    roles[IsOpenVpnRole] = "isOpenVpn";
-    roles[IsXrayRole] = "isXray";
     roles[IsSftpRole] = "isSftp";
-    roles[IsIpsecRole] = "isIpsec";
     roles[IsSocks5ProxyRole] = "isSocks5Proxy";
     roles[IsMtProxyRole] = "isMtProxy";
     roles[IsTelemtRole] = "isTelemt";
@@ -68,10 +63,7 @@ QVariant ProtocolsModel::data(const QModelIndex &index, int role) const
     case ProtocolStringRole: return ProtocolUtils::protoToString(proto);
     case IsWireGuardRole: return proto == Proto::WireGuard;
     case IsAwgRole: return proto == Proto::Awg;
-    case IsOpenVpnRole: return proto == Proto::OpenVpn;
-    case IsXrayRole: return proto == Proto::Xray;
     case IsSftpRole: return proto == Proto::Sftp;
-    case IsIpsecRole: return proto == Proto::Ikev2;
     case IsSocks5ProxyRole: return proto == Proto::Socks5Proxy;
     case IsMtProxyRole: return proto == Proto::MtProxy;
     case IsTelemtRole: return proto == Proto::Telemt;
@@ -117,20 +109,16 @@ bool ProtocolsModel::isClientProtocolExists() const
 PageLoader::PageEnum ProtocolsModel::serverProtocolPage(Proto protocol) const
 {
     switch (protocol) {
-    case Proto::OpenVpn: return PageLoader::PageEnum::PageProtocolOpenVpnSettings;
     case Proto::WireGuard: return PageLoader::PageEnum::PageProtocolWireGuardSettings;
     case Proto::Awg: return PageLoader::PageEnum::PageProtocolAwgSettings;
-    case Proto::Ikev2: return PageLoader::PageEnum::PageProtocolIKev2Settings;
-    case Proto::Xray: return PageLoader::PageEnum::PageProtocolXraySettings;
     
     // non-vpn
-    case Proto::TorWebSite: return PageLoader::PageEnum::PageServiceTorWebsiteSettings;
     case Proto::Dns: return PageLoader::PageEnum::PageServiceDnsSettings;
     case Proto::Sftp: return PageLoader::PageEnum::PageServiceSftpSettings;
     case Proto::Socks5Proxy: return PageLoader::PageEnum::PageServiceSocksProxySettings;
     case Proto::MtProxy: return PageLoader::PageEnum::PageServiceMtProxySettings;
     case Proto::Telemt: return PageLoader::PageEnum::PageServiceTelemtSettings;
-    default: return PageLoader::PageEnum::PageProtocolOpenVpnSettings;
+    default: return PageLoader::PageEnum::PageProtocolRaw;
     }
 }
 
@@ -139,6 +127,6 @@ PageLoader::PageEnum ProtocolsModel::clientProtocolPage(Proto protocol) const
     switch (protocol) {
     case Proto::WireGuard: return PageLoader::PageEnum::PageProtocolWireGuardClientSettings;
     case Proto::Awg: return PageLoader::PageEnum::PageProtocolAwgClientSettings;
-    default: return PageLoader::PageEnum::PageProtocolOpenVpnSettings;
+    default: return PageLoader::PageEnum::PageProtocolRaw;
     }
 }

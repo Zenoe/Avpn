@@ -95,28 +95,6 @@
                                 </array>
                         </dict>
                 </dict>
-                <dict>
-                        <key>UTTypeConformsTo</key>
-                        <array>
-                                <string>public.data</string>
-                        </array>
-                        <key>UTTypeDescription</key>
-                        <string>OpenVPN config</string>
-                        <key>UTTypeIconFiles</key>
-                        <array/>
-                        <key>UTTypeIdentifier</key>
-                        <string>org.amnezia.AmneziaVPN.openvpn-config</string>
-                        <key>UTTypeTagSpecification</key>
-                        <dict>
-                                <key>public.filename-extension</key>
-                                <array>
-                                        <string>ovpn</string>
-                                </array>
-                                <key>public.mime-type</key>
-                                <array>
-                                        <string>text/plain</string>
-                                </array>
-                        </dict>
                 </dict>
                 <dict>
                         <key>UTTypeConformsTo</key>
@@ -153,7 +131,6 @@
                         <array>
                                 <string>org.amnezia.AmneziaVPN.amnezia-config</string>
                                 <string>org.amnezia.AmneziaVPN.wireguard-config</string>
-                                <string>org.amnezia.AmneziaVPN.openvpn-config</string>
                                 <string>org.amnezia.AmneziaVPN.backup-config</string>
                         </array>
                 </dict>

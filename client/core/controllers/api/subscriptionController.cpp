@@ -9,10 +9,8 @@
 #include <QPromise>
 #include <QSet>
 #include <QSysInfo>
-#include <QUuid>
 #include <QVariantMap>
 
-#include "core/configurators/openVpnConfigurator.h"
 #include "core/configurators/wireguardConfigurator.h"
 #include "core/utils/containerEnum.h"
 #include "core/utils/containers/containerUtils.h"
@@ -105,8 +103,6 @@ SubscriptionController::ProtocolData SubscriptionController::generateProtocolDat
         auto connData = WireguardConfigurator::genClientKeys();
         protocolData.wireGuardClientPubKey = connData.clientPubKey;
         protocolData.wireGuardClientPrivKey = connData.clientPrivKey;
-    } else if (protocol == configKey::vless) {
-        protocolData.xrayUuid = QUuid::createUuid().toString(QUuid::WithoutBraces);
     }
 
     return protocolData;
@@ -116,8 +112,6 @@ void SubscriptionController::appendProtocolDataToApiPayload(const QString &proto
 {
     if (protocol == configKey::awg) {
         apiPayload[apiDefs::key::publicKey] = protocolData.wireGuardClientPubKey;
-    } else if (protocol == configKey::vless) {
-        apiPayload[apiDefs::key::publicKey] = protocolData.xrayUuid;
     }
 }
 
@@ -760,12 +754,6 @@ void SubscriptionController::setCurrentProtocol(const QString &serverId, const Q
     }
 }
 
-bool SubscriptionController::isVlessProtocol(const QString &serverId) const
-{
-    auto apiV2 = m_serversRepository->apiV2Config(serverId);
-    return apiV2.has_value() && apiV2->serviceProtocol() == "vless";
-}
-
 QString SubscriptionController::currentProtocol(const QString &serverId) const
 {
     auto apiV2 = m_serversRepository->apiV2Config(serverId);
@@ -789,7 +777,10 @@ QStringList SubscriptionController::availableProtocols(const QString &serverId) 
             continue;
         }
         for (const auto &protocol : countryObject.value(apiDefs::key::availableProtocols).toArray()) {
-            protocols.push_back(protocol.toString());
+            const auto protocolName = protocol.toString();
+            if (protocolName == configKey::awg || protocolName == configKey::wireguard) {
+                protocols.push_back(protocolName);
+            }
         }
         break;
     }

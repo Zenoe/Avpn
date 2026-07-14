@@ -84,7 +84,6 @@ bool KillSwitch::disableKillSwitch() {
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("100.blockAll"), true);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("110.allowNets"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("120.blockNets"), false);
-        LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("130.allowMarkedXray"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("200.allowVPN"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv6, QStringLiteral("250.blockIPv6"), true);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("290.allowDHCP"), false);
@@ -97,7 +96,6 @@ bool KillSwitch::disableKillSwitch() {
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("100.blockAll"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("110.allowNets"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("120.blockNets"), false);
-        LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("130.allowMarkedXray"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("200.allowVPN"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv6, QStringLiteral("250.blockIPv6"), false);
         LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("290.allowDHCP"), true);
@@ -146,7 +144,6 @@ bool KillSwitch::disableAllTraffic() {
         LinuxFirewall::install();
     }
     LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("100.blockAll"), true);
-    LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("130.allowMarkedXray"), false);
     LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("000.allowLoopback"), true);
     LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv6, QStringLiteral("250.blockIPv6"), true);
 #endif
@@ -209,7 +206,7 @@ bool KillSwitch::enablePeerTraffic(const QJsonObject &configStr) {
         config.m_secondaryDnsServer = configStr.value(amnezia::configKey::dns2).toString();
     }
 
-    config.m_serverPublicKey = "openvpn";
+    config.m_serverPublicKey = "wireguard";
     config.m_serverIpv4Gateway = configStr.value("vpnGateway").toString();
     config.m_serverIpv4AddrIn = configStr.value("vpnServer").toString();
     int vpnAdapterIndex = configStr.value("vpnAdapterIndex").toInt();
@@ -283,18 +280,15 @@ bool KillSwitch::enableKillSwitch(const QJsonObject &configStr, int vpnAdapterIn
     bool blockAll = 0;
     bool allowNets = 0;
     bool blockNets = 0;
-    bool allowMarkedXray = 0;
     QStringList allownets;
     QStringList blocknets;
 
     if (splitTunnelType == 0) {
         blockAll = true;
         allowNets = true;
-        allowMarkedXray = true;
         allownets.append(configStr.value("vpnServer").toString());
     } else if (splitTunnelType == 1) {
         blockNets = true;
-        allowMarkedXray = true;
         for (auto v : splitTunnelSites) {
             blocknets.append(v.toString());
         }
@@ -320,7 +314,6 @@ bool KillSwitch::enableKillSwitch(const QJsonObject &configStr, int vpnAdapterIn
     LinuxFirewall::updateAllowNets(allownets);
     LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("120.blockNets"), blockAll);
     LinuxFirewall::updateBlockNets(blocknets);
-    LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("130.allowMarkedXray"), true);
     LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv4, QStringLiteral("200.allowVPN"), true);
     LinuxFirewall::setAnchorEnabled(LinuxFirewall::IPv6, QStringLiteral("250.blockIPv6"), true);
     LinuxFirewall::setAnchorEnabled(LinuxFirewall::Both, QStringLiteral("290.allowDHCP"), true);

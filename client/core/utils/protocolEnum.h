@@ -19,20 +19,15 @@ namespace amnezia
 
         enum Proto {
             Unknown = 0,
-            OpenVpn,
-            WireGuard,
-            Awg,
-            Ikev2,
-            Xray,
-            SSXray,
+            WireGuard = 2,
+            Awg = 3,
 
-            // non-vpn
-            TorWebSite,
-            Dns,
-            Sftp,
-            Socks5Proxy,
-            MtProxy,
-            Telemt,
+            // Preserve persisted numeric values for retained non-VPN services.
+            Dns = 8,
+            Sftp = 9,
+            Socks5Proxy = 10,
+            MtProxy = 11,
+            Telemt = 12,
         };
         Q_ENUM_NS(Proto)
 

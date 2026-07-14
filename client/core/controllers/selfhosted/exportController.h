@@ -39,10 +39,8 @@ public:
 
     ExportResult generateFullAccessConfig(const QString &serverId);
     ExportResult generateConnectionConfig(const QString &serverId, int containerIndex, const QString &clientName);
-    ExportResult generateOpenVpnConfig(const QString &serverId, const QString &clientName);
     ExportResult generateWireGuardConfig(const QString &serverId, const QString &clientName);
     ExportResult generateAwgConfig(const QString &serverId, int containerIndex, const QString &clientName);
-    ExportResult generateXrayConfig(const QString &serverId, const QString &clientName);
 
 signals:
     void appendClientRequested(const QString &serverId, const QString &clientId, const QString &clientName, DockerContainer container);

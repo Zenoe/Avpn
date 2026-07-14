@@ -46,10 +46,8 @@ public:
         // Container type check roles
         IsVpnContainerRole,
         IsServiceContainerRole,
-        IsIpsecRole,
         IsDnsRole,
         IsSftpRole,
-        IsTorWebsiteRole,
         IsSocks5ProxyRole,
         IsMtProxyRole,
         IsTelemtRole,

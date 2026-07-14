@@ -50,9 +50,6 @@
 #include "ui/models/allowedDnsModel.h"
 #include "ui/models/containersModel.h"
 #include "ui/models/languageModel.h"
-#ifdef Q_OS_WINDOWS
-    #include "ui/models/protocols/ikev2ConfigModel.h"
-#endif
 #include "ui/models/api/apiAccountInfoModel.h"
 #include "ui/models/api/apiBenefitsModel.h"
 #include "ui/models/api/apiCountryModel.h"
@@ -62,12 +59,8 @@
 #include "ui/models/appSplitTunnelingModel.h"
 #include "ui/models/clientManagementModel.h"
 #include "ui/models/protocols/awgConfigModel.h"
-#include "ui/models/protocols/openvpnConfigModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
-#include "ui/models/protocols/xrayConfigModel.h"
-#include "ui/models/protocols/xrayConfigSnapshotsModel.h"
 #include "ui/models/protocolsModel.h"
-#include "ui/models/services/torConfigModel.h"
 #include "ui/models/serversModel.h"
 #include "ui/models/services/sftpConfigModel.h"
 #include "ui/models/services/socks5ProxyConfigModel.h"
@@ -213,15 +206,8 @@ private:
     ApiAccountInfoModel* m_apiAccountInfoModel;
     ApiDevicesModel* m_apiDevicesModel;
 
-    OpenVpnConfigModel* m_openVpnConfigModel;
-    XrayConfigModel* m_xrayConfigModel;
-    XrayConfigSnapshotsModel* m_xrayConfigSnapshotsModel;
-    TorConfigModel* m_torConfigModel;
     WireGuardConfigModel* m_wireGuardConfigModel;
     AwgConfigModel* m_awgConfigModel;
-#ifdef Q_OS_WINDOWS
-    Ikev2ConfigModel* m_ikev2ConfigModel;
-#endif
     SftpConfigModel* m_sftpConfigModel;
     Socks5ProxyConfigModel* m_socks5ConfigModel;
     MtProxyConfigModel* m_mtProxyConfigModel;

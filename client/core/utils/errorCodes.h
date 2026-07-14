@@ -35,9 +35,6 @@ namespace amnezia
         ServerCgroupMountpoint = 212,
         DockerPullRateLimit = 213,
         ServerLinuxKernelTooOld = 214,
-        XrayServerConfigInvalid = 215,
-        XrayServerNoVlessClients = 216,
-        XrayRealityKeysReadFailed = 217,
         ServerContainerRuntimeNotSupported = 218,
         ContainerRuntimeServiceNotRunning = 219,
 
@@ -52,27 +49,15 @@ namespace amnezia
         // Ssh scp errors
         SshScpFailureError = 400,
 
-        // Local errors
-        OpenVpnConfigMissing = 500,
-        OpenVpnManagementServerError = 501,
-
         // Distro errors
-        OpenVpnExecutableMissing = 600,
         AmneziaServiceConnectionFailed = 603,
         ExecutableMissing = 604,
-        XrayExecutableMissing = 605,
-        Tun2SockExecutableMissing = 606,
 
         // VPN errors
-        OpenVpnAdaptersInUseError = 700,
-        OpenVpnUnknownError = 701,
-        OpenVpnTapAdapterError = 702,
         AddressPoolError = 703,
 
         // 3rd party utils errors
         OpenSslFailed = 800,
-        XrayExecutableCrashed = 803,
-        Tun2SockExecutableCrashed = 804,
 
         // import and install errors
         ImportInvalidConfigError = 900,

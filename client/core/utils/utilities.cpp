@@ -257,11 +257,6 @@ bool Utils::killProcessByName(const QString &name)
 #endif
 }
 
-QString Utils::openVpnExecPath()
-{
-    return Utils::executable("openvpn", true);
-}
-
 QString Utils::wireguardExecPath()
 {
 #ifdef Q_OS_WIN
@@ -283,11 +278,6 @@ QString Utils::certUtilPath()
 #else
     return "";
 #endif
-}
-
-QString Utils::tun2socksPath()
-{
-    return Utils::executable("tun2socks", true);
 }
 
 #ifdef Q_OS_WIN

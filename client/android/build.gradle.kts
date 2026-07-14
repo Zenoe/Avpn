@@ -73,8 +73,6 @@ dependencies {
     implementation(project(":protocolApi"))
     implementation(project(":wireguard"))
     implementation(project(":awg"))
-    implementation(project(":openvpn"))
-    implementation(project(":xray"))
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment)

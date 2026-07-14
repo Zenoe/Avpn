@@ -21,20 +21,12 @@
 #include "core/utils/constants/protocolConstants.h"
 #include "ui/models/protocols/awgConfigModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
-#include "ui/models/protocols/openvpnConfigModel.h"
-#include "ui/models/protocols/xrayConfigModel.h"
-#ifdef Q_OS_WINDOWS
-#include "ui/models/protocols/ikev2ConfigModel.h"
-#endif
 #include "ui/models/services/sftpConfigModel.h"
 #include "ui/models/services/socks5ProxyConfigModel.h"
-#include "ui/models/services/torConfigModel.h"
 #include "core/utils/utilities.h"
 #include "core/models/containerConfig.h"
 #include "core/models/protocols/awgProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
-#include "core/models/protocols/openVpnProtocolConfig.h"
-#include "core/models/protocols/xrayProtocolConfig.h"
 
 InstallUiController::InstallUiController(InstallController *installController,
                                          ServersController *serversController,
@@ -43,12 +35,6 @@ InstallUiController::InstallUiController(InstallController *installController,
                                          UsersController *usersController,
                                          AwgConfigModel *awgConfigModel,
                                          WireGuardConfigModel *wireGuardConfigModel,
-                                         OpenVpnConfigModel *openVpnConfigModel,
-                                         XrayConfigModel *xrayConfigModel,
-                                         TorConfigModel *torConfigModel,
-#ifdef Q_OS_WINDOWS
-                                         Ikev2ConfigModel *ikev2ConfigModel,
-#endif
                                          SftpConfigModel *sftpConfigModel,
                                          Socks5ProxyConfigModel *socks5ConfigModel,
                                          MtProxyConfigModel* mtConfigModel,
@@ -63,12 +49,6 @@ InstallUiController::InstallUiController(InstallController *installController,
       m_usersController(usersController),
       m_awgConfigModel(awgConfigModel),
       m_wireGuardConfigModel(wireGuardConfigModel),
-      m_openVpnConfigModel(openVpnConfigModel),
-      m_xrayConfigModel(xrayConfigModel),
-      m_torConfigModel(torConfigModel),
-#ifdef Q_OS_WINDOWS
-      m_ikev2ConfigModel(ikev2ConfigModel),
-#endif
       m_sftpConfigModel(sftpConfigModel),
       m_socks5ConfigModel(socks5ConfigModel),
       m_mtProxyConfigModel(mtConfigModel),
@@ -228,19 +208,6 @@ bool InstallUiController::buildContainerConfigFromModel(int containerIndex, int 
         containerConfig.protocolConfig = m_wireGuardConfigModel->getProtocolConfig();
         break;
     }
-    case Proto::OpenVpn: {
-        containerConfig.protocolConfig = m_openVpnConfigModel->getProtocolConfig();
-        break;
-    }
-    case Proto::Xray:
-    case Proto::SSXray: {
-        containerConfig.protocolConfig = m_xrayConfigModel->getProtocolConfig();
-        break;
-    }
-    case Proto::TorWebSite: {
-        containerConfig.protocolConfig = m_torConfigModel->getProtocolConfig();
-        break;
-    }
     case Proto::Sftp: {
         containerConfig.protocolConfig = m_sftpConfigModel->getProtocolConfig();
         break;
@@ -257,12 +224,6 @@ bool InstallUiController::buildContainerConfigFromModel(int containerIndex, int 
         containerConfig.protocolConfig = m_telemtConfigModel->getProtocolConfig();
         break;
     }
-#ifdef Q_OS_WINDOWS
-    case Proto::Ikev2: {
-        containerConfig.protocolConfig = m_ikev2ConfigModel->getProtocolConfig();
-        break;
-    }
-#endif
     default:
         return false;
     }
@@ -303,8 +264,7 @@ void InstallUiController::updateServerConfig(const QString &serverId, int contai
     }
     ContainerConfig oldContainerConfig = m_serversController->getContainerConfig(serverId, container);
 
-    const bool asyncUpdate = container == DockerContainer::MtProxy || container == DockerContainer::Telemt
-            || container == DockerContainer::Xray || container == DockerContainer::SSXray;
+    const bool asyncUpdate = container == DockerContainer::MtProxy || container == DockerContainer::Telemt;
 
     if (asyncUpdate) {
         const bool emitBusy = container == DockerContainer::MtProxy || container == DockerContainer::Telemt;
@@ -504,34 +464,6 @@ void InstallUiController::removeContainer(const QString &serverId, int container
     DockerContainer container = static_cast<DockerContainer>(containerIndex);
     QString containerName = ContainerUtils::containerHumanNames().value(container);
 
-    const bool asyncRemove = container == DockerContainer::Xray || container == DockerContainer::SSXray;
-
-    if (asyncRemove) {
-        emit serverIsBusy(true);
-        auto *watcher = new QFutureWatcher<ErrorCode>(this);
-        QObject::connect(watcher, &QFutureWatcher<ErrorCode>::finished, this,
-                         [this, watcher, serverId, container, containerName, serverName]() {
-                             const ErrorCode errorCode = watcher->result();
-                             watcher->deleteLater();
-                             emit serverIsBusy(false);
-
-                             if (errorCode == ErrorCode::NoError) {
-                                 emit removeContainerFinished(
-                                         tr("%1 has been removed from the server '%2'").arg(containerName, serverName));
-                             } else {
-                                 emit installationErrorOccurred(errorCode);
-                             }
-                         });
-
-        InstallController *installController = m_installController;
-        QFuture<ErrorCode> future = QtConcurrent::run(
-                [installController, serverId, container]() -> ErrorCode {
-                    return installController->removeContainer(serverId, container);
-                });
-        watcher->setFuture(future);
-        return;
-    }
-
     ErrorCode errorCode = m_installController->removeContainer(serverId, container);
     if (errorCode == ErrorCode::NoError) {
 
@@ -702,17 +634,10 @@ void InstallUiController::updateProtocolConfigModel(const QString &serverId, int
     switch (protocolType) {
     case Proto::Awg: updateIfPresent(m_awgConfigModel, containerConfig.getAwgProtocolConfig()); break;
     case Proto::WireGuard: updateIfPresent(m_wireGuardConfigModel, containerConfig.getWireGuardProtocolConfig()); break;
-    case Proto::OpenVpn: updateIfPresent(m_openVpnConfigModel, containerConfig.getOpenVpnProtocolConfig()); break;
-    case Proto::Xray:
-    case Proto::SSXray: updateIfPresent(m_xrayConfigModel, containerConfig.getXrayProtocolConfig()); break;
-    case Proto::TorWebSite: updateIfPresent(m_torConfigModel, containerConfig.getTorProtocolConfig()); break;
     case Proto::Sftp: updateIfPresent(m_sftpConfigModel, containerConfig.getSftpProtocolConfig()); break;
     case Proto::Socks5Proxy: updateIfPresent(m_socks5ConfigModel, containerConfig.getSocks5ProxyProtocolConfig()); break;
     case Proto::MtProxy: updateIfPresent(m_mtProxyConfigModel, containerConfig.getMtProxyProtocolConfig()); break;
     case Proto::Telemt: updateIfPresent(m_telemtConfigModel, containerConfig.getTelemtProtocolConfig()); break;
-#ifdef Q_OS_WINDOWS
-    case Proto::Ikev2: updateIfPresent(m_ikev2ConfigModel, containerConfig.getIkev2ProtocolConfig()); break;
-#endif
     default: break;
     }
 }

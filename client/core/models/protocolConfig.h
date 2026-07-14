@@ -15,12 +15,8 @@
 
 #include "core/models/protocols/awgProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
-#include "core/models/protocols/openVpnProtocolConfig.h"
-#include "core/models/protocols/xrayProtocolConfig.h"
 #include "core/models/protocols/sftpProtocolConfig.h"
 #include "core/models/protocols/socks5ProxyProtocolConfig.h"
-#include "core/models/protocols/ikev2ProtocolConfig.h"
-#include "core/models/protocols/torProtocolConfig.h"
 #include "core/models/protocols/dnsProtocolConfig.h"
 #include "core/models/protocols/mtProxyProtocolConfig.h"
 #include "core/models/protocols/telemtProtocolConfig.h"
@@ -34,14 +30,10 @@ struct ProtocolConfig {
     using Variant = std::variant<
         AwgProtocolConfig,
         WireGuardProtocolConfig,
-        OpenVpnProtocolConfig,
-        XrayProtocolConfig,
         SftpProtocolConfig,
         Socks5ProxyProtocolConfig,
         MtProxyProtocolConfig,
         TelemtProtocolConfig,
-        Ikev2ProtocolConfig,
-        TorProtocolConfig,
         DnsProtocolConfig
     >;
     
@@ -51,10 +43,14 @@ struct ProtocolConfig {
     ProtocolConfig(const Variant& v) : data(v) {}
     ProtocolConfig(Variant&& v) : data(std::move(v)) {}
     
-    template<typename T, typename = std::enable_if_t<!std::is_same<std::remove_cv_t<std::remove_reference_t<T>>, ProtocolConfig>::value>>
+    template<typename T, typename = std::enable_if_t<
+        !std::is_same<std::remove_cv_t<std::remove_reference_t<T>>, ProtocolConfig>::value &&
+        std::is_constructible<Variant, const T&>::value>>
     ProtocolConfig(const T& v) : data(v) {}
     
-    template<typename T, typename = std::enable_if_t<!std::is_same<std::remove_cv_t<std::remove_reference_t<T>>, ProtocolConfig>::value>>
+    template<typename T, typename = std::enable_if_t<
+        !std::is_same<std::remove_cv_t<std::remove_reference_t<T>>, ProtocolConfig>::value &&
+        std::is_constructible<Variant, T&&>::value>>
     ProtocolConfig(T&& v) : data(std::forward<T>(v)) {}
     
     Proto type() const;

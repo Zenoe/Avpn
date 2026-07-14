@@ -16,7 +16,7 @@ namespace amnezia
     {
         QList<Proto> allProtocols();
 
-        // spelling may differ for various protocols - TCP for OpenVPN, tcp for others
+        // Protocol configuration values can use protocol-specific spelling.
         TransportProto transportProtoFromString(QString p);
         QString transportProtoToString(TransportProto proto, Proto p = Proto::Unknown);
 

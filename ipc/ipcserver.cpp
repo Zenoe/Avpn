@@ -16,11 +16,6 @@
 #include "logger.h"
 #include "router.h"
 #include "killswitch.h"
-#include "xray.h"
-
-#ifdef Q_OS_WIN
-    #include "tapcontroller_win.h"
-#endif
 
 
 IpcServer::IpcServer(QObject *parent) : IpcInterfaceSource(parent)
@@ -109,32 +104,6 @@ void IpcServer::resetIpStack()
     Router::resetIpStack();
 }
 
-bool IpcServer::checkAndInstallDriver()
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::checkAndInstallDriver";
-#endif
-
-#ifdef Q_OS_WIN
-    return TapController::checkAndSetup();
-#else
-    return true;
-#endif
-}
-
-QStringList IpcServer::getTapList()
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::getTapList";
-#endif
-
-#ifdef Q_OS_WIN
-    return TapController::getTapList();
-#else
-    return QStringList();
-#endif
-}
-
 void IpcServer::cleanUp()
 {
 #ifdef MZ_DEBUG
@@ -154,24 +123,6 @@ void IpcServer::clearLogs()
     Logger::clearLogs(true);
 }
 
-bool IpcServer::createTun(const QString &dev, const QString &subnet)
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::createTun";
-#endif
-
-    return Router::createTun(dev, subnet);
-}
-
-bool IpcServer::deleteTun(const QString &dev)
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::deleteTun";
-#endif
-
-    return Router::deleteTun(dev);
-}
-
 bool IpcServer::updateResolvers(const QString &ifname, const QList<QHostAddress> &resolvers)
 {
 #ifdef MZ_DEBUG
@@ -188,24 +139,6 @@ bool IpcServer::restoreResolvers()
 #endif
 
     return Router::restoreResolvers();
-}
-
-bool IpcServer::StartRoutingIpv6()
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::StartRoutingIpv6";
-#endif
-
-    return Router::StartRoutingIpv6();
-}
-
-bool IpcServer::StopRoutingIpv6()
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::StopRoutingIpv6";
-#endif
-
-    return Router::StopRoutingIpv6();
 }
 
 void IpcServer::setLogsEnabled(bool enabled)
@@ -302,22 +235,4 @@ bool IpcServer::refreshKillSwitch(bool enabled)
 #endif
 
     return KillSwitch::instance()->refresh(enabled);
-}
-
-bool IpcServer::xrayStart(const QString& cfg)
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::xrayStart";
-#endif
-
-    return Xray::getInstance().startXray(cfg);
-}
-
-bool IpcServer::xrayStop()
-{
-#ifdef MZ_DEBUG
-    qDebug() << "IpcServer::xrayStop";
-#endif
-
-    return Xray::getInstance().stopXray();
 }

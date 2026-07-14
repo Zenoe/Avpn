@@ -10,14 +10,10 @@
 #include "core/models/protocolConfig.h"
 #include "core/models/protocols/awgProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
-#include "core/models/protocols/openVpnProtocolConfig.h"
-#include "core/models/protocols/xrayProtocolConfig.h"
 #include "core/models/protocols/sftpProtocolConfig.h"
 #include "core/models/protocols/socks5ProxyProtocolConfig.h"
 #include "core/models/protocols/mtProxyProtocolConfig.h"
 #include "core/models/protocols/telemtProtocolConfig.h"
-#include "core/models/protocols/ikev2ProtocolConfig.h"
-#include "core/models/protocols/torProtocolConfig.h"
 
 using namespace amnezia;
 using namespace ProtocolUtils;
@@ -66,21 +62,6 @@ ContainerConfig InstallerBase::createBaseConfig(DockerContainer container, int p
             config.protocolConfig = wgConfig;
             break;
         }
-        case Proto::OpenVpn: {
-            OpenVpnProtocolConfig ovpnConfig;
-            ovpnConfig.serverConfig.port = portStr;
-            ovpnConfig.serverConfig.transportProto = transportProtoStr;
-            config.protocolConfig = ovpnConfig;
-            break;
-        }
-        case Proto::Xray:
-        case Proto::SSXray: {
-            XrayProtocolConfig xrayConfig;
-            xrayConfig.serverConfig.port = portStr;
-            xrayConfig.serverConfig.transportProto = transportProtoStr;
-            config.protocolConfig = xrayConfig;
-            break;
-        }
         case Proto::Sftp: {
             SftpProtocolConfig sftpConfig;
             sftpConfig.port = portStr;
@@ -103,16 +84,6 @@ ContainerConfig InstallerBase::createBaseConfig(DockerContainer container, int p
             TelemtProtocolConfig telemtConfig;
             telemtConfig.port = portStr;
             config.protocolConfig = telemtConfig;
-            break;
-        }
-        case Proto::Ikev2: {
-            Ikev2ProtocolConfig ikev2Config;
-            config.protocolConfig = ikev2Config;
-            break;
-        }
-        case Proto::TorWebSite: {
-            TorProtocolConfig torConfig;
-            config.protocolConfig = torConfig;
             break;
         }
         case Proto::Dns: {

@@ -19,14 +19,8 @@
 #include "ui/models/protocolsModel.h"
 #include "ui/models/protocols/awgConfigModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
-#include "ui/models/protocols/openvpnConfigModel.h"
-#include "ui/models/protocols/xrayConfigModel.h"
-#ifdef Q_OS_WINDOWS
-#include "ui/models/protocols/ikev2ConfigModel.h"
-#endif
 #include "ui/models/services/sftpConfigModel.h"
 #include "ui/models/services/socks5ProxyConfigModel.h"
-#include "ui/models/services/torConfigModel.h"
 #include "core/models/protocols/sftpProtocolConfig.h"
 #include "core/models/protocols/socks5ProxyProtocolConfig.h"
 #include "ui/models/services/mtProxyConfigModel.h"
@@ -43,12 +37,6 @@ public:
                                UsersController* usersController,
                                AwgConfigModel* awgConfigModel,
                                WireGuardConfigModel* wireGuardConfigModel,
-                               OpenVpnConfigModel* openVpnConfigModel,
-                               XrayConfigModel* xrayConfigModel,
-                               TorConfigModel* torConfigModel,
-#ifdef Q_OS_WINDOWS
-                               Ikev2ConfigModel* ikev2ConfigModel,
-#endif
                                SftpConfigModel* sftpConfigModel,
                                Socks5ProxyConfigModel* socks5ConfigModel,
                                MtProxyConfigModel* mtConfigModel,
@@ -145,12 +133,6 @@ private:
 
     AwgConfigModel* m_awgConfigModel;
     WireGuardConfigModel* m_wireGuardConfigModel;
-    OpenVpnConfigModel* m_openVpnConfigModel;
-    XrayConfigModel* m_xrayConfigModel;
-    TorConfigModel* m_torConfigModel;
-#ifdef Q_OS_WINDOWS
-    Ikev2ConfigModel* m_ikev2ConfigModel;
-#endif
     SftpConfigModel* m_sftpConfigModel;
     Socks5ProxyConfigModel* m_socks5ConfigModel;
     MtProxyConfigModel* m_mtProxyConfigModel;

@@ -32,13 +32,6 @@ void ExportUiController::generateConnectionConfig(const QString &serverId, int c
     applyExportResult(result);
 }
 
-void ExportUiController::generateOpenVpnConfig(const QString &serverId, const QString &clientName)
-{
-    clearPreviousConfig();
-    auto result = m_exportController->generateOpenVpnConfig(serverId, clientName);
-    applyExportResult(result);
-}
-
 void ExportUiController::generateWireGuardConfig(const QString &serverId, const QString &clientName)
 {
     clearPreviousConfig();
@@ -53,13 +46,6 @@ void ExportUiController::generateAwgConfig(const QString &serverId, int containe
     applyExportResult(result);
 }
 
-
-void ExportUiController::generateXrayConfig(const QString &serverId, const QString &clientName)
-{
-    clearPreviousConfig();
-    auto result = m_exportController->generateXrayConfig(serverId, clientName);
-    applyExportResult(result);
-}
 
 void ExportUiController::generateQrFromString(const QString &text)
 {

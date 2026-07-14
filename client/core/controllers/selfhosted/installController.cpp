@@ -16,15 +16,11 @@
 #include "core/utils/selfhosted/sshSession.h"
 #include "core/installers/awgInstaller.h"
 #include "core/installers/installerBase.h"
-#include "core/installers/openvpnInstaller.h"
 #include "core/installers/sftpInstaller.h"
 #include "core/installers/socks5Installer.h"
 #include "core/installers/mtProxyInstaller.h"
-#include "core/configurators/xrayConfigurator.h"
 #include "core/installers/telemtInstaller.h"
-#include "core/installers/torInstaller.h"
 #include "core/installers/wireguardInstaller.h"
-#include "core/installers/xrayInstaller.h"
 #include "core/utils/networkUtilities.h"
 #include "core/utils/api/apiUtils.h"
 #include "core/repositories/secureServersRepository.h"
@@ -193,16 +189,6 @@ ErrorCode InstallController::updateServerConfig(const QString &serverId, DockerC
     bool reinstallRequired = isReinstallContainerRequired(container, oldConfig, newConfig);
     qDebug() << "InstallController::updateServerConfig for container" << container << "reinstall required is" << reinstallRequired;
 
-    bool xrayServerSettingsChanged = false;
-    if (container == DockerContainer::Xray || container == DockerContainer::SSXray) {
-        const auto *oldXrayConfig = oldConfig.getXrayProtocolConfig();
-        const auto *newXrayConfig = newConfig.getXrayProtocolConfig();
-        if (oldXrayConfig && newXrayConfig) {
-            xrayServerSettingsChanged =
-                    !oldXrayConfig->serverConfig.hasEqualServerSettings(newXrayConfig->serverConfig);
-        }
-    }
-
     ErrorCode errorCode = ErrorCode::NoError;
     if (reinstallRequired) {
         errorCode = setupContainer(credentials, container, newConfig, true);
@@ -216,21 +202,6 @@ ErrorCode InstallController::updateServerConfig(const QString &serverId, DockerC
             && (container == DockerContainer::MtProxy || container == DockerContainer::Telemt)) {
             const QString containerName = ContainerUtils::containerToString(container);
             errorCode = sshSession.runScript(credentials, "sudo docker restart " + containerName);
-        }
-    }
-
-    const bool skipXrayInboundSync =
-            newConfig.getXrayProtocolConfig() && newConfig.getXrayProtocolConfig()->serverConfig.isThirdPartyConfig;
-
-    if (errorCode == ErrorCode::NoError && xrayServerSettingsChanged && !skipXrayInboundSync) {
-        DnsSettings dnsSettings = { m_appSettingsRepository->primaryDns(), m_appSettingsRepository->secondaryDns() };
-        XrayConfigurator xrayConfigurator(&sshSession);
-        qDebug() << "InstallController::updateServerConfig applying Xray server inbound sync, reinstall="
-                 << reinstallRequired;
-        errorCode = xrayConfigurator.applyServerSettingsToRemote(credentials, container, newConfig, dnsSettings, false);
-        if (errorCode != ErrorCode::NoError) {
-            qDebug() << "InstallController::updateServerConfig Xray inbound sync failed, error="
-                     << static_cast<int>(errorCode);
         }
     }
 
@@ -684,17 +655,6 @@ ErrorCode InstallController::isServerPortBusy(const ServerCredentials &credentia
 
 bool InstallController::isReinstallContainerRequired(DockerContainer container, const ContainerConfig &oldConfig, const ContainerConfig &newConfig)
 {
-    if (container == DockerContainer::OpenVpn) {
-        const auto* oldOvpnConfig = oldConfig.getOpenVpnProtocolConfig();
-        const auto* newOvpnConfig = newConfig.getOpenVpnProtocolConfig();
-        
-        if (oldOvpnConfig && newOvpnConfig) {
-            if (!oldOvpnConfig->serverConfig.hasEqualServerSettings(newOvpnConfig->serverConfig)) {
-                return true;
-            }
-        }
-    }
-
     if (ContainerUtils::isAwgContainer(container)) {
         const auto* oldAwgConfig = oldConfig.getAwgProtocolConfig();
         const auto* newAwgConfig = newConfig.getAwgProtocolConfig();
@@ -712,23 +672,6 @@ bool InstallController::isReinstallContainerRequired(DockerContainer container, 
         
         if (oldWgConfig && newWgConfig) {
             if (!oldWgConfig->serverConfig.hasEqualServerSettings(newWgConfig->serverConfig)) {
-                return true;
-            }
-        }
-    }
-
-    if (container == DockerContainer::Xray || container == DockerContainer::SSXray) {
-        const auto *oldXrayConfig = oldConfig.getXrayProtocolConfig();
-        const auto *newXrayConfig = newConfig.getXrayProtocolConfig();
-
-        if (oldXrayConfig && newXrayConfig) {
-            const QString oldPort = oldXrayConfig->serverConfig.port.isEmpty()
-                    ? QString(protocols::xray::defaultPort)
-                    : oldXrayConfig->serverConfig.port;
-            const QString newPort = newXrayConfig->serverConfig.port.isEmpty()
-                    ? QString(protocols::xray::defaultPort)
-                    : newXrayConfig->serverConfig.port;
-            if (oldPort != newPort) {
                 return true;
             }
         }
@@ -1042,10 +985,6 @@ QScopedPointer<InstallerBase> InstallController::createInstaller(DockerContainer
     case DockerContainer::Awg: return QScopedPointer<InstallerBase>(new AwgInstaller(this));
     case DockerContainer::Awg2: return QScopedPointer<InstallerBase>(new AwgInstaller(this));
     case DockerContainer::WireGuard: return QScopedPointer<InstallerBase>(new WireguardInstaller(this));
-    case DockerContainer::OpenVpn: return QScopedPointer<InstallerBase>(new OpenVpnInstaller(this));
-    case DockerContainer::Xray:
-    case DockerContainer::SSXray: return QScopedPointer<InstallerBase>(new XrayInstaller(this));
-    case DockerContainer::TorWebSite: return QScopedPointer<InstallerBase>(new TorInstaller(this));
     case DockerContainer::Sftp: return QScopedPointer<InstallerBase>(new SftpInstaller(this));
     case DockerContainer::Socks5Proxy: return QScopedPointer<InstallerBase>(new Socks5Installer(this));
     case DockerContainer::MtProxy: return QScopedPointer<InstallerBase>(new MtProxyInstaller(this));
@@ -1395,15 +1334,7 @@ void InstallController::updateContainerConfigAfterInstallation(DockerContainer c
 {
     Proto mainProto = ContainerUtils::defaultProtocol(container);
 
-    if (container == DockerContainer::TorWebSite) {
-        if (auto* torProtocolConfig = containerConfig.getTorProtocolConfig()) {
-            qDebug() << "amnezia-tor onions" << stdOut;
-
-            QString onion = stdOut;
-            onion.replace("\n", "");
-            torProtocolConfig->serverConfig.site = onion;
-        }
-    } else if (container == DockerContainer::MtProxy) {
+    if (container == DockerContainer::MtProxy) {
         if (auto* mtProxyConfig = containerConfig.getMtProxyProtocolConfig()) {
             qDebug() << "amnezia mtproxy" << stdOut;
 
@@ -1476,7 +1407,7 @@ ErrorCode InstallController::getAlreadyInstalledContainers(const ServerCredentia
     }
 
     const static QRegularExpression containerAndPortRegExp("(amnezia[-a-z0-9]*).*?:([0-9]*)->[0-9]*/(udp|tcp).*");
-    const static QRegularExpression torOrDnsRegExp("(amnezia-(?:torwebsite|dns)).*?([0-9]*)/(udp|tcp).*");
+    const static QRegularExpression dnsRegExp("(amnezia-dns).*?([0-9]*)/(udp|tcp).*");
 
     QStringList containerInfos = stdOut.split("\n");
     for (const QString &containerInfo : containerInfos) {
@@ -1509,11 +1440,11 @@ ErrorCode InstallController::getAlreadyInstalledContainers(const ServerCredentia
             installedContainers.insert(container, config);
         }
 
-        QRegularExpressionMatch torOrDnsRegMatch = torOrDnsRegExp.match(containerInfo);
-        if (torOrDnsRegMatch.hasMatch()) {
-            QString name = torOrDnsRegMatch.captured(1);
-            QString portStr = torOrDnsRegMatch.captured(2);
-            QString transportProtoStr = torOrDnsRegMatch.captured(3);
+        QRegularExpressionMatch dnsRegMatch = dnsRegExp.match(containerInfo);
+        if (dnsRegMatch.hasMatch()) {
+            QString name = dnsRegMatch.captured(1);
+            QString portStr = dnsRegMatch.captured(2);
+            QString transportProtoStr = dnsRegMatch.captured(3);
             DockerContainer container = ContainerUtils::containerFromString(name);
 
             if (container == DockerContainer::None || ContainerUtils::isUnsupportedContainer(container)) {

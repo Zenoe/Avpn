@@ -11,23 +11,16 @@ namespace amnezia
         Q_NAMESPACE
         enum DockerContainer {
             None = 0,
-            Awg,
-            Awg2,
-            WireGuard,
-            OpenVpn,
-            Cloak,
-            ShadowSocks,
-            Ipsec,
-            Xray,
-            SSXray,
+            Awg = 1,
+            Awg2 = 2,
+            WireGuard = 3,
 
-            // non-vpn
-            TorWebSite,
-            Dns,
-            Sftp,
-            Socks5Proxy,
-            MtProxy,
-            Telemt,
+            // Preserve persisted numeric values for retained non-VPN services.
+            Dns = 11,
+            Sftp = 12,
+            Socks5Proxy = 13,
+            MtProxy = 14,
+            Telemt = 15,
         };
         Q_ENUM_NS(DockerContainer)
     } // namespace ContainerEnumNS

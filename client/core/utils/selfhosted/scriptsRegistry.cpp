@@ -13,10 +13,8 @@
 #include "core/utils/constants/configKeys.h"
 #include "core/utils/constants/protocolConstants.h"
 #include "core/models/containerConfig.h"
-#include "core/models/protocols/openVpnProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
 #include "core/models/protocols/awgProtocolConfig.h"
-#include "core/models/protocols/xrayProtocolConfig.h"
 #include "core/models/protocols/sftpProtocolConfig.h"
 #include "core/models/protocols/socks5ProxyProtocolConfig.h"
 #include "core/models/protocols/mtProxyProtocolConfig.h"
@@ -28,14 +26,9 @@ using namespace ProtocolUtils;
 QString amnezia::scriptFolder(amnezia::DockerContainer container)
 {
     switch (container) {
-    case DockerContainer::OpenVpn: return QLatin1String("openvpn");
     case DockerContainer::WireGuard: return QLatin1String("wireguard");
     case DockerContainer::Awg2: return QLatin1String("awg");
     case DockerContainer::Awg: return QLatin1String("awg_legacy");
-    case DockerContainer::Ipsec: return QLatin1String("ipsec");
-    case DockerContainer::Xray: return QLatin1String("xray");
-
-    case DockerContainer::TorWebSite: return QLatin1String("website_tor");
     case DockerContainer::Dns: return QLatin1String("dns");
     case DockerContainer::Sftp: return QLatin1String("sftp");
     case DockerContainer::Socks5Proxy: return QLatin1String("socks5_proxy");
@@ -69,10 +62,8 @@ QString amnezia::scriptName(ProtocolScriptType type)
     case ProtocolScriptType::run_container: return QLatin1String("run_container.sh");
     case ProtocolScriptType::configure_container: return QLatin1String("configure_container.sh");
     case ProtocolScriptType::container_startup: return QLatin1String("start.sh");
-    case ProtocolScriptType::openvpn_template: return QLatin1String("template.ovpn");
     case ProtocolScriptType::wireguard_template: return QLatin1String("template.conf");
     case ProtocolScriptType::awg_template: return QLatin1String("template.conf");
-    case ProtocolScriptType::xray_template: return QLatin1String("template.json");
     default: return QString();
     }
 }
@@ -140,7 +131,7 @@ amnezia::ScriptVars amnezia::genBaseVars(const ServerCredentials &credentials,
     vars.append({ { "$CONTAINER_NAME", ContainerUtils::containerToString(container) } });
     vars.append({ { "$DOCKERFILE_FOLDER", "/opt/amnezia/" + ContainerUtils::containerToString(container) } });
 
-    QString serverIp = (!ContainerUtils::isAwgContainer(container) && container != DockerContainer::WireGuard && container != DockerContainer::Xray)
+    QString serverIp = (!ContainerUtils::isAwgContainer(container) && container != DockerContainer::WireGuard)
             ? NetworkUtilities::getIPAddress(credentials.hostName)
             : credentials.hostName;
     if (!serverIp.isEmpty()) {
@@ -154,62 +145,6 @@ amnezia::ScriptVars amnezia::genBaseVars(const ServerCredentials &credentials,
     vars.append({ { "$PRIMARY_SERVER_DNS", dns1 } });
     vars.append({ { "$SECONDARY_SERVER_DNS", dns2 } });
 
-    // IPsec vars (constants)
-    vars.append({ { "$IPSEC_VPN_L2TP_NET", "192.168.42.0/24" } });
-    vars.append({ { "$IPSEC_VPN_L2TP_POOL", "192.168.42.10-192.168.42.250" } });
-    vars.append({ { "$IPSEC_VPN_L2TP_LOCAL", "192.168.42.1" } });
-    vars.append({ { "$IPSEC_VPN_XAUTH_NET", "192.168.43.0/24" } });
-    vars.append({ { "$IPSEC_VPN_XAUTH_POOL", "192.168.43.10-192.168.43.250" } });
-    vars.append({ { "$IPSEC_VPN_SHA2_TRUNCBUG", "yes" } });
-    vars.append({ { "$IPSEC_VPN_VPN_ANDROID_MTU_FIX", "yes" } });
-    vars.append({ { "$IPSEC_VPN_DISABLE_IKEV2", "no" } });
-    vars.append({ { "$IPSEC_VPN_DISABLE_L2TP", "no" } });
-    vars.append({ { "$IPSEC_VPN_DISABLE_XAUTH", "no" } });
-    vars.append({ { "$IPSEC_VPN_C2C_TRAFFIC", "no" } });
-
-    return vars;
-}
-
-amnezia::ScriptVars amnezia::genOpenVpnVars(const ContainerConfig &containerConfig)
-{
-    ScriptVars vars;
-    
-    if (auto* openVpnProtocolConfig = containerConfig.getOpenVpnProtocolConfig()) {
-        const OpenVpnServerConfig& config = openVpnProtocolConfig->serverConfig;
-        
-        vars.append({ { "$OPENVPN_SUBNET_IP", config.subnetAddress.isEmpty() ? protocols::openvpn::defaultSubnetAddress : config.subnetAddress } });
-        vars.append({ { "$OPENVPN_SUBNET_CIDR", config.subnetCidr.isEmpty() ? protocols::openvpn::defaultSubnetCidr : config.subnetCidr } });
-        vars.append({ { "$OPENVPN_SUBNET_MASK", config.subnetMask.isEmpty() ? protocols::openvpn::defaultSubnetMask : config.subnetMask } });
-        vars.append({ { "$OPENVPN_PORT", config.port.isEmpty() ? protocols::openvpn::defaultPort : config.port } });
-        vars.append({ { "$OPENVPN_TRANSPORT_PROTO", config.transportProto.isEmpty() ? protocols::openvpn::defaultTransportProto : config.transportProto } });
-        
-        vars.append({ { "$OPENVPN_NCP_DISABLE", config.ncpDisable ? protocols::openvpn::ncpDisableString : "" } });
-        vars.append({ { "$OPENVPN_CIPHER", config.cipher.isEmpty() ? protocols::openvpn::defaultCipher : config.cipher } });
-        vars.append({ { "$OPENVPN_HASH", config.hash.isEmpty() ? protocols::openvpn::defaultHash : config.hash } });
-        
-        vars.append({ { "$OPENVPN_TLS_AUTH", config.tlsAuth ? protocols::openvpn::tlsAuthString : "" } });
-        if (!config.tlsAuth) {
-            vars.append({ { "$OPENVPN_TA_KEY", "" } });
-        }
-        
-        vars.append({ { "$OPENVPN_ADDITIONAL_CLIENT_CONFIG", config.additionalClientConfig.isEmpty() ? protocols::openvpn::defaultAdditionalClientConfig : config.additionalClientConfig } });
-        vars.append({ { "$OPENVPN_ADDITIONAL_SERVER_CONFIG", config.additionalServerConfig.isEmpty() ? protocols::openvpn::defaultAdditionalServerConfig : config.additionalServerConfig } });
-    }
-    
-    return vars;
-}
-
-amnezia::ScriptVars amnezia::genXrayVars(const ContainerConfig &containerConfig)
-{
-    ScriptVars vars;
-    
-    if (auto* xrayProtocolConfig = containerConfig.getXrayProtocolConfig()) {
-        const XrayServerConfig& config = xrayProtocolConfig->serverConfig;
-        
-        vars.append({ { "$XRAY_SITE_NAME", config.site.isEmpty() ? protocols::xray::defaultSite : config.site } });
-        vars.append({ { "$XRAY_SERVER_PORT", config.port.isEmpty() ? protocols::xray::defaultPort : config.port } });
-    }
-    
     return vars;
 }
 
@@ -386,12 +321,6 @@ amnezia::ScriptVars amnezia::genProtocolVarsForContainer(DockerContainer contain
     Proto protocol = ContainerUtils::defaultProtocol(container);
 
     switch (protocol) {
-    case Proto::OpenVpn:
-        vars.append(genOpenVpnVars(containerConfig));
-        break;
-    case Proto::Xray:
-        vars.append(genXrayVars(containerConfig));
-        break;
     case Proto::WireGuard:
         vars.append(genWireGuardVars(containerConfig));
         break;

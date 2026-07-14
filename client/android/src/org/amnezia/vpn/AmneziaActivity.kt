@@ -580,7 +580,7 @@ class AmneziaActivity : QtActivity() {
             .setTitle(R.string.vpnSetupFailed)
             .setMessage(R.string.vpnSetupFailedMessage)
             .setNegativeButton(R.string.ok) { _, _ -> }
-            .setPositiveButton(R.string.openVpnSettings) { _, _ ->
+            .setPositiveButton(R.string.vpnSettings) { _, _ ->
                 startActivity(Intent(Settings.ACTION_VPN_SETTINGS))
             }
             .show()

@@ -6,7 +6,6 @@
 #include "core/configurators/configuratorBase.h"
 #include "core/utils/selfhosted/sshSession.h"
 #include "core/utils/qrCodeUtils.h"
-#include "core/utils/serialization/serialization.h"
 #include "core/utils/protocolEnum.h"
 #include "core/protocols/protocolUtils.h"
 #include "core/utils/constants/configKeys.h"
@@ -35,8 +34,13 @@ ExportController::ExportResult ExportController::generateFullAccessConfig(const 
         result.errorCode = ErrorCode::InternalError;
         return result;
     }
-    for (auto it = adminConfig->containers.begin(); it != adminConfig->containers.end(); ++it) {
+    for (auto it = adminConfig->containers.begin(); it != adminConfig->containers.end();) {
+        if (it.key() != DockerContainer::WireGuard && !ContainerUtils::isAwgContainer(it.key())) {
+            it = adminConfig->containers.erase(it);
+            continue;
+        }
         it.value().protocolConfig.clearClientConfig();
+        ++it;
     }
 
     QJsonObject serverJson = adminConfig->toJson();
@@ -156,45 +160,12 @@ ExportController::NativeConfigResult ExportController::generateNativeConfig(cons
     ExportSettings exportSettings = { { dns.first, dns.second } };
     ProtocolConfig processedConfig = configurator->processConfigWithExportSettings(exportSettings, newProtocolConfig);
 
-    if (protocol == Proto::OpenVpn || protocol == Proto::WireGuard || protocol == Proto::Awg) {
-        result.jsonNativeConfig[configKey::config] = processedConfig.nativeConfig();
-    } else {
-        result.jsonNativeConfig = QJsonDocument::fromJson(processedConfig.nativeConfig().toUtf8()).object();
+    result.jsonNativeConfig[configKey::config] = processedConfig.nativeConfig();
+
+    QString clientId = newProtocolConfig.clientId();
+    if (!clientId.isEmpty()) {
+        emit appendClientRequested(serverId, clientId, clientName, container);
     }
-
-    if (protocol == Proto::OpenVpn || protocol == Proto::WireGuard || protocol == Proto::Awg || protocol == Proto::Xray) {
-        QString clientId = newProtocolConfig.clientId();
-        if (!clientId.isEmpty()) {
-            emit appendClientRequested(serverId, clientId, clientName, container);
-        }
-    }
-    return result;
-}
-
-ExportController::ExportResult ExportController::generateOpenVpnConfig(const QString &serverId, const QString &clientName)
-{
-    ExportResult result;
-
-    DockerContainer container = DockerContainer::OpenVpn;
-    auto adminConfig = m_serversRepository->selfHostedAdminConfig(serverId);
-    if (!adminConfig.has_value()) {
-        result.errorCode = ErrorCode::InternalError;
-        return result;
-    }
-    ContainerConfig containerConfig = adminConfig->containerConfig(container);
-
-    auto nativeResult = generateNativeConfig(serverId, container, containerConfig, clientName);
-    if (nativeResult.errorCode != ErrorCode::NoError) {
-        result.errorCode = nativeResult.errorCode;
-        return result;
-    }
-
-    QStringList lines = nativeResult.jsonNativeConfig.value(configKey::config).toString().replace("\r", "").split("\n");
-    for (const QString &line : std::as_const(lines)) {
-        result.config.append(line + "\n");
-    }
-
-    result.qrCodes = generateQrCodesFromConfig(result.config.toUtf8());
     return result;
 }
 
@@ -229,6 +200,10 @@ ExportController::ExportResult ExportController::generateAwgConfig(const QString
     ExportResult result;
 
     DockerContainer container = static_cast<DockerContainer>(containerIndex);
+    if (container != DockerContainer::WireGuard && !ContainerUtils::isAwgContainer(container)) {
+        result.errorCode = ErrorCode::ImportInvalidConfigError;
+        return result;
+    }
     if (container != DockerContainer::Awg && container != DockerContainer::Awg2) {
         result.errorCode = ErrorCode::InternalError;
         return result;
@@ -255,92 +230,6 @@ ExportController::ExportResult ExportController::generateAwgConfig(const QString
     return result;
 }
 
-
-ExportController::ExportResult ExportController::generateXrayConfig(const QString &serverId, const QString &clientName)
-{
-    ExportResult result;
-
-    auto adminConfig = m_serversRepository->selfHostedAdminConfig(serverId);
-    if (!adminConfig.has_value()) {
-        result.errorCode = ErrorCode::InternalError;
-        return result;
-    }
-    ContainerConfig containerConfig = adminConfig->containerConfig(DockerContainer::Xray);
-
-    auto nativeResult = generateNativeConfig(serverId, DockerContainer::Xray, containerConfig, clientName);
-    if (nativeResult.errorCode != ErrorCode::NoError) {
-        result.errorCode = nativeResult.errorCode;
-        return result;
-    }
-
-    QStringList lines = QString(QJsonDocument(nativeResult.jsonNativeConfig).toJson()).replace("\r", "").split("\n");
-    for (const QString &line : std::as_const(lines)) {
-        result.config.append(line + "\n");
-    }
-
-    // Parse the Xray data to extract VLESS parameters and generate string
-    QJsonObject xrayConfig = nativeResult.jsonNativeConfig;
-    QJsonArray outbounds = xrayConfig.value(amnezia::protocols::xray::outbounds).toArray();
-
-    if (outbounds.isEmpty()) {
-        result.errorCode = ErrorCode::InternalError;
-        return result;
-    }
-
-    QJsonObject outbound = outbounds[0].toObject();
-    QJsonObject settings = outbound.value(amnezia::protocols::xray::settings).toObject();
-    QJsonObject streamSettings = outbound.value(amnezia::protocols::xray::streamSettings).toObject();
-
-    QJsonArray vnext = settings.value(amnezia::protocols::xray::vnext).toArray();
-    if (vnext.isEmpty()) {
-        result.errorCode = ErrorCode::InternalError;
-        return result;
-    }
-
-    QJsonObject server = vnext[0].toObject();
-    QJsonArray users = server.value(amnezia::protocols::xray::users).toArray();
-    if (users.isEmpty()) {
-        result.errorCode = ErrorCode::InternalError;
-        return result;
-    }
-
-    QJsonObject user = users[0].toObject();
-
-    amnezia::serialization::VlessServerObject vlessServer;
-    vlessServer.address = server.value(amnezia::protocols::xray::address).toString();
-    vlessServer.port = server.value(amnezia::protocols::xray::port).toInt();
-    vlessServer.id = user.value(amnezia::protocols::xray::id).toString();
-    vlessServer.flow = user.value(amnezia::protocols::xray::flow).toString("xtls-rprx-vision");
-    vlessServer.encryption = user.value(amnezia::protocols::xray::encryption).toString("none");
-
-    vlessServer.network = streamSettings.value(amnezia::protocols::xray::network).toString("tcp");
-    vlessServer.security = streamSettings.value(amnezia::protocols::xray::security).toString("reality");
-
-    if (vlessServer.security == "reality") {
-        QJsonObject realitySettings = streamSettings.value(amnezia::protocols::xray::realitySettings).toObject();
-        vlessServer.serverName = realitySettings.value(amnezia::protocols::xray::serverName).toString();
-        vlessServer.publicKey = realitySettings.value(amnezia::protocols::xray::publicKey).toString();
-        vlessServer.shortId = realitySettings.value(amnezia::protocols::xray::shortId).toString();
-        vlessServer.fingerprint = realitySettings.value(amnezia::protocols::xray::fingerprint).toString("chrome");
-        vlessServer.spiderX = realitySettings.value(amnezia::protocols::xray::spiderX).toString("");
-    } else if (vlessServer.security == "tls") {
-        QJsonObject tlsSettings = streamSettings.value("tlsSettings").toObject();
-        vlessServer.serverName = tlsSettings.value(amnezia::protocols::xray::serverName).toString();
-        vlessServer.fingerprint = tlsSettings.value(amnezia::protocols::xray::fingerprint).toString();
-        // alpn: serialize array back to comma-separated for VLESS URI
-        QJsonArray alpnArr = tlsSettings.value("alpn").toArray();
-        QStringList alpnList;
-        for (const QJsonValue &v : alpnArr) {
-            alpnList << v.toString();
-        }
-        // alpn goes into vless URI query param — handled by Serialize via serverName/alpn fields
-        // VlessServerObject doesn't have alpn field, so we embed in serverName if needed
-    }
-
-    result.nativeConfigString = amnezia::serialization::vless::Serialize(vlessServer, "AmneziaVPN");
-
-    return result;
-}
 
 void ExportController::updateClientManagementModel(const QString &serverId, int containerIndex)
 {

@@ -39,10 +39,7 @@ ListViewType {
                         }
                     }
 
-                    if (isIpsec) {
-                        InstallController.updateProtocols(ServersUiController.processedServerId, containerIndex)
-                        PageController.goToPage(PageEnum.PageProtocolRaw)
-                    } else if (isDns) {
+                    if (isDns) {
                         PageController.goToPage(PageEnum.PageServiceDnsSettings)
                     } else if (isMtProxy) {
                         MtProxyConfigModel.updateModel(config)

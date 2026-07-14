@@ -21,7 +21,6 @@ namespace
     namespace configKey
     {
         constexpr char awg[] = "awg";
-        constexpr char vless[] = "vless";
 
         constexpr char apiEndpoint[] = "api_endpoint";
         constexpr char accessToken[] = "api_key";
@@ -306,10 +305,8 @@ bool SubscriptionUiController::importFreeFromGateway()
         m_captchaState.userCountryCode = userCountryCode;
         m_captchaState.serviceType = serviceType;
         m_captchaState.serviceProtocol = serviceProtocol;
-        m_captchaState.openvpnPrivKey = protocolData.certPrivKey;
         m_captchaState.wireguardClientPrivKey = protocolData.wireGuardClientPrivKey;
         m_captchaState.wireguardClientPubKey = protocolData.wireGuardClientPubKey;
-        m_captchaState.xrayUuid = protocolData.xrayUuid;
         m_captchaState.isPending = true;
 
         emit captchaRequired(captchaInfo.captchaId, captchaInfo.captchaImageBase64,
@@ -328,10 +325,8 @@ void SubscriptionUiController::onCaptchaSolved(const QString &captchaId, const Q
     }
 
     SubscriptionController::ProtocolData protocolData;
-    protocolData.certPrivKey = m_captchaState.openvpnPrivKey;
     protocolData.wireGuardClientPrivKey = m_captchaState.wireguardClientPrivKey;
     protocolData.wireGuardClientPubKey = m_captchaState.wireguardClientPubKey;
-    protocolData.xrayUuid = m_captchaState.xrayUuid;
 
     SubscriptionController::CaptchaInfo retryCaptcha;
     ErrorCode errorCode = m_subscriptionController->resolveImportServiceCaptcha(
@@ -369,10 +364,8 @@ void SubscriptionUiController::onRefreshCaptchaRequested()
     }
 
     SubscriptionController::ProtocolData protocolData;
-    protocolData.certPrivKey = m_captchaState.openvpnPrivKey;
     protocolData.wireGuardClientPrivKey = m_captchaState.wireguardClientPrivKey;
     protocolData.wireGuardClientPubKey = m_captchaState.wireguardClientPubKey;
-    protocolData.xrayUuid = m_captchaState.xrayUuid;
 
     SubscriptionController::CaptchaInfo captchaInfo;
 
@@ -501,11 +494,6 @@ void SubscriptionUiController::setCurrentProtocol(const QString &serverId, const
     m_subscriptionController->setCurrentProtocol(serverId, protocolName);
 }
 
-
-bool SubscriptionUiController::isVlessProtocol(const QString &serverId)
-{
-    return m_subscriptionController->isVlessProtocol(serverId);
-}
 
 
 QString SubscriptionUiController::currentProtocol(const QString &serverId)

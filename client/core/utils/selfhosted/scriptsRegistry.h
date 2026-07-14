@@ -36,10 +36,8 @@ enum ProtocolScriptType {
     run_container,
     configure_container,
     container_startup,
-    openvpn_template,
     wireguard_template,
-    awg_template,
-    xray_template
+    awg_template
 };
 
 enum ClientScriptType {
@@ -62,8 +60,6 @@ ScriptVars genBaseVars(const ServerCredentials &credentials,
                        const QString &primaryDns,
                        const QString &secondaryDns);
 
-ScriptVars genOpenVpnVars(const ContainerConfig &containerConfig);
-ScriptVars genXrayVars(const ContainerConfig &containerConfig);
 ScriptVars genWireGuardVars(const ContainerConfig &containerConfig);
 ScriptVars genAwgVars(const ContainerConfig &containerConfig);
 ScriptVars genSftpVars(const ContainerConfig &containerConfig);

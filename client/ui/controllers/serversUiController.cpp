@@ -250,13 +250,6 @@ bool ServersUiController::isDefaultServerDefaultContainerHasSplitTunneling() con
             }
         }
         return false;
-    } else if (defaultContainer == DockerContainer::OpenVpn) {
-        if (const auto* ovpnConfig = containerConfig.getOpenVpnProtocolConfig()) {
-            if (ovpnConfig->hasClientConfig()) {
-                return !ovpnConfig->clientConfig->nativeConfig.isEmpty() 
-                    && !ovpnConfig->clientConfig->nativeConfig.contains("redirect-gateway");
-            }
-        }
     }
     return false;
 }
@@ -504,8 +497,6 @@ QStringList ServersUiController::getAllInstalledServicesName(int serverIndex) co
                 servicesName.append("DNS");
             } else if (container == DockerContainer::Sftp) {
                 servicesName.append("SFTP");
-            } else if (container == DockerContainer::TorWebSite) {
-                servicesName.append("TOR");
             } else if (container == DockerContainer::Socks5Proxy) {
                 servicesName.append("SOCKS5");
             } else if (container == DockerContainer::MtProxy) {

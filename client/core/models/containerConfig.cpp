@@ -73,26 +73,6 @@ const WireGuardProtocolConfig* ContainerConfig::getWireGuardProtocolConfig() con
     return protocolConfig.as<WireGuardProtocolConfig>();
 }
 
-OpenVpnProtocolConfig* ContainerConfig::getOpenVpnProtocolConfig()
-{
-    return protocolConfig.as<OpenVpnProtocolConfig>();
-}
-
-const OpenVpnProtocolConfig* ContainerConfig::getOpenVpnProtocolConfig() const
-{
-    return protocolConfig.as<OpenVpnProtocolConfig>();
-}
-
-XrayProtocolConfig* ContainerConfig::getXrayProtocolConfig()
-{
-    return protocolConfig.as<XrayProtocolConfig>();
-}
-
-const XrayProtocolConfig* ContainerConfig::getXrayProtocolConfig() const
-{
-    return protocolConfig.as<XrayProtocolConfig>();
-}
-
 SftpProtocolConfig* ContainerConfig::getSftpProtocolConfig()
 {
     return protocolConfig.as<SftpProtocolConfig>();
@@ -131,26 +111,6 @@ TelemtProtocolConfig* ContainerConfig::getTelemtProtocolConfig()
 const TelemtProtocolConfig* ContainerConfig::getTelemtProtocolConfig() const
 {
     return protocolConfig.as<TelemtProtocolConfig>();
-}
-
-Ikev2ProtocolConfig* ContainerConfig::getIkev2ProtocolConfig()
-{
-    return protocolConfig.as<Ikev2ProtocolConfig>();
-}
-
-const Ikev2ProtocolConfig* ContainerConfig::getIkev2ProtocolConfig() const
-{
-    return protocolConfig.as<Ikev2ProtocolConfig>();
-}
-
-TorProtocolConfig* ContainerConfig::getTorProtocolConfig()
-{
-    return protocolConfig.as<TorProtocolConfig>();
-}
-
-const TorProtocolConfig* ContainerConfig::getTorProtocolConfig() const
-{
-    return protocolConfig.as<TorProtocolConfig>();
 }
 
 DnsProtocolConfig* ContainerConfig::getDnsProtocolConfig()

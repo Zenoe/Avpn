@@ -20,11 +20,8 @@ class SubscriptionController
 public:
     struct ProtocolData
     {
-        QString certRequest;
-        QString certPrivKey;
         QString wireGuardClientPrivKey;
         QString wireGuardClientPubKey;
-        QString xrayUuid;
     };
 
     struct GatewayRequestData
@@ -85,7 +82,6 @@ public:
     bool removeServer(const QString &serverId);
 
     void setCurrentProtocol(const QString &serverId, const QString &protocolName);
-    bool isVlessProtocol(const QString &serverId) const;
     QString currentProtocol(const QString &serverId) const;
     QStringList availableProtocols(const QString &serverId) const;
 

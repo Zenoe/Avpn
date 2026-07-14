@@ -30,9 +30,6 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/installers/installerBase.h
     ${CLIENT_ROOT_DIR}/core/installers/awgInstaller.h
     ${CLIENT_ROOT_DIR}/core/installers/wireguardInstaller.h
-    ${CLIENT_ROOT_DIR}/core/installers/openvpnInstaller.h
-    ${CLIENT_ROOT_DIR}/core/installers/xrayInstaller.h
-    ${CLIENT_ROOT_DIR}/core/installers/torInstaller.h
     ${CLIENT_ROOT_DIR}/core/installers/sftpInstaller.h
     ${CLIENT_ROOT_DIR}/core/installers/socks5Installer.h
     ${CLIENT_ROOT_DIR}/core/installers/mtProxyInstaller.h
@@ -58,8 +55,6 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/utils/selfhosted/sshClient.h
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.h
     ${CLIENT_ROOT_DIR}/core/utils/payloadSender.h
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/serialization.h
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/transfer.h
     ${CLIENT_ROOT_DIR}/../common/logger/logger.h
     ${CLIENT_ROOT_DIR}/../common/crypto/cryptoUtils.h
     ${CLIENT_ROOT_DIR}/ui/utils/qmlUtils.h
@@ -110,9 +105,6 @@ set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/core/installers/installerBase.cpp
     ${CLIENT_ROOT_DIR}/core/installers/awgInstaller.cpp
     ${CLIENT_ROOT_DIR}/core/installers/wireguardInstaller.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/openvpnInstaller.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/xrayInstaller.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/torInstaller.cpp
     ${CLIENT_ROOT_DIR}/core/installers/sftpInstaller.cpp
     ${CLIENT_ROOT_DIR}/core/installers/socks5Installer.cpp
     ${CLIENT_ROOT_DIR}/core/installers/mtProxyInstaller.cpp
@@ -135,14 +127,6 @@ set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/core/utils/selfhosted/sshClient.cpp
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.cpp
     ${CLIENT_ROOT_DIR}/core/utils/payloadSender.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/outbound.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/inbound.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/ss.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/ssd.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/vless.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/trojan.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/vmess.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/serialization/vmess_new.cpp
     ${CLIENT_ROOT_DIR}/../common/logger/logger.cpp
     ${CLIENT_ROOT_DIR}/../common/crypto/cryptoUtils.cpp
     ${CLIENT_ROOT_DIR}/ui/utils/qmlUtils.cpp
@@ -198,23 +182,23 @@ set(COMMON_FILES_CPP
     ${CLIENT_ROOT_DIR}/vpnConnection.cpp
 )
 
-file(GLOB_RECURSE PAGE_LOGIC_H CONFIGURE_DEPENDS ${CLIENT_ROOT_DIR}/ui/pages_logic/*.h)
-file(GLOB_RECURSE PAGE_LOGIC_CPP CONFIGURE_DEPENDS ${CLIENT_ROOT_DIR}/ui/pages_logic/*.cpp)
+file(GLOB_RECURSE PAGE_LOGIC_H ${CLIENT_ROOT_DIR}/ui/pages_logic/*.h)
+file(GLOB_RECURSE PAGE_LOGIC_CPP ${CLIENT_ROOT_DIR}/ui/pages_logic/*.cpp)
 
-file(GLOB CONFIGURATORS_H CONFIGURE_DEPENDS ${CLIENT_ROOT_DIR}/core/configurators/*.h)
-file(GLOB CONFIGURATORS_CPP CONFIGURE_DEPENDS ${CLIENT_ROOT_DIR}/core/configurators/*.cpp)
+file(GLOB CONFIGURATORS_H ${CLIENT_ROOT_DIR}/core/configurators/*.h)
+file(GLOB CONFIGURATORS_CPP ${CLIENT_ROOT_DIR}/core/configurators/*.cpp)
 
-file(GLOB_RECURSE CORE_MODELS_H CONFIGURE_DEPENDS ${CLIENT_ROOT_DIR}/core/models/*.h)
-file(GLOB_RECURSE CORE_MODELS_CPP CONFIGURE_DEPENDS ${CLIENT_ROOT_DIR}/core/models/*.cpp)
+file(GLOB_RECURSE CORE_MODELS_H ${CLIENT_ROOT_DIR}/core/models/*.h)
+file(GLOB_RECURSE CORE_MODELS_CPP ${CLIENT_ROOT_DIR}/core/models/*.cpp)
 
-file(GLOB UI_MODELS_H CONFIGURE_DEPENDS
+file(GLOB UI_MODELS_H
     ${CLIENT_ROOT_DIR}/ui/models/*.h
     ${CLIENT_ROOT_DIR}/ui/models/protocols/*.h
     ${CLIENT_ROOT_DIR}/ui/models/services/*.h
     ${CLIENT_ROOT_DIR}/ui/models/utils/*.h
     ${CLIENT_ROOT_DIR}/ui/models/api/*.h
 )
-file(GLOB UI_MODELS_CPP CONFIGURE_DEPENDS
+file(GLOB UI_MODELS_CPP
     ${CLIENT_ROOT_DIR}/ui/models/*.cpp
     ${CLIENT_ROOT_DIR}/ui/models/protocols/*.cpp
     ${CLIENT_ROOT_DIR}/ui/models/services/*.cpp
@@ -222,13 +206,13 @@ file(GLOB UI_MODELS_CPP CONFIGURE_DEPENDS
     ${CLIENT_ROOT_DIR}/ui/models/api/*.cpp
 )
 
-file(GLOB UI_CONTROLLERS_H CONFIGURE_DEPENDS
+file(GLOB UI_CONTROLLERS_H
     ${CLIENT_ROOT_DIR}/ui/controllers/*.h
     ${CLIENT_ROOT_DIR}/ui/controllers/api/*.h
     ${CLIENT_ROOT_DIR}/ui/controllers/qml/*.h
     ${CLIENT_ROOT_DIR}/ui/controllers/selfhosted/*.h
 )
-file(GLOB UI_CONTROLLERS_CPP CONFIGURE_DEPENDS
+file(GLOB UI_CONTROLLERS_CPP
     ${CLIENT_ROOT_DIR}/ui/controllers/*.cpp
     ${CLIENT_ROOT_DIR}/ui/controllers/api/*.cpp
     ${CLIENT_ROOT_DIR}/ui/controllers/qml/*.cpp
@@ -253,14 +237,6 @@ set(SOURCES ${SOURCES}
 )
 
 if(WIN32)
-    set(HEADERS ${HEADERS}
-        ${CLIENT_ROOT_DIR}/core/protocols/ikev2VpnProtocolWindows.h
-    )
-
-    set(SOURCES ${SOURCES}
-        ${CLIENT_ROOT_DIR}/core/protocols/ikev2VpnProtocolWindows.cpp
-    )
-
     set(RESOURCES ${RESOURCES}
         ${CMAKE_CURRENT_BINARY_DIR}/amneziavpn.rc
     )
@@ -273,9 +249,7 @@ if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
     set(HEADERS ${HEADERS}
         ${CLIENT_ROOT_DIR}/core/utils/ipcClient.h
         ${CLIENT_ROOT_DIR}/ui/utils/systemTrayNotificationHandler.h
-        ${CLIENT_ROOT_DIR}/core/protocols/openVpnProtocol.h
         ${CLIENT_ROOT_DIR}/core/protocols/wireGuardProtocol.h
-        ${CLIENT_ROOT_DIR}/core/protocols/xrayProtocol.h
         ${CLIENT_ROOT_DIR}/core/protocols/awgProtocol.h
         ${CLIENT_ROOT_DIR}/mozilla/localsocketcontroller.h
     )
@@ -284,9 +258,7 @@ if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
         ${CLIENT_ROOT_DIR}/core/utils/ipcClient.cpp
         ${CLIENT_ROOT_DIR}/mozilla/localsocketcontroller.cpp
         ${CLIENT_ROOT_DIR}/ui/utils/systemTrayNotificationHandler.cpp
-        ${CLIENT_ROOT_DIR}/core/protocols/openVpnProtocol.cpp
         ${CLIENT_ROOT_DIR}/core/protocols/wireGuardProtocol.cpp
-        ${CLIENT_ROOT_DIR}/core/protocols/xrayProtocol.cpp
         ${CLIENT_ROOT_DIR}/core/protocols/awgProtocol.cpp
     )
 endif()

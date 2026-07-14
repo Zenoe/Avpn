@@ -257,29 +257,8 @@ install(SCRIPT ${QT_DEPLOY_SCRIPT}
 )
 
 if (APPLE AND NOT IOS AND NOT MACOS_NE)
-    list(APPEND OVPN_SCRIPTS "${CMAKE_SOURCE_DIR}/deploy/data/macos/update-resolv-conf.sh")
     set_target_properties(${PROJECT} PROPERTIES
         XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
         XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
-    )
-endif()
-if (LINUX AND NOT ANDROID)
-    list(APPEND OVPN_SCRIPTS "${CMAKE_SOURCE_DIR}/deploy/data/linux/update-resolv-conf.sh")
-endif()
-
-if(OVPN_SCRIPTS)
-    add_custom_command(TARGET ${PROJECT} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${OVPN_SCRIPTS}
-        "$<TARGET_FILE_DIR:${PROJECT}>"
-    )
-
-    install(FILES ${OVPN_SCRIPTS}
-        DESTINATION ${CMAKE_INSTALL_BINDIR}
-        COMPONENT AmneziaVPN
-        PERMISSIONS
-            OWNER_READ OWNER_EXECUTE
-            GROUP_READ GROUP_EXECUTE
-            WORLD_READ WORLD_EXECUTE
     )
 endif()

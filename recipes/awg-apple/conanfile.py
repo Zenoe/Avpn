@@ -1,7 +1,7 @@
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.layout import basic_layout
-from conan.tools.files import get, copy, collect_libs
+from conan.tools.files import get, copy, collect_libs, rm, replace_in_file
 from conan.tools.apple import is_apple_os
 from conan.tools.gnu import AutotoolsToolchain, Autotools
 
@@ -41,6 +41,11 @@ class AwgApple(ConanFile):
         get(self, f"https://github.com/amnezia-vpn/amneziawg-apple/archive/refs/tags/v{self.version}.zip",
             sha256="a04f49eac9f82bbf5dd9031bab188d44de2b3482efde1b6e970821de1d5a3c5d", strip_root=True
         )
+        go_dir = os.path.join(self.source_folder, "Sources", "WireGuardKitGo")
+        rm(self, "api-xray.go", go_dir)
+        go_mod = os.path.join(go_dir, "go.mod")
+        replace_in_file(self, go_mod, "\tgithub.com/amnezia-vpn/amnezia-libxray v0.0.1\n", "")
+        replace_in_file(self, go_mod, "\tgithub.com/amnezia-vpn/amnezia-xray-core v1.8.16\n", "")
 
     def generate(self):
         tc = AutotoolsToolchain(self)

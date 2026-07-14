@@ -21,10 +21,8 @@ PageType {
 
     enum ConfigType {
         AmneziaConnection,
-        OpenVpn,
         WireGuard,
-        Awg,
-        Xray
+        Awg
     }
 
     Connections {
@@ -53,13 +51,6 @@ PageType {
                 configFileName = "amnezia_config"
                 break;
             }
-            case PageShare.ConfigType.OpenVpn: {
-                ExportController.generateOpenVpnConfig(serverId, clientNameTextField.textField.text)
-                configCaption = qsTr("Save OpenVPN config")
-                configExtension = ".ovpn"
-                configFileName = "amnezia_for_openvpn"
-                break
-            }
             case PageShare.ConfigType.WireGuard: {
                 ExportController.generateWireGuardConfig(serverId, clientNameTextField.textField.text)
                 configCaption = qsTr("Save WireGuard config")
@@ -72,13 +63,6 @@ PageType {
                 configCaption = qsTr("Save AmneziaWG config")
                 configExtension = ".conf"
                 configFileName = "amnezia_for_awg"
-                break
-            }
-            case PageShare.ConfigType.Xray: {
-                ExportController.generateXrayConfig(serverId, clientNameTextField.textField.text)
-                configCaption = qsTr("Save XRay config")
-                configExtension = ".json"
-                configFileName = "amnezia_for_xray"
                 break
             }
             }
@@ -109,11 +93,6 @@ PageType {
         readonly property int type: PageShare.ConfigType.AmneziaConnection
     }
     QtObject {
-        id: openVpnConnectionFormat
-        readonly property string name: qsTr("OpenVPN native format")
-        readonly property int type: PageShare.ConfigType.OpenVpn
-    }
-    QtObject {
         id: wireGuardConnectionFormat
         readonly property string name: qsTr("WireGuard native format")
         readonly property int type: PageShare.ConfigType.WireGuard
@@ -122,11 +101,6 @@ PageType {
         id: awgConnectionFormat
         readonly property string name: qsTr("AmneziaWG native format")
         readonly property int type: PageShare.ConfigType.Awg
-    }
-    QtObject {
-        id: xrayConnectionFormat
-        readonly property string name: qsTr("XRay native format")
-        readonly property int type: PageShare.ConfigType.Xray
     }
 
     FlickableType {
@@ -447,16 +421,12 @@ PageType {
 
                         var index = proxyContainersModel.mapToSource(selectedIndex)
 
-                        if (index === ContainerProps.containerFromString("amnezia-openvpn")) {
-                            root.connectionTypesModel.push(openVpnConnectionFormat)
-                        } else if (index === ContainerProps.containerFromString("amnezia-wireguard")) {
+                        if (index === ContainerProps.containerFromString("amnezia-wireguard")) {
                             root.connectionTypesModel.push(wireGuardConnectionFormat)
                         } else if (index === ContainerProps.containerFromString("amnezia-awg")) {
                             root.connectionTypesModel.push(awgConnectionFormat)
                         } else if (index === ContainerProps.containerFromString("amnezia-awg2")) {
                             root.connectionTypesModel.push(awgConnectionFormat)
-                        } else if (index === ContainerProps.containerFromString("amnezia-xray")) {
-                            root.connectionTypesModel.push(xrayConnectionFormat)
                         }
                     }
                 }

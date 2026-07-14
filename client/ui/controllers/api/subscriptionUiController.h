@@ -56,7 +56,6 @@ public slots:
     void validateConfig();
 
     void setCurrentProtocol(const QString &serverId, const QString &protocolName);
-    bool isVlessProtocol(const QString &serverId);
     QString currentProtocol(const QString &serverId);
     QStringList availableProtocols(const QString &serverId);
 
@@ -101,10 +100,8 @@ private:
         QString userCountryCode;
         QString serviceType;
         QString serviceProtocol;
-        QString openvpnPrivKey;
         QString wireguardClientPrivKey;
         QString wireguardClientPubKey;
-        QString xrayUuid;
         bool isPending = false;
     } m_captchaState;
 

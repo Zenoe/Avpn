@@ -31,7 +31,6 @@ set(HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/router.h
     ${CMAKE_CURRENT_LIST_DIR}/killswitch.h
     ${CMAKE_CURRENT_LIST_DIR}/systemservice.h
-    ${CMAKE_CURRENT_LIST_DIR}/xray.h
     ${CMAKE_CURRENT_BINARY_DIR}/version.h
 )
 
@@ -48,7 +47,6 @@ set(SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/router.cpp
     ${CMAKE_CURRENT_LIST_DIR}/killswitch.cpp
     ${CMAKE_CURRENT_LIST_DIR}/systemservice.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xray.cpp
 )
 
 # Mozilla headres
@@ -128,7 +126,6 @@ if(WIN32)
     )
 
     set(HEADERS ${HEADERS}
-        ${CMAKE_CURRENT_LIST_DIR}/tapcontroller_win.h
         ${CMAKE_CURRENT_LIST_DIR}/router_win.h
         ${CMAKE_CURRENT_SOURCE_DIR}/../../client/platforms/windows/daemon/windowsdaemon.h
         ${CMAKE_CURRENT_SOURCE_DIR}/../../client/platforms/windows/daemon/windowsdaemontunnel.h
@@ -148,7 +145,6 @@ if(WIN32)
     )
 
     set(SOURCES ${SOURCES}
-        ${CMAKE_CURRENT_LIST_DIR}/tapcontroller_win.cpp
         ${CMAKE_CURRENT_LIST_DIR}/router_win.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/../../client/platforms/windows/daemon/windowsdaemon.cpp
@@ -291,9 +287,6 @@ add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${RESOURCES})
 target_link_libraries(${PROJECT} PRIVATE Qt6::Core Qt6::Widgets Qt6::Network Qt6::RemoteObjects Qt6::Core5Compat Qt6::DBus Qt6::Concurrent ${LIBS})
 target_compile_definitions(${PROJECT} PRIVATE "MZ_$<UPPER_CASE:${MZ_PLATFORM_NAME}>")
 
-find_package(amnezia-xray-bindings REQUIRED)
-target_link_libraries(${PROJECT} PRIVATE amnezia::xray-bindings)
-
 find_package(OpenSSL REQUIRED)
 target_link_libraries(${PROJECT} PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
@@ -349,15 +342,6 @@ else()
     list(APPEND CONAN_EXECS $<TARGET_FILE:amnezia::awg-go>)
 endif()
 
-find_package(openvpn REQUIRED)
-list(APPEND CONAN_EXECS $<TARGET_FILE:openvpn::openvpn>)
-
-find_package(tun2socks REQUIRED)
-list(APPEND CONAN_EXECS $<TARGET_FILE:xjasonlyu::tun2socks>)
-
-find_package(v2ray-rules-dat REQUIRED)
-list(APPEND CONAN_BINS ${GEOSITE_DAT_PATH} ${GEOIP_DAT_PATH})
-
 add_custom_command(TARGET ${PROJECT} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CONAN_EXECS} ${CONAN_BINS}
@@ -387,17 +371,6 @@ install(FILES ${CONAN_BINS}
 
 # install drivers
 if (WIN32)
-    find_package(tap-windows6 REQUIRED)
-    add_custom_command(TARGET ${PROJECT} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${TAP_WINDOWS6_BIN}"
-            "$<TARGET_FILE_DIR:${PROJECT}>/tap"
-    )
-    install(DIRECTORY "${TAP_WINDOWS6_BIN}/"
-        DESTINATION "${CMAKE_INSTALL_BINDIR}/tap"
-        COMPONENT AmneziaVPN
-    )
-
     find_package(win-split-tunnel REQUIRED)
     add_custom_command(TARGET ${PROJECT} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory

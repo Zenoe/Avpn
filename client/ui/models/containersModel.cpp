@@ -70,10 +70,8 @@ QVariant ContainersModel::data(const QModelIndex &index, int role) const
     case IsUnsupportedContainerRole: return ContainerUtils::isUnsupportedContainer(container);
     case IsVpnContainerRole: return ContainerUtils::containerService(container) == ServiceType::Vpn;
     case IsServiceContainerRole: return ContainerUtils::containerService(container) == ServiceType::Other;
-    case IsIpsecRole: return container == DockerContainer::Ipsec;
     case IsDnsRole: return container == DockerContainer::Dns;
     case IsSftpRole: return container == DockerContainer::Sftp;
-    case IsTorWebsiteRole: return container == DockerContainer::TorWebSite;
     case IsSocks5ProxyRole: return container == DockerContainer::Socks5Proxy;
     case IsMtProxyRole: return container == DockerContainer::MtProxy;
     case IsTelemtRole: return container == DockerContainer::Telemt;
@@ -184,10 +182,8 @@ QHash<int, QByteArray> ContainersModel::roleNames() const
     
     roles[IsVpnContainerRole] = "isVpnContainer";
     roles[IsServiceContainerRole] = "isServiceContainer";
-    roles[IsIpsecRole] = "isIpsec";
     roles[IsDnsRole] = "isDns";
     roles[IsSftpRole] = "isSftp";
-    roles[IsTorWebsiteRole] = "isTorWebsite";
     roles[IsSocks5ProxyRole] = "isSocks5Proxy";
     roles[IsMtProxyRole] = "isMtProxy";
     roles[IsTelemtRole] = "isTelemt";
