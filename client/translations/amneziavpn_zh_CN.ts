@@ -296,12 +296,12 @@ Can&apos;t be disabled for current server</source>
 <context>
     <name>IpSplitTunnelingController</name>
     <message>
-        <location filename="../core/controllers/ipSplitTunnelingController.cpp" line="198"/>
+        <location filename="../core/controllers/ipSplitTunnelingController.cpp" line="203"/>
         <source>Failed to parse JSON data: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/controllers/ipSplitTunnelingController.cpp" line="203"/>
+        <location filename="../core/controllers/ipSplitTunnelingController.cpp" line="208"/>
         <source>The JSON data is not an array</source>
         <translation type="unfinished"></translation>
     </message>
@@ -559,37 +559,32 @@ Can&apos;t be disabled for current server</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../ui/qml/Pages2/PageSettings.qml" line="117"/>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="116"/>
         <source>Servers</source>
         <translation>服务器</translation>
     </message>
     <message>
-        <location filename="../ui/qml/Pages2/PageSettings.qml" line="128"/>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="127"/>
         <source>Connection</source>
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../ui/qml/Pages2/PageSettings.qml" line="139"/>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="138"/>
         <source>Application</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../ui/qml/Pages2/PageSettings.qml" line="150"/>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="149"/>
         <source>News &amp; Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/qml/Pages2/PageSettings.qml" line="166"/>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="165"/>
         <source>Backup</source>
         <translation>备份</translation>
     </message>
     <message>
-        <location filename="../ui/qml/Pages2/PageSettings.qml" line="177"/>
-        <source>About AmneziaVPN</source>
-        <translation>关于</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettings.qml" line="188"/>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="176"/>
         <source>Dev console</source>
         <translation type="unfinished"></translation>
     </message>
@@ -597,94 +592,6 @@ Can&apos;t be disabled for current server</source>
         <location filename="../ui/qml/Pages2/PageSettings.qml" line="85"/>
         <source>Close application</source>
         <translation>关闭应用</translation>
-    </message>
-</context>
-<context>
-    <name>PageSettingsAbout</name>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="61"/>
-        <source>Support Amnezia</source>
-        <translation>支持Amnezia</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="76"/>
-        <source>Amnezia is a free and open-source application. You can support the developers if you like it.</source>
-        <translation>Amnezia 是一款免费的开源应用程序。 如果您喜欢的话可以支持开发者。</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="86"/>
-        <source>Contacts</source>
-        <translation>联系方式</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="189"/>
-        <source>Telegram group</source>
-        <translation>电报群</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="190"/>
-        <source>To discuss features</source>
-        <translation>用于功能讨论</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="193"/>
-        <source>https://t.me/amnezia_vpn_en</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="200"/>
-        <source>support@amnezia.org</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="201"/>
-        <source>For reviews and bug reports</source>
-        <translation>用于评论和提交软件的缺陷</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="204"/>
-        <source>mailto:support@amnezia.org</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="211"/>
-        <source>GitHub</source>
-        <translation>GitHub</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="212"/>
-        <source>Discover the source code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="215"/>
-        <source>https://github.com/amnezia-vpn/amnezia-client</source>
-        <translation>https://github.com/amnezia-vpn/amnezia-client</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="222"/>
-        <source>Website</source>
-        <translation>官网</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="223"/>
-        <source>Visit official website</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="119"/>
-        <source>Software version: %1</source>
-        <translation>软件版本: %1</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="149"/>
-        <source>Check for updates</source>
-        <translation>检查更新</translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="170"/>
-        <source>Privacy Policy</source>
-        <translation>隐私政策</translation>
     </message>
 </context>
 <context>
@@ -1203,7 +1110,7 @@ Can&apos;t be disabled for current server</source>
     <message>
         <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="200"/>
         <source>Remove </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">移除 </translation>
     </message>
     <message>
         <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="201"/>

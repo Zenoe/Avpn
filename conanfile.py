@@ -33,4 +33,3 @@ class AmneziaVPN(ConanFile):
             self.requires("awg-android/2.0.1")
 
         self.requires("openssl/3.6.2")
-        self.requires("zlib/1.3.2")

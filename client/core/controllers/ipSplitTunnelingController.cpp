@@ -1,6 +1,7 @@
 #include "ipSplitTunnelingController.h"
 #include "core/utils/networkUtilities.h"
 #include <QJsonObject>
+#include <QRegularExpression>
 
 IpSplitTunnelingController::IpSplitTunnelingController(SecureAppSettingsRepository* appSettingsRepository, QObject* parent)
     : QObject(parent),
@@ -140,12 +141,16 @@ void IpSplitTunnelingController::fillSites()
 
 QString IpSplitTunnelingController::normalizeHostname(const QString &hostname) const
 {
-    QString normalized = hostname;
-    normalized.replace("https://", "");
-    normalized.replace("http://", "");
-    normalized.replace("ftp://", "");
-    normalized = normalized.split("/", Qt::SkipEmptyParts).first();
-    return normalized;
+    QString normalized = hostname.trimmed();
+    normalized.remove(QRegularExpression(QStringLiteral("^(?:https?|ftp)://"),
+                                         QRegularExpression::CaseInsensitiveOption));
+
+    const qsizetype pathSeparator = normalized.indexOf('/');
+    if (pathSeparator >= 0) {
+        normalized.truncate(pathSeparator);
+    }
+
+    return normalized.trimmed();
 }
 
 bool IpSplitTunnelingController::validateHostname(const QString &hostname) const

@@ -391,22 +391,27 @@ void ServersUiController::setProcessedServerId(const QString &serverId)
 {
     const int newIndex = serverId.isEmpty() ? -1 : serverIndexForId(serverId);
     const QString normalizedServerId = newIndex >= 0 ? serverId : QString();
+    const bool serverChanged = m_processedServerId != normalizedServerId;
 
-    if (m_processedServerId != normalizedServerId) {
+    if (serverChanged) {
         m_processedServerId = normalizedServerId;
+    }
 
-        if (newIndex >= 0) {
-            if (isServerFromApi(m_processedServerId)) {
-                const auto &description = serverDescriptionById(m_processedServerId);
-                if (description.isApiV2 && description.isCountrySelectionAvailable
-                    && !description.apiAvailableCountries.isEmpty()) {
-                    emit updateApiCountryModel();
-                }
-            } else {
-                updateContainersModel();
+    if (newIndex >= 0) {
+        if (isServerFromApi(m_processedServerId)) {
+            const auto &description = serverDescriptionById(m_processedServerId);
+            if (serverChanged && description.isApiV2 && description.isCountrySelectionAvailable
+                && !description.apiAvailableCountries.isEmpty()) {
+                emit updateApiCountryModel();
             }
+        } else {
+            // The settings page can be reopened for the same server after another
+            // model used ContainersModel. Always reload the complete protocol list.
+            updateContainersModel();
         }
+    }
 
+    if (serverChanged) {
         emit processedServerIdChanged(m_processedServerId);
     }
 }

@@ -30,7 +30,6 @@ namespace PageLoader
         PageSettingsNewsNotifications,
         PageSettingsNewsDetail,
         PageSettingsBackup,
-        PageSettingsAbout,
         PageSettingsLogging,
         PageSettingsSplitTunneling,
         PageSettingsAppSplitTunneling,
