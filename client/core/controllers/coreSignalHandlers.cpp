@@ -3,7 +3,6 @@
 #include <QTimer>
 #include <QtConcurrent>
 
-#include "core/utils/selfhosted/sshSession.h"
 #include "core/utils/errorCodes.h"
 #include "core/utils/routeModes.h"
 #include "core/controllers/coreController.h"
@@ -19,7 +18,6 @@
 #include "ui/controllers/allowedDnsUiController.h"
 #include "ui/controllers/appSplitTunnelingUiController.h"
 #include "ui/controllers/languageUiController.h"
-#include "ui/controllers/selfhosted/installUiController.h"
 #include "ui/controllers/importUiController.h"
 #include "ui/controllers/api/subscriptionUiController.h"
 #include "ui/controllers/updateUiController.h"
@@ -27,12 +25,8 @@
 #include "core/controllers/serversController.h"
 #include "core/controllers/ipSplitTunnelingController.h"
 #include "core/controllers/appSplitTunnelingController.h"
-#include "core/controllers/selfhosted/usersController.h"
 #include "core/controllers/settingsController.h"
-#include "core/controllers/selfhosted/installController.h"
-#include "core/controllers/selfhosted/exportController.h"
 #include "core/controllers/connectionController.h"
-#include "ui/models/clientManagementModel.h"
 #include "ui/controllers/api/apiNewsUiController.h"
 #include "ui/models/containersModel.h"
 #include "core/utils/containerEnum.h"
@@ -61,19 +55,14 @@ void CoreSignalHandlers::initAllHandlers()
 {
     initErrorMessagesHandler();
     initSettingsSplitTunnelingHandler();
-    initInstallControllerHandler();
-    initExportControllerHandler();
     initImportControllerHandler();
     initApiCountryModelUpdateHandler();
     initSubscriptionRefreshHandler();
-    initAdminConfigRevokedHandler();
-    initPassphraseRequestHandler();
     initTranslationsUpdatedHandler();
     initLanguageHandler();
     initAutoConnectHandler();
     initAmneziaDnsToggledHandler();
     initServersModelUpdateHandler();
-    initClientManagementModelUpdateHandler();
     initSitesModelUpdateHandler();
     initAllowedDnsModelUpdateHandler();
     initAppSplitTunnelingModelUpdateHandler();
@@ -121,40 +110,6 @@ void CoreSignalHandlers::initSettingsSplitTunnelingHandler()
     });
 }
 
-void CoreSignalHandlers::initInstallControllerHandler()
-{
-    connect(m_coreController->m_installController, &InstallController::serverIsBusy, m_coreController->m_installUiController, &InstallUiController::serverIsBusy);
-    connect(m_coreController->m_installUiController, &InstallUiController::cancelInstallation, m_coreController->m_installController, &InstallController::cancelInstallation);
-    connect(m_coreController->m_serversUiController, &ServersUiController::processedServerIdChanged,
-        m_coreController->m_installUiController, [this](const QString &serverId) {
-        if (!serverId.isEmpty()) {
-            m_coreController->m_installUiController->clearProcessedServerCredentials();
-        }
-    });
-}
-
-void CoreSignalHandlers::initExportControllerHandler()
-{
-    connect(m_coreController->m_exportController, &ExportController::appendClientRequested, this,
-            [this](const QString &serverId, const QString &clientId, const QString &clientName, DockerContainer container) {
-                m_coreController->m_usersController->appendClient(serverId, clientId, clientName, container);
-            });
-    connect(m_coreController->m_exportController, &ExportController::updateClientsRequested, this,
-            [this](const QString &serverId, DockerContainer container) {
-                m_coreController->m_usersController->updateClients(serverId, container);
-            });
-    connect(m_coreController->m_exportController, &ExportController::revokeClientRequested, this,
-            [this](const QString &serverId, int row, DockerContainer container) {
-                QtConcurrent::run([this, serverId, row, container]() {
-                    m_coreController->m_usersController->revokeClient(serverId, row, container);
-                });
-            });
-    connect(m_coreController->m_exportController, &ExportController::renameClientRequested, this,
-            [this](const QString &serverId, int row, const QString &clientName, DockerContainer container) {
-                m_coreController->m_usersController->renameClient(serverId, row, clientName, container);
-            });
-}
-
 void CoreSignalHandlers::initImportControllerHandler()
 {
     connect(m_coreController->m_importCoreController, &ImportController::importFinished, this, [this]() {
@@ -199,32 +154,6 @@ void CoreSignalHandlers::initSubscriptionRefreshHandler()
             m_coreController->m_subscriptionUiController->getAccountInfo(defaultServerId, false);
         }
     });
-}
-
-void CoreSignalHandlers::initAdminConfigRevokedHandler()
-{
-    connect(m_coreController->m_installController, &InstallController::clientRevocationRequested, this,
-            [this](const QString &serverId, const ContainerConfig &containerConfig, DockerContainer container) {
-                QtConcurrent::run([this, serverId, containerConfig, container]() {
-                    m_coreController->m_usersController->revokeClient(serverId, containerConfig, container);
-                });
-            });
-
-    connect(m_coreController->m_installController, &InstallController::clientAppendRequested, this,
-            [this](const QString &serverId, const QString &clientId, const QString &clientName, DockerContainer container) {
-                m_coreController->m_usersController->appendClient(serverId, clientId, clientName, container);
-            }, Qt::DirectConnection);
-
-    connect(m_coreController->m_usersController, &UsersController::adminConfigRevoked, m_coreController->m_installController,
-            &InstallController::clearCachedProfile);
-}
-
-void CoreSignalHandlers::initPassphraseRequestHandler()
-{
-    connect(m_coreController->m_installUiController, &InstallUiController::passphraseRequestStarted, m_coreController->m_pageController,
-            &PageController::showPassphraseRequestDrawer);
-    connect(m_coreController->m_pageController, &PageController::passphraseRequestDrawerClosed, m_coreController->m_installUiController,
-            &InstallUiController::setEncryptedPassphrase);
 }
 
 void CoreSignalHandlers::initTranslationsUpdatedHandler()
@@ -284,16 +213,6 @@ void CoreSignalHandlers::initServersModelUpdateHandler()
     });
 }
 
-void CoreSignalHandlers::initClientManagementModelUpdateHandler()
-{
-    connect(m_coreController->m_usersController, &UsersController::clientsUpdated,
-            m_coreController->m_clientManagementModel, &ClientManagementModel::updateModel);
-    connect(m_coreController->m_usersController, &UsersController::clientRenamed,
-            m_coreController->m_clientManagementModel, &ClientManagementModel::updateClientName);
-    connect(m_coreController->m_usersController, &UsersController::revokeFinished,
-            m_coreController->m_exportController, &ExportController::revokeFinished);
-}
-
 void CoreSignalHandlers::initSitesModelUpdateHandler()
 {
     connect(m_coreController->m_appSettingsRepository, &SecureAppSettingsRepository::sitesChanged, m_coreController->m_ipSplitTunnelingUiController, &IpSplitTunnelingUiController::updateModel);
@@ -329,7 +248,7 @@ void CoreSignalHandlers::initPrepareConfigHandler()
         if (serverConfigUtils::isApiV2Subscription(kind) || serverConfigUtils::isLegacyApiSubscription(kind)) {
             m_coreController->m_subscriptionUiController->validateConfig();
         } else {
-            m_coreController->m_installUiController->validateConfig();
+            m_coreController->m_connectionUiController->openConnection();
         }
     });
 
@@ -342,14 +261,6 @@ void CoreSignalHandlers::initPrepareConfigHandler()
         m_coreController->m_connectionUiController->openConnection();
     });
 
-    connect(m_coreController->m_installUiController, &InstallUiController::configValidated, this, [this](bool isValid) {
-        if (!isValid) {
-            m_coreController->m_connectionController->setConnectionState(Vpn::ConnectionState::Disconnected);
-            return;
-        }
-
-        m_coreController->m_connectionUiController->openConnection();
-    });
 }
 
 void CoreSignalHandlers::initUnsupportedConnectDrawerHandler()

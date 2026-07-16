@@ -5,17 +5,16 @@
 
 using namespace amnezia;
 
-ConfiguratorBase::ConfiguratorBase(SshSession* sshSession, QObject *parent)
-    : QObject { parent }, m_sshSession(sshSession)
+ConfiguratorBase::ConfiguratorBase(QObject *parent)
+    : QObject { parent }
 {
 }
 
-QScopedPointer<ConfiguratorBase> ConfiguratorBase::create(Proto protocol,
-                                                          SshSession* sshSession)
+QScopedPointer<ConfiguratorBase> ConfiguratorBase::create(Proto protocol)
 {
     switch (protocol) {
-    case Proto::WireGuard: return QScopedPointer<ConfiguratorBase>(new WireguardConfigurator(sshSession, false));
-    case Proto::Awg: return QScopedPointer<ConfiguratorBase>(new AwgConfigurator(sshSession));
+    case Proto::WireGuard: return QScopedPointer<ConfiguratorBase>(new WireguardConfigurator(false));
+    case Proto::Awg: return QScopedPointer<ConfiguratorBase>(new AwgConfigurator());
     default: return QScopedPointer<ConfiguratorBase>();
     }
 }

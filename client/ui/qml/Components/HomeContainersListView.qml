@@ -44,9 +44,6 @@ ListViewType {
 
                 ButtonGroup.group: containersRadioButtonGroup
 
-                imageSource: "qrc:/images/controls/download.svg"
-                showImage: !isInstalled
-
                 checkable: isInstalled && !ConnectionController.isConnected
                 checked: proxyDefaultServerContainersModel.mapToSource(index) === ServersUiController.serverDefaultContainer(ServersUiController.defaultServerId)
 
@@ -57,13 +54,6 @@ ListViewType {
                     }
 
                     var containerIndex = proxyDefaultServerContainersModel.mapToSource(index)
-
-                    if (!isInstalled) {
-                        ServersUiController.processedContainerIndex = containerIndex
-                        PageController.goToPage(PageEnum.PageSetupWizardProtocolSettings)
-                        containersDropDown.closeTriggered()
-                        return
-                    }
 
                     containersDropDown.closeTriggered()
                     ServersUiController.setDefaultContainer(ServersUiController.defaultServerId, containerIndex)

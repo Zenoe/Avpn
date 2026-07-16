@@ -43,13 +43,19 @@ ServersUiController::ServersUiController(ServersController* serversController,
                                          ServersModel* serversModel,
                                          ContainersModel* containersModel,
                                          ContainersModel* defaultServerContainersModel,
+                                         ProtocolsModel* protocolsModel,
+                                         AwgConfigModel* awgConfigModel,
+                                         WireGuardConfigModel* wireGuardConfigModel,
                                          QObject *parent)
     : QObject(parent),
       m_serversController(serversController),
       m_settingsController(settingsController),
       m_serversModel(serversModel),
       m_containersModel(containersModel),
-      m_defaultServerContainersModel(defaultServerContainersModel)
+      m_defaultServerContainersModel(defaultServerContainersModel),
+      m_protocolsModel(protocolsModel),
+      m_awgConfigModel(awgConfigModel),
+      m_wireGuardConfigModel(wireGuardConfigModel)
 {
 }
 
@@ -67,6 +73,43 @@ void ServersUiController::removeServerAtIndex(int index)
     const QString serverId = getServerId(index);
     if (!serverId.isEmpty()) {
         removeServer(serverId);
+    }
+}
+
+void ServersUiController::openClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex)
+{
+    const DockerContainer container = static_cast<DockerContainer>(containerIndex);
+    ContainerConfig config = m_serversController->getContainerConfig(serverId, container);
+    config.container = container;
+    m_protocolsModel->updateModel(config);
+
+    switch (static_cast<Proto>(protocolIndex)) {
+    case Proto::Awg:
+        if (auto *protocol = config.getAwgProtocolConfig()) m_awgConfigModel->updateModel(container, *protocol);
+        break;
+    case Proto::WireGuard:
+        if (auto *protocol = config.getWireGuardProtocolConfig()) m_wireGuardConfigModel->updateModel(container, *protocol);
+        break;
+    default: break;
+    }
+}
+
+void ServersUiController::saveClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex)
+{
+    const DockerContainer container = static_cast<DockerContainer>(containerIndex);
+    ContainerConfig config;
+    config.container = container;
+    switch (static_cast<Proto>(protocolIndex)) {
+    case Proto::Awg: config.protocolConfig = m_awgConfigModel->getProtocolConfig(); break;
+    case Proto::WireGuard: config.protocolConfig = m_wireGuardConfigModel->getProtocolConfig(); break;
+    default: return;
+    }
+
+    if (m_serversController->updateClientConfig(serverId, container, config) == ErrorCode::NoError) {
+        m_protocolsModel->updateModel(config);
+        emit finished(tr("Settings updated successfully"));
+    } else {
+        emit errorOccurred(tr("Failed to update settings"));
     }
 }
 

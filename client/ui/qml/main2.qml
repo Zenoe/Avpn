@@ -362,7 +362,7 @@ Window  {
             }
 
             PageController.showBusyIndicator(true)
-            InstallController.removeServer(ServersUiController.defaultServerId)
+            ServersUiController.removeServer(ServersUiController.defaultServerId)
             PageController.showBusyIndicator(false)
         }
         let noButtonFunction = function() {

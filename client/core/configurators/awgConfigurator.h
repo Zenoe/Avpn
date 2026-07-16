@@ -9,12 +9,7 @@ class AwgConfigurator : public WireguardConfigurator
 {
     Q_OBJECT
 public:
-    AwgConfigurator(SshSession* sshSession, QObject *parent = nullptr);
-
-    amnezia::ProtocolConfig createConfig(const amnezia::ServerCredentials &credentials, amnezia::DockerContainer container,
-                                const amnezia::ContainerConfig &containerConfig,
-                                const amnezia::DnsSettings &dnsSettings,
-                                amnezia::ErrorCode &errorCode) override;
+    explicit AwgConfigurator(QObject *parent = nullptr);
 };
 
 #endif // AWGCONFIGURATOR_H

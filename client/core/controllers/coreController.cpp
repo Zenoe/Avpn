@@ -4,8 +4,6 @@
 #include <QTranslator>
 #include <QTimer>
 
-#include "core/utils/selfhosted/sshSession.h"
-#include "core/controllers/selfhosted/installController.h"
 #include "core/controllers/selfhosted/importController.h"
 #include "core/controllers/coreSignalHandlers.h"
 #include "logger.h"
@@ -95,9 +93,6 @@ void CoreController::initModels()
     m_telemtConfigModel = new TelemtConfigModel(this);
     setQmlContextProperty("TelemtConfigModel", m_telemtConfigModel);
 
-    m_clientManagementModel = new ClientManagementModel(this);
-    setQmlContextProperty("ClientManagementModel", m_clientManagementModel);
-
     m_apiCountryModel = new ApiCountryModel(this);
     setQmlContextProperty("ApiCountryModel", m_apiCountryModel);
 
@@ -125,15 +120,12 @@ void CoreController::initCoreControllers()
 {
     m_serversController = new ServersController(m_serversRepository, m_appSettingsRepository, this);
     m_appSplitTunnelingController = new AppSplitTunnelingController(m_appSettingsRepository);
-    m_usersController = new UsersController(m_serversRepository, this);
     m_ipSplitTunnelingController = new IpSplitTunnelingController(m_appSettingsRepository, this);
     m_allowedDnsController = new AllowedDnsController(m_appSettingsRepository);
     m_subscriptionController = new SubscriptionController(m_serversRepository, m_appSettingsRepository);
     m_newsController = new NewsController(m_appSettingsRepository, m_serversRepository);
     m_updateController = new UpdateController(m_appSettingsRepository, this);
     
-    m_installController = new InstallController(m_serversRepository, m_appSettingsRepository, this);
-    m_exportController = new ExportController(m_serversRepository, m_appSettingsRepository, this);
     m_importCoreController = new ImportController(m_serversRepository, m_appSettingsRepository, this);
     m_connectionController = new ConnectionController(m_serversRepository, m_appSettingsRepository, m_vpnConnection.get(), this);
     m_settingsController = new SettingsController(m_serversRepository, m_appSettingsRepository, this);
@@ -149,17 +141,8 @@ void CoreController::initControllers()
         setQmlContextProperty("FocusController", m_focusController);
     }
 
-    m_installUiController = new InstallUiController(m_installController, m_serversController, m_settingsController, m_protocolsModel, m_usersController,
-                                                     m_awgConfigModel, m_wireGuardConfigModel,
-                                                     m_sftpConfigModel, m_socks5ConfigModel, m_mtProxyConfigModel, m_telemtConfigModel,
-                                                     m_connectionController, this);
-    setQmlContextProperty("InstallController", m_installUiController);
-
     m_importController = new ImportUiController(m_importCoreController, this);
     setQmlContextProperty("ImportController", m_importController);
-
-    m_exportUiController = new ExportUiController(m_exportController, this);
-    setQmlContextProperty("ExportController", m_exportUiController);
 
     m_languageUiController = new LanguageUiController(m_settingsController, m_languageModel, this);
     setQmlContextProperty("LanguageUiController", m_languageUiController);
@@ -170,7 +153,9 @@ void CoreController::initControllers()
     m_pageController = new PageController(m_serversController, m_settingsController, this);
     setQmlContextProperty("PageController", m_pageController);
 
-    m_serversUiController = new ServersUiController(m_serversController, m_settingsController, m_serversModel, m_containersModel, m_defaultServerContainersModel, this);
+    m_serversUiController = new ServersUiController(m_serversController, m_settingsController, m_serversModel, m_containersModel,
+                                                    m_defaultServerContainersModel, m_protocolsModel, m_awgConfigModel,
+                                                    m_wireGuardConfigModel, this);
     setQmlContextProperty("ServersUiController", m_serversUiController);
 
     m_ipSplitTunnelingUiController = new IpSplitTunnelingUiController(m_ipSplitTunnelingController, m_ipSplitTunnelingModel, this);

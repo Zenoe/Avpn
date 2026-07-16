@@ -13,6 +13,9 @@
 #include "core/controllers/settingsController.h"
 #include "ui/models/serversModel.h"
 #include "ui/models/containersModel.h"
+#include "ui/models/protocolsModel.h"
+#include "ui/models/protocols/awgConfigModel.h"
+#include "ui/models/protocols/wireguardConfigModel.h"
 
 class ServersUiController : public QObject
 {
@@ -44,6 +47,9 @@ public:
                                  ServersModel* serversModel,
                                  ContainersModel* containersModel,
                                  ContainersModel* defaultServerContainersModel,
+                                 ProtocolsModel* protocolsModel,
+                                 AwgConfigModel* awgConfigModel,
+                                 WireGuardConfigModel* wireGuardConfigModel,
                                  QObject *parent = nullptr);
 
 public slots:
@@ -57,6 +63,8 @@ public slots:
 
     void setDefaultContainer(const QString &serverId, int containerIndex);
     void setDefaultContainerAtIndex(int index, int containerIndex);
+    void openClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex);
+    void saveClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex);
 
     void toggleAmneziaDns(bool enabled);
     void onDefaultServerChanged(const QString &defaultServerId);
@@ -131,6 +139,9 @@ private:
     ServersModel* m_serversModel;
     ContainersModel* m_containersModel;
     ContainersModel* m_defaultServerContainersModel;
+    ProtocolsModel* m_protocolsModel;
+    AwgConfigModel* m_awgConfigModel;
+    WireGuardConfigModel* m_wireGuardConfigModel;
 
     QVector<amnezia::ServerDescription> m_orderedServerDescriptions;
     

@@ -9,7 +9,6 @@
 #include "core/utils/serverConfigUtils.h"
 #include "core/utils/constants/apiKeys.h"
 #include "core/utils/constants/apiConstants.h"
-#include "core/utils/selfhosted/sshSession.h"
 #include "core/utils/networkUtilities.h"
 
 #if defined(Q_OS_IOS) || defined(MACOS_NE)

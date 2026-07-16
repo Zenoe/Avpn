@@ -15,28 +15,15 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/utils/constants/apiKeys.h
     ${CLIENT_ROOT_DIR}/core/utils/constants/apiConstants.h
     ${CLIENT_ROOT_DIR}/core/utils/errorStrings.h
-    ${CLIENT_ROOT_DIR}/core/utils/selfhosted/scriptsRegistry.h
     ${CLIENT_ROOT_DIR}/core/utils/qrCodeUtils.h
     ${CLIENT_ROOT_DIR}/core/controllers/coreController.h
     ${CLIENT_ROOT_DIR}/core/controllers/coreSignalHandlers.h
     ${CLIENT_ROOT_DIR}/core/controllers/gatewayController.h
-    ${CLIENT_ROOT_DIR}/core/utils/selfhosted/sshSession.h
     ${CLIENT_ROOT_DIR}/core/controllers/serversController.h
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/usersController.h
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/installController.h
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/exportController.h
     ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/importController.h
-    ${CLIENT_ROOT_DIR}/core/installers/installerBase.h
-    ${CLIENT_ROOT_DIR}/core/installers/awgInstaller.h
-    ${CLIENT_ROOT_DIR}/core/installers/wireguardInstaller.h
-    ${CLIENT_ROOT_DIR}/core/installers/sftpInstaller.h
-    ${CLIENT_ROOT_DIR}/core/installers/socks5Installer.h
-    ${CLIENT_ROOT_DIR}/core/installers/mtProxyInstaller.h
-    ${CLIENT_ROOT_DIR}/core/installers/telemtInstaller.h
     ${CLIENT_ROOT_DIR}/core/controllers/appSplitTunnelingController.h
     ${CLIENT_ROOT_DIR}/core/controllers/ipSplitTunnelingController.h
     ${CLIENT_ROOT_DIR}/core/controllers/allowedDnsController.h
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/exportController.h
     ${CLIENT_ROOT_DIR}/core/controllers/connectionController.h
     ${CLIENT_ROOT_DIR}/core/controllers/settingsController.h
     ${CLIENT_ROOT_DIR}/core/controllers/api/subscriptionController.h
@@ -50,7 +37,6 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/ui/utils/mtProxyPublicHostInput.h
     ${CLIENT_ROOT_DIR}/core/protocols/vpnProtocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/version.h
-    ${CLIENT_ROOT_DIR}/core/utils/selfhosted/sshClient.h
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.h
     ${CLIENT_ROOT_DIR}/core/utils/payloadSender.h
     ${CLIENT_ROOT_DIR}/../common/logger/logger.h
@@ -88,28 +74,15 @@ set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/core/utils/errorStrings.cpp
     ${CLIENT_ROOT_DIR}/core/utils/containers/containerUtils.cpp
     ${CLIENT_ROOT_DIR}/core/protocols/protocolUtils.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/selfhosted/scriptsRegistry.cpp
     ${CLIENT_ROOT_DIR}/core/utils/qrCodeUtils.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/coreController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/coreSignalHandlers.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/gatewayController.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/selfhosted/sshSession.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/serversController.cpp
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/usersController.cpp
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/installController.cpp
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/exportController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/importController.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/installerBase.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/awgInstaller.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/wireguardInstaller.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/sftpInstaller.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/socks5Installer.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/mtProxyInstaller.cpp
-    ${CLIENT_ROOT_DIR}/core/installers/telemtInstaller.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/appSplitTunnelingController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/ipSplitTunnelingController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/allowedDnsController.cpp
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/exportController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/connectionController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/settingsController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/api/subscriptionController.cpp
@@ -120,7 +93,6 @@ set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/ui/utils/qAutoStart.cpp
     ${CLIENT_ROOT_DIR}/ui/utils/mtProxyPublicHostInput.cpp
     ${CLIENT_ROOT_DIR}/core/protocols/vpnProtocol.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/selfhosted/sshClient.cpp
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.cpp
     ${CLIENT_ROOT_DIR}/core/utils/payloadSender.cpp
     ${CLIENT_ROOT_DIR}/../common/logger/logger.cpp

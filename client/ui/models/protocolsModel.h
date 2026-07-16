@@ -3,7 +3,6 @@
 
 #include <QAbstractListModel>
 
-#include "../controllers/qml/pageController.h"
 #include "core/models/containerConfig.h"
 
 class ProtocolsModel : public QAbstractListModel
@@ -12,8 +11,6 @@ class ProtocolsModel : public QAbstractListModel
 public:
     enum Roles {
         ProtocolNameRole = Qt::UserRole + 1,
-        ServerProtocolPageRole,
-        ClientProtocolPageRole,
         ProtocolIndexRole,
         ProtocolStringRole,
         RawConfigRole,
@@ -40,9 +37,7 @@ protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    PageLoader::PageEnum serverProtocolPage(Proto protocol) const;
-    PageLoader::PageEnum clientProtocolPage(Proto protocol) const;
-    Proto getProtocolType() const;
+    amnezia::Proto getProtocolType() const;
     QString getRawConfig() const;
     bool isClientProtocolExists() const;
 

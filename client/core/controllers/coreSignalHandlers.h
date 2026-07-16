@@ -16,19 +16,14 @@ public:
 private:
     void initErrorMessagesHandler();
     void initSettingsSplitTunnelingHandler();
-    void initInstallControllerHandler();
-    void initExportControllerHandler();
     void initImportControllerHandler();
     void initApiCountryModelUpdateHandler();
     void initSubscriptionRefreshHandler();
-    void initAdminConfigRevokedHandler();
-    void initPassphraseRequestHandler();
     void initTranslationsUpdatedHandler();
     void initLanguageHandler();
     void initAutoConnectHandler();
     void initAmneziaDnsToggledHandler();
     void initServersModelUpdateHandler();
-    void initClientManagementModelUpdateHandler();
     void initSitesModelUpdateHandler();
     void initAllowedDnsModelUpdateHandler();
     void initAppSplitTunnelingModelUpdateHandler();

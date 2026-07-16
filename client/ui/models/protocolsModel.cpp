@@ -9,7 +9,7 @@
 #include "core/models/protocols/awgProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
 
-using namespace ProtocolUtils;
+using namespace amnezia;
 
 ProtocolsModel::ProtocolsModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -27,8 +27,6 @@ QHash<int, QByteArray> ProtocolsModel::roleNames() const
     QHash<int, QByteArray> roles;
 
     roles[ProtocolNameRole] = "protocolName";
-    roles[ServerProtocolPageRole] = "serverProtocolPage";
-    roles[ClientProtocolPageRole] = "clientProtocolPage";
     roles[ProtocolIndexRole] = "protocolIndex";
     roles[ProtocolStringRole] = "protocolString";
     roles[RawConfigRole] = "rawConfig";
@@ -53,14 +51,10 @@ QVariant ProtocolsModel::data(const QModelIndex &index, int role) const
     
     switch (role) {
     case ProtocolNameRole: {
-        return ProtocolUtils::protocolHumanNames().value(proto);
+        return amnezia::ProtocolUtils::protocolHumanNames().value(proto);
     }
-    case ServerProtocolPageRole:
-        return static_cast<int>(serverProtocolPage(proto));
-    case ClientProtocolPageRole:
-        return static_cast<int>(clientProtocolPage(proto));
     case ProtocolIndexRole: return static_cast<int>(proto);
-    case ProtocolStringRole: return ProtocolUtils::protoToString(proto);
+    case ProtocolStringRole: return amnezia::ProtocolUtils::protoToString(proto);
     case IsWireGuardRole: return proto == Proto::WireGuard;
     case IsAwgRole: return proto == Proto::Awg;
     case IsSftpRole: return proto == Proto::Sftp;
@@ -83,7 +77,7 @@ void ProtocolsModel::updateModel(const amnezia::ContainerConfig &containerConfig
     endResetModel();
 }
 
-Proto ProtocolsModel::getProtocolType() const
+amnezia::Proto ProtocolsModel::getProtocolType() const
 {
     return m_containerConfig.getProtocolType();
 }
@@ -104,29 +98,4 @@ bool ProtocolsModel::isClientProtocolExists() const
 {
     return m_containerConfig.protocolConfig.hasClientConfig() && 
            !m_containerConfig.protocolConfig.nativeConfig().isEmpty();
-}
-
-PageLoader::PageEnum ProtocolsModel::serverProtocolPage(Proto protocol) const
-{
-    switch (protocol) {
-    case Proto::WireGuard: return PageLoader::PageEnum::PageProtocolWireGuardSettings;
-    case Proto::Awg: return PageLoader::PageEnum::PageProtocolAwgSettings;
-    
-    // non-vpn
-    case Proto::Dns: return PageLoader::PageEnum::PageServiceDnsSettings;
-    case Proto::Sftp: return PageLoader::PageEnum::PageServiceSftpSettings;
-    case Proto::Socks5Proxy: return PageLoader::PageEnum::PageServiceSocksProxySettings;
-    case Proto::MtProxy: return PageLoader::PageEnum::PageServiceMtProxySettings;
-    case Proto::Telemt: return PageLoader::PageEnum::PageServiceTelemtSettings;
-    default: return PageLoader::PageEnum::PageProtocolRaw;
-    }
-}
-
-PageLoader::PageEnum ProtocolsModel::clientProtocolPage(Proto protocol) const
-{
-    switch (protocol) {
-    case Proto::WireGuard: return PageLoader::PageEnum::PageProtocolWireGuardClientSettings;
-    case Proto::Awg: return PageLoader::PageEnum::PageProtocolAwgClientSettings;
-    default: return PageLoader::PageEnum::PageProtocolRaw;
-    }
 }

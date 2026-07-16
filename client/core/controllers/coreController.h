@@ -14,12 +14,9 @@
 #include "ui/controllers/appSplitTunnelingUiController.h"
 #include "ui/controllers/allowedDnsUiController.h"
 #include "ui/controllers/connectionUiController.h"
-#include "ui/controllers/selfhosted/exportUiController.h"
-#include "core/controllers/selfhosted/exportController.h"
 #include "ui/controllers/qml/focusController.h"
 #include "ui/controllers/importUiController.h"
 #include "core/controllers/selfhosted/importController.h"
-#include "ui/controllers/selfhosted/installUiController.h"
 #include "ui/controllers/qml/pageController.h"
 #include "ui/controllers/settingsUiController.h"
 #include "ui/controllers/serversUiController.h"
@@ -30,13 +27,11 @@
 #include "ui/controllers/networkReachabilityController.h"
 
 #include "core/controllers/serversController.h"
-#include "core/controllers/selfhosted/usersController.h"
 #include "core/controllers/appSplitTunnelingController.h"
 #include "core/controllers/ipSplitTunnelingController.h"
 #include "core/controllers/allowedDnsController.h"
 #include "core/controllers/api/subscriptionController.h"
 #include "core/controllers/api/newsController.h"
-#include "core/controllers/selfhosted/installController.h"
 #include "core/controllers/settingsController.h"
 #include "core/controllers/connectionController.h"
 #include "core/controllers/updateController.h"
@@ -52,7 +47,6 @@
 #include "ui/models/api/apiCountryModel.h"
 #include "ui/models/api/apiDevicesModel.h"
 #include "ui/models/appSplitTunnelingModel.h"
-#include "ui/models/clientManagementModel.h"
 #include "ui/models/protocols/awgConfigModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
 #include "ui/models/protocolsModel.h"
@@ -103,10 +97,7 @@ protected:
     IpSplitTunnelingModel* ipSplitTunnelingModelProtected() const { return m_ipSplitTunnelingModel; }
     LanguageModel* languageModelProtected() const { return m_languageModel; }
     ConnectionUiController* connectionUiControllerProtected() const { return m_connectionUiController; }
-    InstallUiController* installUiControllerProtected() const { return m_installUiController; }
     ImportController* importCoreControllerProtected() const { return m_importCoreController; }
-    ExportController* exportControllerProtected() const { return m_exportController; }
-    InstallController* installControllerProtected() const { return m_installController; }
     ServersController* serversControllerProtected() const { return m_serversController; }
     SettingsUiController* settingsUiControllerProtected() const { return m_settingsUiController; }
     SettingsController* settingsControllerProtected() const { return m_settingsController; }
@@ -148,10 +139,8 @@ private:
     ConnectionUiController* m_connectionUiController;
     FocusController* m_focusController;
     PageController* m_pageController;
-    InstallUiController* m_installUiController;
     ImportUiController* m_importController;
     ImportController* m_importCoreController;
-    ExportUiController* m_exportUiController;
     SettingsUiController* m_settingsUiController;
     ServersUiController* m_serversUiController;
     IpSplitTunnelingUiController* m_ipSplitTunnelingUiController;
@@ -167,15 +156,12 @@ private:
     
 
     ServersController* m_serversController;
-    UsersController* m_usersController;
     AppSplitTunnelingController* m_appSplitTunnelingController;
     IpSplitTunnelingController* m_ipSplitTunnelingController;
     AllowedDnsController* m_allowedDnsController;
     SubscriptionController* m_subscriptionController;
     NewsController* m_newsController;
     UpdateController* m_updateController;
-    InstallController* m_installController;
-    ExportController* m_exportController;
     ConnectionController* m_connectionController;
     SettingsController* m_settingsController;
 
@@ -188,7 +174,6 @@ private:
     NewsModel* m_newsModel;
     AllowedDnsModel* m_allowedDnsModel;
     AppSplitTunnelingModel* m_appSplitTunnelingModel;
-    ClientManagementModel* m_clientManagementModel;
 
     ApiCountryModel* m_apiCountryModel;
     ApiAccountInfoModel* m_apiAccountInfoModel;

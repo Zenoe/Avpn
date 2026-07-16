@@ -13,7 +13,6 @@
 #include "version.h"
 #include "core/controllers/gatewayController.h"
 #include "core/utils/constants/apiKeys.h"
-#include "core/utils/selfhosted/scriptsRegistry.h"
 
 namespace
 {
@@ -296,8 +295,14 @@ int UpdateController::runMacInstaller(const QString &installerPath)
         return -1;
     }
 
-    // Get script content from registry
-    QString scriptContent = amnezia::scriptData(amnezia::ClientScriptType::mac_installer);
+    QFile installerScript(":/client_scripts/mac_installer.sh");
+    if (!installerScript.open(QIODevice::ReadOnly)) {
+        logger.error() << "Failed to open bundled macOS installer script";
+        scriptFile.close();
+        return -1;
+    }
+    QString scriptContent = QString::fromUtf8(installerScript.readAll());
+    scriptContent.replace("\r", "");
     if (scriptContent.isEmpty()) {
         logger.error() << "macOS installer script content is empty";
         scriptFile.close();

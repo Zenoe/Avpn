@@ -1,6 +1,5 @@
 #include <QDebug>
 #include <QTimer>
-#include <libssh/libssh.h>
 
 #include "amneziaApplication.h"
 #include "core/utils/osSignalHandler.h"
@@ -45,11 +44,6 @@ int main(int argc, char *argv[])
 
     AmneziaApplication app(argc, argv);
     OsSignalHandler::setup();
-
-    ssh_init();
-    QObject::connect(&app, &QCoreApplication::aboutToQuit, []() {
-        ssh_finalize();
-    });
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(MACOS_NE)
     if (isAnotherInstanceRunning()) {

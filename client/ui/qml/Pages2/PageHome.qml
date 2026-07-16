@@ -520,11 +520,7 @@ PageType {
                             }
 
                             function updateContainersModelFilters() {
-                                if (ServersUiController.isServerHasWriteAccess(ServersUiController.defaultServerId)) {
-                                    proxyDefaultServerContainersModel.filters = ContainersModelFilters.getWriteAccessProtocolsListFilters()
-                                } else {
-                                    proxyDefaultServerContainersModel.filters = ContainersModelFilters.getReadAccessProtocolsListFilters()
-                                }
+                                proxyDefaultServerContainersModel.filters = ContainersModelFilters.getReadAccessProtocolsListFilters()
                             }
 
                             model: SortFilterProxyModel {

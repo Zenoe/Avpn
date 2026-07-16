@@ -35,26 +35,13 @@ PageType {
         }
 
         function onGoToPageSettings() {
-            tabBar.setCurrentIndex(2)
+            tabBar.setCurrentIndex(1)
             tabBarStackView.goToTabBarPage(PageEnum.PageSettings)
         }
 
         function onGoToPageViewConfig() {
             var pagePath = PageController.getPagePath(PageEnum.PageSetupWizardViewConfig)
             tabBarStackView.push(pagePath, { "objectName" : pagePath }, StackView.PushTransition)
-        }
-
-        function onGoToShareConnectionPage(headerText, configContentHeaderText, configCaption, configExtension, configFileName) {
-            var pagePath = PageController.getPagePath(PageEnum.PageShareConnection)
-            tabBarStackView.push(pagePath,
-                                 { "objectName" : pagePath,
-                                     "headerText" : headerText,
-                                     "configContentHeaderText" : configContentHeaderText,
-                                     "configCaption" : configCaption,
-                                     "configExtension" : configExtension,
-                                     "configFileName" : configFileName
-                                 },
-                                 StackView.PushTransition)
         }
 
         function onDisableControls(disabled) {
@@ -95,90 +82,12 @@ PageType {
             }
 
             var pageName = tabBarStackView.currentItem.objectName
-            if ((pageName === PageController.getPagePath(PageEnum.PageShare)) ||
-                    (pageName === PageController.getPagePath(PageEnum.PageSettings)) ||
+            if ((pageName === PageController.getPagePath(PageEnum.PageSettings)) ||
                     (pageName === PageController.getPagePath(PageEnum.PageSetupWizardConfigSource))) {
                 PageController.goToPageHome()
             } else {
                 PageController.closePage()
             }
-        }
-    }
-
-    Connections {
-        objectName: "connectionControllerConnections"
-
-        target: ConnectionController
-
-        function onNoInstalledContainers() {
-            PageController.setTriggeredByConnectButton(true)
-
-            ServersUiController.setProcessedServerId(ServersUiController.defaultServerId)
-            PageController.goToPage(PageEnum.PageSetupWizardEasy)
-        }
-    }
-
-    Connections {
-        objectName: "installControllerConnections"
-
-        target: InstallController
-
-        function onInstallationErrorOccurred(error) {
-            PageController.showBusyIndicator(false)
-
-            PageController.showErrorMessage(error)
-
-            var needCloseCurrentPage = false
-            var currentPageName = tabBarStackView.currentItem.objectName
-
-            if (currentPageName === PageController.getPagePath(PageEnum.PageSetupWizardInstalling)) {
-                needCloseCurrentPage = true
-            } else if (currentPageName === PageController.getPagePath(PageEnum.PageDeinstalling)) {
-                needCloseCurrentPage = true
-            }
-            if (needCloseCurrentPage) {
-                PageController.closePage()
-            }
-        }
-
-        function onWrongInstallationUser(message) {
-            onInstallationErrorOccurred(message)
-        }
-
-        function onUpdateContainerFinished(message, closePage) {
-            PageController.showNotificationMessage(message)
-            if (closePage) {
-                PageController.closePage()
-            }
-        }
-
-        function onCachedProfileCleared(message) {
-            PageController.showNotificationMessage(message)
-        }
-
-        function onRemoveServerFinished(finishedMessage) {
-            if (!ServersUiController.getServersCount()) {
-                PageController.goToPageHome()
-            } else {
-                PageController.goToStartPage()
-                PageController.goToPage(PageEnum.PageSettingsServersList)
-            }
-            PageController.showNotificationMessage(finishedMessage)
-        }
-
-        function onRemoveAllContainersFinished(finishedMessage) {
-            if (tabBarStackView.currentItem.objectName === PageController.getPagePath(PageEnum.PageDeinstalling)) {
-                PageController.closePage()
-            }
-            PageController.showNotificationMessage(finishedMessage)
-        }
-
-        function onRemoveContainerFinished(finishedMessage) {
-            if (tabBarStackView.currentItem.objectName === PageController.getPagePath(PageEnum.PageDeinstalling)) {
-                PageController.closePage()
-            }
-            PageController.closePage()
-            PageController.showNotificationMessage(finishedMessage)
         }
     }
 
@@ -367,37 +276,10 @@ PageType {
         }
 
         TabImageButtonType {
-            id: shareTabButton
-            objectName: "shareTabButton"
-
-            Connections {
-                target: ServersModel
-
-                function onModelReset() {
-                    if (!SettingsController.isOnTv()) {
-                        var hasServerWithWriteAccess = ServersUiController.hasServerWithWriteAccess()
-                        shareTabButton.visible = hasServerWithWriteAccess
-                        shareTabButton.width = hasServerWithWriteAccess ? undefined : 0
-                    }
-                }
-            }
-
-            visible: !SettingsController.isOnTv() && ServersUiController.hasServerWithWriteAccess()
-            width: !SettingsController.isOnTv() && ServersUiController.hasServerWithWriteAccess() ? undefined : 0
-
-            isSelected: tabBar.currentIndex === 1
-            image: "qrc:/images/controls/share-2.svg"
-            clickedFunc: function () {
-                tabBarStackView.goToTabBarPage(PageEnum.PageShare)
-                tabBar.currentIndex = 1
-            }
-        }
-
-        TabImageButtonType {
             id: settingsTabButton
             objectName: "settingsTabButton"
 
-            isSelected: tabBar.currentIndex === 2
+            isSelected: tabBar.currentIndex === 1
             image: (ServersUiController.hasServersFromGatewayApi && NewsModel.hasUnread && SettingsController.isNewsNotificationsEnabled()) ? "qrc:/images/controls/settings-news.svg" : "qrc:/images/controls/settings.svg"
             Binding {
                 target: settingsTabButton

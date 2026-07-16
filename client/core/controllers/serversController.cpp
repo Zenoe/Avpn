@@ -378,6 +378,35 @@ ServerCredentials ServersController::getServerCredentials(const QString &serverI
     return ServerCredentials {};
 }
 
+ErrorCode ServersController::updateClientConfig(const QString &serverId, DockerContainer container,
+                                                const ContainerConfig &newConfig)
+{
+    switch (m_serversRepository->serverKind(serverId)) {
+    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
+        auto config = m_serversRepository->selfHostedAdminConfig(serverId);
+        if (!config) return ErrorCode::InternalError;
+        config->updateContainerConfig(container, newConfig);
+        m_serversRepository->editServer(serverId, config->toJson(), serverConfigUtils::ConfigType::SelfHostedAdmin);
+        return ErrorCode::NoError;
+    }
+    case serverConfigUtils::ConfigType::SelfHostedUser: {
+        auto config = m_serversRepository->selfHostedUserConfig(serverId);
+        if (!config) return ErrorCode::InternalError;
+        config->updateContainerConfig(container, newConfig);
+        m_serversRepository->editServer(serverId, config->toJson(), serverConfigUtils::ConfigType::SelfHostedUser);
+        return ErrorCode::NoError;
+    }
+    case serverConfigUtils::ConfigType::Native: {
+        auto config = m_serversRepository->nativeConfig(serverId);
+        if (!config) return ErrorCode::InternalError;
+        config->updateContainerConfig(container, newConfig);
+        m_serversRepository->editServer(serverId, config->toJson(), serverConfigUtils::ConfigType::Native);
+        return ErrorCode::NoError;
+    }
+    default: return ErrorCode::InternalError;
+    }
+}
+
 bool ServersController::isServerFromApiAlreadyExists(const QString &userCountryCode, const QString &serviceType,
                                                       const QString &serviceProtocol) const
 {

@@ -5,7 +5,7 @@
 #include <QJsonArray>
 
 #include "core/utils/containerEnum.h"
-#include "core/utils/selfhosted/sshSession.h"
+#include "core/utils/commonStructs.h"
 #include "core/models/selfhosted/selfHostedAdminServerConfig.h"
 #include "core/models/selfhosted/selfHostedUserServerConfig.h"
 #include "core/models/selfhosted/nativeServerConfig.h"

@@ -102,14 +102,6 @@ Each component is distributed under its own license as linked below.
 
 ---
 
-## libssh
-
-- Source: https://www.libssh.org/
-- License: GNU Lesser General Public License (LGPL)
-- License Text: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-
----
-
 ## OpenVPNAdapter
 
 - Source: https://github.com/ss-abramchuk/OpenVPNAdapter

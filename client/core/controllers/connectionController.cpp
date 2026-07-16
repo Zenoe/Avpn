@@ -281,7 +281,7 @@ QJsonObject ConnectionController::createConnectionConfiguration(const QPair<QStr
         }
     };
 
-    auto configurator = ConfiguratorBase::create(proto, nullptr);
+    auto configurator = ConfiguratorBase::create(proto);
     ProtocolConfig processedConfig = configurator->processConfigWithLocalSettings(connectionSettings,
                                                                                   containerConfig.protocolConfig);
 

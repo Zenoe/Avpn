@@ -219,25 +219,12 @@ PageType {
     }
 
     property list<QtObject> variants: [
-        selfHostVpn,
         backupRestore,
         fileOpen,
         qrScan,
         siteLink
     ]
     
-    QtObject {
-        id: selfHostVpn
-
-        property string title: qsTr("Self-hosted VPN")
-        property string description: qsTr("Configure Amnezia VPN on your own server")
-        property string imageSource: "qrc:/images/controls/server.svg"
-        property bool isVisible: true
-        property var handler: function() {
-            PageController.goToPage(PageEnum.PageSetupWizardCredentials)
-        }
-    }
-
     QtObject {
         id: backupRestore
 

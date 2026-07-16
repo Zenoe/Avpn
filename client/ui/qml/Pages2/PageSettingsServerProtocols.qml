@@ -1,64 +1,51 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
-
 import SortFilterProxyModel 0.2
-
-import PageEnum 1.0
-import ContainerProps 1.0
 import ContainersModelFilters 1.0
-import Style 1.0
+import PageEnum 1.0
 
 import "./"
 import "../Controls2"
-import "../Controls2/TextTypes"
-import "../Config"
-import "../Components"
 
 PageType {
     id: root
 
-    property var installedProtocolsCount
-
-    function resetView() {
-        settingsContainersListView.positionViewAtBeginning()
-    }
-
-    SettingsContainersListView {
-        id: settingsContainersListView
-
+    ListViewType {
+        id: protocolsList
         anchors.fill: parent
 
-        Connections {
-            target: ServersUiController
-
-            function onProcessedServerIdChanged() {
-                settingsContainersListView.updateContainersModelFilters()
-            }
-        }
-
-        function updateContainersModelFilters() {
-            if (ServersUiController.isProcessedServerHasWriteAccess()) {
-                proxyContainersModel.filters = ContainersModelFilters.getWriteAccessProtocolsListFilters()
-            } else {
-                proxyContainersModel.filters = ContainersModelFilters.getReadAccessProtocolsListFilters()
-            }
-            root.installedProtocolsCount = proxyContainersModel.count
-        }
-
         model: SortFilterProxyModel {
-            id: proxyContainersModel
+            id: protocolsModel
             sourceModel: ContainersModel
-            sorters: [
-                RoleSorter { roleName: "isInstalled"; sortOrder: Qt.DescendingOrder },
-                RoleSorter { roleName: "installPageOrder"; sortOrder: Qt.AscendingOrder }
-            ]
+            filters: ContainersModelFilters.getReadAccessProtocolsListFilters()
         }
 
-        Component.onCompleted: {
-            settingsContainersListView.isFocusable = true
-            settingsContainersListView.interactive = true
-            updateContainersModelFilters()
+        delegate: ColumnLayout {
+            width: protocolsList.width
+
+            LabelWithButtonType {
+                readonly property bool isAwgProtocol: dockerContainer === 1 || dockerContainer === 2
+                readonly property bool isWireGuardProtocol: dockerContainer === 3
+                Layout.fillWidth: true
+                text: name
+                descriptionText: description
+                rightImageSource: (isAwgProtocol || isWireGuardProtocol) ? "qrc:/images/controls/chevron-right.svg" : ""
+
+                clickedFunction: function() {
+                    if (!isAwgProtocol && !isWireGuardProtocol) return
+                    var containerIndex = protocolsModel.mapToSource(index)
+                    ServersUiController.processedContainerIndex = containerIndex
+                    ServersUiController.openClientProtocolSettings(
+                                ServersUiController.processedServerId,
+                                containerIndex,
+                                isAwgProtocol ? 3 : 2)
+                    PageController.goToPage(isAwgProtocol
+                                            ? PageEnum.PageProtocolAwgClientSettings
+                                            : PageEnum.PageProtocolWireGuardClientSettings)
+                }
+            }
+
+            DividerType {}
         }
     }
 }

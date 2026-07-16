@@ -9,14 +9,12 @@
 #include "core/utils/errorCodes.h"
 #include "core/utils/routeModes.h"
 #include "core/utils/commonStructs.h"
-#include "core/utils/selfhosted/scriptsRegistry.h"
 
 class WireguardConfigurator : public ConfiguratorBase
 {
     Q_OBJECT
 public:
-    WireguardConfigurator(SshSession* sshSession,
-                          bool isAwg, QObject *parent = nullptr);
+    WireguardConfigurator(bool isAwg, QObject *parent = nullptr);
 
     struct ConnectionData
     {
@@ -29,11 +27,6 @@ public:
         QString port;
     };
 
-    amnezia::ProtocolConfig createConfig(const amnezia::ServerCredentials &credentials, amnezia::DockerContainer container,
-                                const amnezia::ContainerConfig &containerConfig,
-                                const amnezia::DnsSettings &dnsSettings,
-                                amnezia::ErrorCode &errorCode) override;
-
     amnezia::ProtocolConfig processConfigWithLocalSettings(const amnezia::ConnectionSettings &settings,
                                                            amnezia::ProtocolConfig protocolConfig) override;
     amnezia::ProtocolConfig processConfigWithExportSettings(const amnezia::ExportSettings &settings,
@@ -42,20 +35,7 @@ public:
     static ConnectionData genClientKeys();
 
 private:
-    QList<QHostAddress> getIpsFromConf(const QString &input);
-    ConnectionData prepareWireguardConfig(const amnezia::ServerCredentials &credentials, amnezia::DockerContainer container,
-                                          const amnezia::WireGuardServerConfig* serverConfig,
-                                          const amnezia::AwgServerConfig* awgServerConfig,
-                                          const amnezia::DnsSettings &dnsSettings,
-                                          amnezia::ErrorCode &errorCode);
-
     bool m_isAwg;
-    QString m_serverConfigPath;
-    QString m_serverPublicKeyPath;
-    QString m_serverPskKeyPath;
-    amnezia::ProtocolScriptType m_configTemplate;
-    QString m_protocolName;
-    QString m_defaultPort;
 };
 
 #endif // WIREGUARD_CONFIGURATOR_H

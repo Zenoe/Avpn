@@ -20,9 +20,6 @@
 #include "core/models/containerConfig.h"
 #include "core/models/serverDescription.h"
 
-class SshSession;
-class InstallController;
-
 using namespace amnezia;
 
 class ServersController : public QObject
@@ -57,6 +54,7 @@ public:
     QMap<DockerContainer, ContainerConfig> getServerContainersMap(const QString &serverId) const;
     DockerContainer getDefaultContainer(const QString &serverId) const;
     ContainerConfig getContainerConfig(const QString &serverId, DockerContainer container) const;
+    ErrorCode updateClientConfig(const QString &serverId, DockerContainer container, const ContainerConfig &config);
 
     // Validation
     bool isServerFromApiAlreadyExists(const QString &userCountryCode, const QString &serviceType, const QString &serviceProtocol) const;

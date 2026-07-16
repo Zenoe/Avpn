@@ -54,7 +54,6 @@ AmneziaVPN uses several open-source projects to work:
 - [OpenSSL](https://www.openssl.org/)
 - [OpenVPN](https://openvpn.net/)
 - [Qt](https://www.qt.io/)
-- [LibSsh](https://libssh.org)
 - [WireGuard](https://www.wireguard.com/)
 - [Xray-core](https://xtls.github.io/en/)
 - [Conan](https://conan.io/)

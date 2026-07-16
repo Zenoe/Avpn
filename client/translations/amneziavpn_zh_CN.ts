@@ -92,6 +92,68 @@
     </message>
 </context>
 <context>
+    <name>CaptchaDialogType</name>
+    <message>
+        <location filename="../ui/qml/Controls2/CaptchaDialogType.qml" line="18"/>
+        <source>Enter the digits from the image to continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/CaptchaDialogType.qml" line="199"/>
+        <source>Digits from the image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/CaptchaDialogType.qml" line="202"/>
+        <source>_ _ _ _ _ _</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/CaptchaDialogType.qml" line="224"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/CaptchaDialogType.qml" line="241"/>
+        <source>Close</source>
+        <translation type="unfinished">关闭</translation>
+    </message>
+</context>
+<context>
+    <name>ChangelogDrawer</name>
+    <message>
+        <location filename="../ui/qml/Components/ChangelogDrawer.qml" line="70"/>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/ChangelogDrawer.qml" line="96"/>
+        <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConnectButton</name>
+    <message>
+        <location filename="../ui/qml/Components/ConnectButton.qml" line="54"/>
+        <source>Unable to disconnect during configuration preparation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionTypeSelectionDrawer</name>
+    <message>
+        <location filename="../ui/qml/Components/ConnectionTypeSelectionDrawer.qml" line="36"/>
+        <source>Add new connection</source>
+        <translation>添加新连接</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/ConnectionTypeSelectionDrawer.qml" line="44"/>
+        <source>Open config file, key or QR code</source>
+        <translation>配置文件，授权码或二维码</translation>
+    </message>
+</context>
+<context>
     <name>ConnectionUiController</name>
     <message>
         <location filename="../ui/controllers/connectionUiController.cpp" line="58"/>
@@ -128,6 +190,84 @@
     </message>
 </context>
 <context>
+    <name>ContextMenuType</name>
+    <message>
+        <location filename="../ui/qml/Controls2/ContextMenuType.qml" line="41"/>
+        <source>C&amp;ut</source>
+        <translation>剪切</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/ContextMenuType.qml" line="46"/>
+        <source>&amp;Copy</source>
+        <translation>拷贝</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/ContextMenuType.qml" line="51"/>
+        <source>&amp;Paste</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/ContextMenuType.qml" line="58"/>
+        <source>&amp;SelectAll</source>
+        <translation>全选</translation>
+    </message>
+</context>
+<context>
+    <name>HomeContainersListView</name>
+    <message>
+        <location filename="../ui/qml/Components/HomeContainersListView.qml" line="52"/>
+        <source>Unable change protocol while there is an active connection</source>
+        <translation>已建立连接时无法更改服务器配置</translation>
+    </message>
+</context>
+<context>
+    <name>HomeSplitTunnelingDrawer</name>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="34"/>
+        <source>Split tunneling</source>
+        <translation>隧道分离</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="35"/>
+        <source>Allows you to connect to some sites or applications through a VPN connection and bypass others</source>
+        <translation>允许您通过 VPN 连接连接到某些站点或应用程序，并绕过其他站点或应用程序</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="45"/>
+        <source>Split tunneling on the server</source>
+        <translation>服务器上的分割隧道</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="46"/>
+        <source>Enabled 
+Can&apos;t be disabled for current server</source>
+        <translation>已启用 
+无法禁用当前服务器</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="64"/>
+        <source>Site-based split tunneling</source>
+        <translation>基于网站的隧道分离</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="65"/>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="84"/>
+        <source>Enabled</source>
+        <translation>开启</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="65"/>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="84"/>
+        <source>Disabled</source>
+        <translation>禁用</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/HomeSplitTunnelingDrawer.qml" line="83"/>
+        <source>App-based split tunneling</source>
+        <translation>基于应用的隧道分离</translation>
+    </message>
+</context>
+<context>
     <name>ImportUiController</name>
     <message>
         <location filename="../ui/controllers/importUiController.cpp" line="185"/>
@@ -136,73 +276,21 @@
     </message>
 </context>
 <context>
-    <name>InstallUiController</name>
+    <name>InstalledAppsDrawer</name>
     <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="105"/>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="147"/>
-        <source>%1 installed successfully. </source>
-        <translation type="unfinished">%1 安装成功。</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="107"/>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="149"/>
-        <source>%1 is already installed on the server. </source>
-        <translation type="unfinished">服务器上已经安装 %1。</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="111"/>
-        <source>
-Added containers that were already installed on the server</source>
-        <translation type="unfinished">添加已安装在服务器上的容器</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="153"/>
-        <source>
-Already installed containers were found on the server. All installed containers have been added to the application</source>
-        <translation type="unfinished">
-在服务上发现已经安装协议并添加至应用</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="249"/>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="287"/>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="311"/>
-        <source>Settings updated successfully</source>
-        <translation type="unfinished">配置更新成功</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="431"/>
-        <source>Server &apos;%1&apos; was rebooted</source>
-        <translation type="unfinished">服务器 &apos;%1&apos; 已重新启动</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="445"/>
-        <source>Server &apos;%1&apos; was removed</source>
-        <translation type="unfinished">已移除服务器 &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="454"/>
-        <source>All containers from server &apos;%1&apos; have been removed</source>
-        <translation type="unfinished">服务器 &apos;%1&apos; 的所有容器已移除</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="470"/>
-        <source>%1 has been removed from the server &apos;%2&apos;</source>
-        <translation type="unfinished">%1 已从服务器 &apos;%2&apos; 上移除</translation>
-    </message>
-    <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="485"/>
-        <source>%1 cached profile cleared</source>
+        <location filename="../ui/qml/Components/InstalledAppsDrawer.qml" line="57"/>
+        <source>Choose application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="539"/>
-        <source>Please login as the user</source>
-        <translation type="unfinished">请以用户身份登录</translation>
+        <location filename="../ui/qml/Components/InstalledAppsDrawer.qml" line="124"/>
+        <source>application name</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/controllers/selfhosted/installUiController.cpp" line="563"/>
-        <source>Server added successfully</source>
-        <translation type="unfinished">增加服务器成功</translation>
+        <location filename="../ui/qml/Components/InstalledAppsDrawer.qml" line="137"/>
+        <source>Add selected</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -252,106 +340,1825 @@ Already installed containers were found on the server. All installed containers 
     </message>
 </context>
 <context>
-    <name>NotificationHandler</name>
+    <name>MinMaxRowType</name>
     <message>
-        <location filename="../ui/utils/notificationHandler.cpp" line="57"/>
-        <location filename="../ui/utils/notificationHandler.cpp" line="64"/>
-        <source>AmneziaVPN</source>
+        <location filename="../ui/qml/Controls2/MinMaxRowType.qml" line="75"/>
+        <source>Min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Controls2/MinMaxRowType.qml" line="110"/>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageDevMenu</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageDevMenu.qml" line="60"/>
+        <source>Gateway endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageDevMenu.qml" line="77"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageDevMenu.qml" line="85"/>
+        <source>Settings saved</source>
+        <translation type="unfinished">配置已保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageDevMenu.qml" line="99"/>
+        <source>Dev gateway environment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageHome</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="119"/>
+        <source>Logging enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="147"/>
+        <source>Dev gateway enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="189"/>
+        <source>Split tunneling enabled</source>
+        <translation>用户分隔隧道已启用</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="189"/>
+        <source>Split tunneling disabled</source>
+        <translation>分隔隧道已禁用</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="451"/>
+        <source>Unable change protocol while trying to make an active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="455"/>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="661"/>
+        <source>Cannot change protocol during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="497"/>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="611"/>
+        <source>VPN protocol</source>
+        <translation>VPN协议</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageHome.qml" line="546"/>
+        <source>Servers</source>
+        <translation>服务器</translation>
+    </message>
+</context>
+<context>
+    <name>PageProtocolAwgClientSettings</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="56"/>
+        <source>AmneziaWG settings</source>
+        <translation type="unfinished">AmneziaWG 配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="80"/>
+        <source>MTU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="171"/>
+        <source>I1 - First special junk packet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="195"/>
+        <source>I2 - Second special junk packet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="219"/>
+        <source>I3 - Third special junk packet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="243"/>
+        <source>I4 - Fourth special junk packet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="267"/>
+        <source>I5 - Fifth special junk packet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="292"/>
+        <source>Server settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="303"/>
+        <source>Port</source>
+        <translation type="unfinished">端口</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="423"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="432"/>
+        <source>Save settings?</source>
+        <translation type="unfinished">保存设置？</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="433"/>
+        <source>Only the settings for this device will be changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="434"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="435"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolAwgClientSettings.qml" line="439"/>
+        <source>Unable change settings while there is an active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageProtocolWireGuardClientSettings</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="58"/>
+        <source>WG settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="68"/>
+        <source>MTU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="86"/>
+        <source>Server settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="98"/>
+        <source>Port</source>
+        <translation type="unfinished">端口</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="117"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="120"/>
+        <source>Save settings?</source>
+        <translation type="unfinished">保存设置？</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="121"/>
+        <source>Only the settings for this device will be changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="122"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="123"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageProtocolWireGuardClientSettings.qml" line="127"/>
+        <source>Unable change settings while there is an active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettings</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="48"/>
+        <source>Settings</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="117"/>
+        <source>Servers</source>
+        <translation>服务器</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="128"/>
+        <source>Connection</source>
+        <translation>连接</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="139"/>
+        <source>Application</source>
+        <translation>应用</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="150"/>
+        <source>News &amp; Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="166"/>
+        <source>Backup</source>
+        <translation>备份</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="177"/>
+        <source>About AmneziaVPN</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="188"/>
+        <source>Dev console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettings.qml" line="85"/>
+        <source>Close application</source>
+        <translation>关闭应用</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsAbout</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="61"/>
+        <source>Support Amnezia</source>
+        <translation>支持Amnezia</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="76"/>
+        <source>Amnezia is a free and open-source application. You can support the developers if you like it.</source>
+        <translation>Amnezia 是一款免费的开源应用程序。 如果您喜欢的话可以支持开发者。</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="86"/>
+        <source>Contacts</source>
+        <translation>联系方式</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="189"/>
+        <source>Telegram group</source>
+        <translation>电报群</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="190"/>
+        <source>To discuss features</source>
+        <translation>用于功能讨论</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="193"/>
+        <source>https://t.me/amnezia_vpn_en</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/utils/notificationHandler.cpp" line="58"/>
-        <source>VPN Connected</source>
-        <translation>已连接到VPN</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="200"/>
+        <source>support@amnezia.org</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/utils/notificationHandler.cpp" line="65"/>
-        <source>VPN Disconnected</source>
-        <translation>已从VPN断开</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="201"/>
+        <source>For reviews and bug reports</source>
+        <translation>用于评论和提交软件的缺陷</translation>
     </message>
     <message>
-        <location filename="../ui/utils/notificationHandler.cpp" line="88"/>
-        <source>AmneziaVPN notification</source>
-        <translation>AmneziaVPN 提示</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="204"/>
+        <source>mailto:support@amnezia.org</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/utils/notificationHandler.cpp" line="89"/>
-        <source>Unsecured network detected: </source>
-        <translation>发现不安全网络</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="211"/>
+        <source>GitHub</source>
+        <translation>GitHub</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="212"/>
+        <source>Discover the source code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="215"/>
+        <source>https://github.com/amnezia-vpn/amnezia-client</source>
+        <translation>https://github.com/amnezia-vpn/amnezia-client</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="222"/>
+        <source>Website</source>
+        <translation>官网</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="223"/>
+        <source>Visit official website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="119"/>
+        <source>Software version: %1</source>
+        <translation>软件版本: %1</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="149"/>
+        <source>Check for updates</source>
+        <translation>检查更新</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAbout.qml" line="170"/>
+        <source>Privacy Policy</source>
+        <translation>隐私政策</translation>
     </message>
 </context>
 <context>
-    <name>QKeychain::DeletePasswordJobPrivate</name>
+    <name>PageSettingsApiAvailableCountries</name>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="104"/>
-        <source>Password entry not found</source>
-        <translation>未发现秘密</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="147"/>
+        <source>Subscription expired</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="108"/>
-        <source>Could not decrypt data</source>
-        <translation>数据无法加密</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="147"/>
+        <source>Subscription expiring soon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="166"/>
+        <source>Renew subscription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="180"/>
+        <source>Location for connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="209"/>
+        <source>Unable change server location while trying to make an active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="213"/>
+        <source>Unable change server location while there is an active connection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>QKeychain::ReadPasswordJobPrivate</name>
+    <name>PageSettingsApiDevices</name>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="32"/>
-        <source>Password entry not found</source>
-        <translation>未发现密码</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="45"/>
+        <source>Active Devices</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="36"/>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="139"/>
-        <source>Could not decrypt data</source>
-        <translation>数据无法加密</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="46"/>
+        <source>Manage currently connected devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="55"/>
+        <source>You can find the identifier on the Support tab or, for older versions of the app, by tapping &apos;+&apos; and then the three dots at the top of the page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="69"/>
+        <source> (current device)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="70"/>
+        <source>Support tag: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="70"/>
+        <source>Last updated: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="75"/>
+        <source>Cannot unlink device during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="79"/>
+        <source>Are you sure you want to unlink this device?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="80"/>
+        <source>This will unlink the device from your subscription. You can reconnect it anytime by pressing&#xa0;&quot;Reload API config&quot; in subscription settings on device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="81"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="82"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
     </message>
 </context>
 <context>
-    <name>QKeychain::WritePasswordJobPrivate</name>
+    <name>PageSettingsApiInstructions</name>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="78"/>
-        <source>Credential size exceeds maximum size of %1</source>
-        <translation>证书大小超过上限，最大为: %1</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="22"/>
+        <source>Windows</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="87"/>
-        <source>Credential key exceeds maximum size of %1</source>
-        <translation>凭证密钥大小超过上限，最大为: %1</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="29"/>
+        <source>macOS</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="92"/>
-        <source>Writing credentials failed: Win32 error code %1</source>
-        <translation>写入凭证失败，Win32错误码: %1</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="36"/>
+        <source>Android</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../3rd/qtkeychain/qtkeychain/keychain_win.cpp" line="162"/>
-        <source>Encryption failed</source>
-        <translation>加密失败</translation>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="43"/>
+        <source>AndroidTV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="50"/>
+        <source>iOS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="57"/>
+        <source>Linux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="64"/>
+        <source>Routers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="23"/>
+        <source>documentation/instructions/connect-amnezia-premium#windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="30"/>
+        <source>documentation/instructions/connect-amnezia-premium#macos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="37"/>
+        <source>documentation/instructions/connect-amnezia-premium#android</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="44"/>
+        <source>documentation/instructions/android_tv_connect/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="51"/>
+        <source>documentation/instructions/connect-amnezia-premium#ios</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="58"/>
+        <source>documentation/instructions/connect-amnezia-premium#linux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="65"/>
+        <source>documentation/instructions/connect-amnezia-premium#routers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="101"/>
+        <source>How to connect on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiInstructions.qml" line="102"/>
+        <source>Setup guides on the Amnezia website</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsApiNativeConfigs</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="23"/>
+        <source>Save AmneziaVPN config</source>
+        <translation type="unfinished">保存配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="60"/>
+        <source>Configuration Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="61"/>
+        <source>For router setup or the AmneziaWG app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="73"/>
+        <source>The configuration needs to be reissued</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="135"/>
+        <source> configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="149"/>
+        <source>Generate a new configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="150"/>
+        <source>The previously created one will stop working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="168"/>
+        <source>Revoke the current configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="198"/>
+        <source>Config file saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="212"/>
+        <source>The config has been revoked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="219"/>
+        <source>Generate a new %1 configuration file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="221"/>
+        <source>Revoke the current %1 configuration file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="224"/>
+        <source>Your previous configuration file will no longer work, and it will not be possible to connect using it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="225"/>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="225"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiNativeConfigs.qml" line="226"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsApiServerInfo</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="29"/>
+        <source>Subscription Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="38"/>
+        <source>Valid Until</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="47"/>
+        <source>Active Connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="158"/>
+        <source>Subscription expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="159"/>
+        <source>Subscription expiring soon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="189"/>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="254"/>
+        <source>Renew subscription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="277"/>
+        <source>Configurations have been updated for some countries. Download and install the updated configuration files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="298"/>
+        <source>Subscription Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="320"/>
+        <source>Configuration Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="322"/>
+        <source>Manage configuration files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="340"/>
+        <source>Active Devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="342"/>
+        <source>Manage currently connected devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="359"/>
+        <source>Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="374"/>
+        <source>How to connect on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="399"/>
+        <source>Reload API config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="402"/>
+        <source>Reload API config?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="403"/>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="441"/>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="478"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="404"/>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="442"/>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="479"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="408"/>
+        <source>Cannot reload API config during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="436"/>
+        <source>Unlink this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="439"/>
+        <source>Are you sure you want to unlink this device?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="440"/>
+        <source>This will unlink the device from your subscription. You can reconnect it anytime by pressing&#xa0;&quot;Reload API config&quot; in subscription settings on device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="446"/>
+        <source>Cannot unlink device during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="474"/>
+        <source>Remove from application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="477"/>
+        <source>Remove from application?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiServerInfo.qml" line="483"/>
+        <source>Cannot remove server during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsApiSubscriptionKey</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="93"/>
+        <source>Copy key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="98"/>
+        <source>Copied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="114"/>
+        <source>Save key as a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="121"/>
+        <source>Save AmneziaVPN config</source>
+        <translation type="unfinished">保存配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="122"/>
+        <source>Config files (*.vpn)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="133"/>
+        <source>Config file saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="150"/>
+        <source>Show key text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSubscriptionKey.qml" line="191"/>
+        <source>To read the QR code in the Amnezia app, tap + in the main menu → &apos;QR code&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsApiSupport</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="22"/>
+        <source>Telegram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="30"/>
+        <source>Email</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="38"/>
+        <source>Email Billing &amp; Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="46"/>
+        <source>Website</source>
+        <translation type="unfinished">官网</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="81"/>
+        <source>Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="82"/>
+        <source>Our technical support specialists are available to assist you at any time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="110"/>
+        <source>Support tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApiSupport.qml" line="120"/>
+        <source>Copied</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsAppSplitTunneling</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="27"/>
+        <source>Cannot change split tunneling settings during active connection</source>
+        <translation type="unfinished">无法在活动连接期间更改分割隧道设置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="49"/>
+        <source>Only the apps from the list should have access via VPN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="56"/>
+        <source>Apps from the list should not have access via VPN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="87"/>
+        <source>App split tunneling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="112"/>
+        <source>Mode</source>
+        <translation type="unfinished">规则</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="154"/>
+        <source>Only &quot;Apps from the list should not have access via VPN&quot; mode is available on Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="200"/>
+        <source>Remove </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="201"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="202"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="245"/>
+        <source>application name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="255"/>
+        <source>Open executable file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsAppSplitTunneling.qml" line="256"/>
+        <source>Executable files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsApplication</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="48"/>
+        <source>Application</source>
+        <translation>应用</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="66"/>
+        <source>Allow application screenshots</source>
+        <translation>允许截屏</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="87"/>
+        <source>Enable notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="88"/>
+        <source>Enable notifications to show the VPN state in the status bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="108"/>
+        <source>Auto start</source>
+        <translation>自动运行</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="109"/>
+        <source>Launch the application every time the device is starts</source>
+        <translation>每次设备启动时启动应用程序</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="131"/>
+        <source>Auto connect</source>
+        <translation>自动连接</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="132"/>
+        <source>Connect to VPN on app start</source>
+        <translation>应用开启时连接VPN</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="154"/>
+        <source>Start minimized</source>
+        <translation>最小化</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="155"/>
+        <source>Launch application minimized (works with autostart option turned on)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="180"/>
+        <source>News Notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="181"/>
+        <source>Show a notification icon for unread news</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="205"/>
+        <source>Language</source>
+        <translation>语言</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="221"/>
+        <source>Logging</source>
+        <translation>日志</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="222"/>
+        <source>Enabled</source>
+        <translation>开启</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="222"/>
+        <source>Disabled</source>
+        <translation>禁用</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="237"/>
+        <source>Reset settings and remove all data from the application</source>
+        <translation>重置并清理应用的所有数据</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="242"/>
+        <source>Reset settings and remove all data from the application?</source>
+        <translation>重置并清理应用的所有数据？</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="243"/>
+        <source>All settings will be reset to default. All installed AmneziaVPN services will still remain on the server.</source>
+        <translation>所有配置恢复为默认值。服务器已安装的AmneziaVPN服务将被保留。</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="244"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="245"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsApplication.qml" line="249"/>
+        <source>Cannot reset settings during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsBackup</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="26"/>
+        <source>Settings restored from backup file</source>
+        <translation>从备份文件还原配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="69"/>
+        <source>Back up your configuration</source>
+        <translation>备份您的配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="70"/>
+        <source>You can save your settings to a backup file to restore them the next time you install the application.</source>
+        <translation>您可以将配置信息备份到文件中，以便在下次安装应用软件时恢复配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="88"/>
+        <source>The backup will contain your passwords and private keys for all servers added to AmneziaVPN. Keep this information in a secure place.</source>
+        <translation>备份将包含您添加到 AmneziaVPN 的所有服务器的密码和私钥。请将这些信息保存在安全的地方。</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="102"/>
+        <source>Make a backup</source>
+        <translation>进行备份</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="109"/>
+        <source>Save backup file</source>
+        <translation>保存备份</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="110"/>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="148"/>
+        <source>Backup files (*.backup)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="119"/>
+        <source>Backup file saved</source>
+        <translation>备份文件已保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="141"/>
+        <source>Restore from backup</source>
+        <translation>从备份还原</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="147"/>
+        <source>Open backup file</source>
+        <translation>打开备份文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="162"/>
+        <source>Import settings from a backup file?</source>
+        <translation>从备份文件导入设置？</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="163"/>
+        <source>All current settings will be reset</source>
+        <translation>当前所有设置将重置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="164"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="165"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsBackup.qml" line="169"/>
+        <source>Cannot restore backup settings during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsConnection</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="49"/>
+        <source>Connection</source>
+        <translation>连接</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="84"/>
+        <source>When AmneziaDNS is not used or installed</source>
+        <translation>当未使用或未安装AmneziaDNS时</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="124"/>
+        <source>Allows you to use the VPN only for certain Apps</source>
+        <translation>只允许在某些应用程序中使用 VPN</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="142"/>
+        <source>KillSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="143"/>
+        <source>Blocks network connections without VPN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="65"/>
+        <source>Use AmneziaDNS</source>
+        <translation>使用AmneziaDNS</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="66"/>
+        <source>If AmneziaDNS is installed on the server</source>
+        <translation>如果已在服务器安装AmneziaDNS</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="83"/>
+        <source>DNS servers</source>
+        <translation>DNS服务器</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="99"/>
+        <source>Site-based split tunneling</source>
+        <translation>基于网站的隧道分离</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="100"/>
+        <source>Allows you to select which sites you want to access through the VPN</source>
+        <translation>配置想要通过VPN访问网站</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsConnection.qml" line="123"/>
+        <source>App-based split tunneling</source>
+        <translation>基于应用的隧道分离</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsDns</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="46"/>
+        <source>Default server does not support custom DNS</source>
+        <translation>默认服务器不支持自定义 DNS</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="59"/>
+        <source>DNS servers</source>
+        <translation>DNS服务器</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="67"/>
+        <source>If AmneziaDNS is not used or installed</source>
+        <translation>如果未使用或未安装AmneziaDNS</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="84"/>
+        <source>Primary DNS</source>
+        <translation>首选 DNS</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="99"/>
+        <source>Secondary DNS</source>
+        <translation>备用 DNS</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="122"/>
+        <source>Restore default</source>
+        <translation>恢复默认配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="125"/>
+        <source>Restore default DNS settings?</source>
+        <translation>是否恢复默认DNS配置？</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="126"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="127"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="134"/>
+        <source>Settings have been reset</source>
+        <translation>已重置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="149"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="153"/>
+        <source>Primary DNS cannot be empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsDns.qml" line="165"/>
+        <source>Settings saved</source>
+        <translation>配置已保存</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsKillSwitch</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="40"/>
+        <source>KillSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="41"/>
+        <source>Enable to ensure network traffic goes through a secure VPN tunnel, preventing accidental exposure of your IP and DNS queries if the connection drops</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="52"/>
+        <source>KillSwitch settings cannot be changed during an active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="68"/>
+        <source>Soft KillSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="69"/>
+        <source>Internet access is blocked if the VPN disconnects unexpectedly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="92"/>
+        <source>Strict KillSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="93"/>
+        <source>Internet connection is blocked even when VPN is turned off manually or hasn&apos;t started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="96"/>
+        <source>Just a little heads-up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="97"/>
+        <source>If the VPN disconnects or drops while Strict KillSwitch is enabled, internet access will be blocked. To restore access, reconnect VPN or disable/change the KillSwitch.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="98"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="99"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="123"/>
+        <source>DNS Exceptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitch.qml" line="124"/>
+        <source>DNS servers listed here will remain accessible when KillSwitch is active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsKillSwitchExceptions</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="44"/>
+        <source>DNS Exceptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="45"/>
+        <source>DNS servers listed here will remain accessible when KillSwitch is active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="105"/>
+        <source>Delete </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="106"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="107"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="137"/>
+        <source>IPv4 address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="167"/>
+        <source>Import / Export addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="174"/>
+        <source>Import</source>
+        <translation type="unfinished">导入</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="187"/>
+        <source>Save address list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="194"/>
+        <source>Save addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="195"/>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="265"/>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="281"/>
+        <source>Address files (*.json)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="254"/>
+        <source>Import address list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="261"/>
+        <source>Replace address list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="264"/>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="280"/>
+        <source>Open address file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsKillSwitchExceptions.qml" line="277"/>
+        <source>Add imported addresses to existing ones</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsLogging</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="50"/>
+        <source>Logging</source>
+        <translation>日志</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="51"/>
+        <source>Enabling this function will save application&apos;s logs automatically. By default, logging functionality is disabled. Enable log saving in case of application malfunction.</source>
+        <translation>默认情况下，日志功能是禁用的。如果应用程序出现故障，则启用日志保存功能。</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="192"/>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="218"/>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="193"/>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="219"/>
+        <source>Logs files (*.log)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="202"/>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="227"/>
+        <source>Logs file saved</source>
+        <translation>日志文件已保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="63"/>
+        <source>Enable logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="85"/>
+        <source>Clear logs?</source>
+        <translation>清理日志？</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="86"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="87"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="93"/>
+        <source>Logs have been cleaned up</source>
+        <translation>日志已清理</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="181"/>
+        <source>Client logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="182"/>
+        <source>AmneziaVPN logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="143"/>
+        <source>Open logs folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="157"/>
+        <source>Export logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="210"/>
+        <source>Service logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="211"/>
+        <source>AmneziaVPN-service logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsLogging.qml" line="80"/>
+        <source>Clear logs</source>
+        <translation>清理日志</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsNewsDetail</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsNewsDetail.qml" line="87"/>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsNewsDetail.qml" line="112"/>
+        <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsNewsNotifications</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsNewsNotifications.qml" line="33"/>
+        <source>News &amp; Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsServerData</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServerData.qml" line="25"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServerData.qml" line="26"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServerData.qml" line="19"/>
+        <source>Remove server from application</source>
+        <translation>移除本地服务器信息</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServerData.qml" line="23"/>
+        <source>Do you want to remove the server from application?</source>
+        <translation>您想要从应用程序中移除服务器吗？</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServerData.qml" line="31"/>
+        <source>Cannot remove server during active connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsServerInfo</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServerInfo.qml" line="75"/>
+        <source>Protocols</source>
+        <translation>协议</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServerInfo.qml" line="79"/>
+        <source>Management</source>
+        <translation>管理</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsServersList</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsServersList.qml" line="38"/>
+        <source>Servers</source>
+        <translation>服务器</translation>
+    </message>
+</context>
+<context>
+    <name>PageSettingsSplitTunneling</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="32"/>
+        <source>Default server does not support split tunneling function</source>
+        <translation>默认服务器不支持分离隧道功能</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="70"/>
+        <source>Addresses from the list should not be accessed via VPN</source>
+        <translation>不使用VPN访问</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="101"/>
+        <source>Split tunneling</source>
+        <translation>隧道分离</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="128"/>
+        <source>Mode</source>
+        <translation>规则</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="210"/>
+        <source>Remove </source>
+        <translation>移除 </translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="211"/>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="361"/>
+        <source>Continue</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="212"/>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="362"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="29"/>
+        <source>Cannot change split tunneling settings during active connection</source>
+        <translation>无法在活动连接期间更改分割隧道设置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="65"/>
+        <source>Only the sites listed here will be accessed through the VPN</source>
+        <translation>只有这里列出的网站将通过VPN访问</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="262"/>
+        <source>website or IP</source>
+        <translation>网站或IP</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="308"/>
+        <source>Additional options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="315"/>
+        <source>Import</source>
+        <translation>导入</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="328"/>
+        <source>Save site list</source>
+        <translation>保存网址</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="335"/>
+        <source>Save sites</source>
+        <translation>保存网址</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="336"/>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="462"/>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="475"/>
+        <source>Sites files (*.json)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="356"/>
+        <source>Clear site list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="359"/>
+        <source>Clear site list?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="360"/>
+        <source>All sites will be removed from list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="424"/>
+        <source>Import a list of sites</source>
+        <translation>导入网址列表</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="459"/>
+        <source>Replace site list</source>
+        <translation>替换网址列表</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="461"/>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="474"/>
+        <source>Open sites file</source>
+        <translation>打开网址文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSettingsSplitTunneling.qml" line="472"/>
+        <source>Add imported sites to existing ones</source>
+        <translation>将导入的网址添加到现有网址中</translation>
+    </message>
+</context>
+<context>
+    <name>PageSetupWizardConfigSource</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="50"/>
+        <source>Connection</source>
+        <translation type="unfinished">连接</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="77"/>
+        <source>Settings</source>
+        <translation type="unfinished">设置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="87"/>
+        <source>Enable logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="101"/>
+        <source>Export client logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="111"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="112"/>
+        <source>Logs files (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="121"/>
+        <source>Logs file saved</source>
+        <translation type="unfinished">日志文件已保存</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="131"/>
+        <source>Support tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="142"/>
+        <source>Copied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="160"/>
+        <source>Other connection options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="210"/>
+        <source>Site Amnezia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="231"/>
+        <source>Restore from backup</source>
+        <translation type="unfinished">从备份还原</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="232"/>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="257"/>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="275"/>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="290"/>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="239"/>
+        <source>Open backup file</source>
+        <translation type="unfinished">打开备份文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="240"/>
+        <source>Backup files (*.backup)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="256"/>
+        <source>File with connection settings</source>
+        <translation>包含连接配置的文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="262"/>
+        <source>Open config file</source>
+        <translation>打开配置文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="274"/>
+        <source>QR code</source>
+        <translation>二维码</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="289"/>
+        <source>I have nothing</source>
+        <translation type="unfinished">我没有</translation>
+    </message>
+</context>
+<context>
+    <name>PageSetupWizardQrReader</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardQrReader.qml" line="38"/>
+        <source>Point the camera at the QR code and hold for a couple of seconds. </source>
+        <translation>将相机对准二维码并按住几秒钟</translation>
+    </message>
+</context>
+<context>
+    <name>PageSetupWizardStart</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardStart.qml" line="42"/>
+        <source>Let&apos;s get started</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PageSetupWizardViewConfig</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardViewConfig.qml" line="75"/>
+        <source>New connection</source>
+        <translation>新连接</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardViewConfig.qml" line="115"/>
+        <source>Collapse content</source>
+        <translation>折叠内容</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardViewConfig.qml" line="115"/>
+        <source>Show content</source>
+        <translation>显示内容</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardViewConfig.qml" line="132"/>
+        <source>Enable WireGuard obfuscation. It may be useful if WireGuard is blocked on your provider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardViewConfig.qml" line="163"/>
+        <source>Use connection codes only from sources you trust. Codes from public sources may have been created to intercept your data.</source>
+        <translation>只使用您信任的来源提供的连接代码。公共来源的代码可能是为了拦截您的数据而创建的。</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageSetupWizardViewConfig.qml" line="207"/>
+        <source>Connect</source>
+        <translation>连接</translation>
+    </message>
+</context>
+<context>
+    <name>PageStart</name>
+    <message>
+        <location filename="../ui/qml/Pages2/PageStart.qml" line="116"/>
+        <source>Logging was disabled after 14 days, log files were deleted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageStart.qml" line="120"/>
+        <source>Settings restored from backup file</source>
+        <translation type="unfinished">从备份文件还原配置</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Pages2/PageStart.qml" line="126"/>
+        <source>Logging is enabled. Note that logs will be automaticallydisabled after 14 days, and all log files will be deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopupType</name>
+    <message>
+        <location filename="../ui/qml/Controls2/PopupType.qml" line="101"/>
+        <source>Close</source>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../core/protocols/protocolUtils.cpp" line="65"/>
-        <source>SFTP service</source>
-        <translation>SFTP 服务</translation>
-    </message>
-    <message>
         <location filename="../core/utils/containers/containerUtils.cpp" line="69"/>
         <location filename="../core/utils/containers/containerUtils.cpp" line="130"/>
-        <location filename="../core/protocols/protocolUtils.cpp" line="66"/>
         <source>SOCKS5 proxy server</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/protocols/protocolUtils.cpp" line="185"/>
-        <source> (version 2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/protocols/protocolUtils.cpp" line="186"/>
-        <source> (version 1.5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -712,13 +2519,11 @@ Already installed containers were found on the server. All installed containers 
     </message>
     <message>
         <location filename="../core/utils/containers/containerUtils.cpp" line="70"/>
-        <location filename="../core/protocols/protocolUtils.cpp" line="67"/>
         <source>MTProxy (Telegram)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/utils/containers/containerUtils.cpp" line="71"/>
-        <location filename="../core/protocols/protocolUtils.cpp" line="68"/>
         <source>Telemt (Telegram)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -770,9 +2575,9 @@ Features:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ui/models/containersModel.cpp" line="41"/>
         <location filename="../core/utils/containers/containerUtils.cpp" line="81"/>
         <location filename="../core/utils/containers/containerUtils.cpp" line="84"/>
-        <location filename="../ui/models/containersModel.cpp" line="41"/>
         <source>AmneziaWG is a special protocol from Amnezia based on WireGuard. It provides high connection speed and ensures stable operation even in the most challenging network conditions.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -831,22 +2636,63 @@ For more detailed information, you can
     </message>
 </context>
 <context>
-    <name>SecureServersRepository</name>
+    <name>RenameServerDrawer</name>
     <message>
-        <location filename="../core/repositories/secureServersRepository.cpp" line="212"/>
-        <source>Server</source>
-        <translation type="unfinished">服务器</translation>
+        <location filename="../ui/qml/Components/RenameServerDrawer.qml" line="30"/>
+        <source>Server name</source>
+        <translation type="unfinished">服务器名</translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/RenameServerDrawer.qml" line="41"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+</context>
+<context>
+    <name>SelectLanguageDrawer</name>
+    <message>
+        <location filename="../ui/qml/Components/SelectLanguageDrawer.qml" line="48"/>
+        <source>Choose language</source>
+        <translation>选择语言</translation>
+    </message>
+</context>
+<context>
+    <name>ServersListView</name>
+    <message>
+        <location filename="../ui/qml/Components/ServersListView.qml" line="70"/>
+        <source>Subscription expired. Please renew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/ServersListView.qml" line="70"/>
+        <source>Subscription expiring soon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/ServersListView.qml" line="83"/>
+        <source>Unable change server while there is an active connection</source>
+        <translation type="unfinished">已建立连接时无法更改服务器配置</translation>
     </message>
 </context>
 <context>
     <name>ServersUiController</name>
     <message>
-        <location filename="../ui/controllers/serversUiController.cpp" line="96"/>
+        <location filename="../ui/controllers/serversUiController.cpp" line="110"/>
+        <source>Settings updated successfully</source>
+        <translation type="unfinished">配置更新成功</translation>
+    </message>
+    <message>
+        <location filename="../ui/controllers/serversUiController.cpp" line="112"/>
+        <source>Failed to update settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/controllers/serversUiController.cpp" line="139"/>
         <source>Legacy API v1 configs are no longer supported. Remove this server to continue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/controllers/serversUiController.cpp" line="97"/>
+        <location filename="../ui/controllers/serversUiController.cpp" line="140"/>
         <source>Use the remove action to delete this legacy config.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -857,6 +2703,29 @@ For more detailed information, you can
         <location filename="../ui/controllers/settingsUiController.cpp" line="183"/>
         <source>All settings have been reset to default values</source>
         <translation type="unfinished">所配置恢复为默认值</translation>
+    </message>
+</context>
+<context>
+    <name>SubscriptionExpiredDrawer</name>
+    <message>
+        <location filename="../ui/qml/Components/SubscriptionExpiredDrawer.qml" line="46"/>
+        <source> subscription has expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/SubscriptionExpiredDrawer.qml" line="59"/>
+        <source>Renew to continue using VPN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/SubscriptionExpiredDrawer.qml" line="71"/>
+        <source>Renew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/qml/Components/SubscriptionExpiredDrawer.qml" line="95"/>
+        <source>Support</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -883,36 +2752,19 @@ For more detailed information, you can
     </message>
 </context>
 <context>
-    <name>SystemTrayNotificationHandler</name>
+    <name>TermsAndPrivacyText</name>
     <message>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="28"/>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="62"/>
-        <source>Show</source>
-        <translation>显示</translation>
+        <location filename="../ui/qml/Components/TermsAndPrivacyText.qml" line="23"/>
+        <source>By continuing, you agree to the &lt;a href=&quot;%1&quot; style=&quot;color: %3;&quot;&gt;Terms of Use&lt;/a&gt; and &lt;a href=&quot;%2&quot; style=&quot;color: %3;&quot;&gt;Privacy Policy&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>TextFieldWithHeaderType</name>
     <message>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="32"/>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="63"/>
-        <source>Connect</source>
-        <translation>连接</translation>
-    </message>
-    <message>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="33"/>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="64"/>
-        <source>Disconnect</source>
-        <translation>断开</translation>
-    </message>
-    <message>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="37"/>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="65"/>
-        <source>Visit Website</source>
-        <translation>官网</translation>
-    </message>
-    <message>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="43"/>
-        <location filename="../ui/utils/systemTrayNotificationHandler.cpp" line="66"/>
-        <source>Quit</source>
-        <translation>退出</translation>
+        <location filename="../ui/qml/Controls2/TextFieldWithHeaderType.qml" line="143"/>
+        <source>The field can&apos;t be empty</source>
+        <translation>输入不能为空</translation>
     </message>
 </context>
 <context>
@@ -942,46 +2794,42 @@ For more detailed information, you can
     </message>
 </context>
 <context>
-    <name>VpnProtocol</name>
+    <name>main2</name>
     <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="123"/>
-        <source>Unknown</source>
-        <translation>未知</translation>
+        <location filename="../ui/qml/main2.qml" line="258"/>
+        <source>Private key passphrase</source>
+        <translation>私钥密码</translation>
     </message>
     <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="124"/>
-        <source>Disconnected</source>
-        <translation>连接已断开</translation>
+        <location filename="../ui/qml/main2.qml" line="279"/>
+        <source>Save</source>
+        <translation>保存</translation>
     </message>
     <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="125"/>
-        <source>Preparing</source>
-        <translation>准备中</translation>
+        <location filename="../ui/qml/main2.qml" line="353"/>
+        <source>This subscription format is no longer supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="126"/>
-        <source>Connecting...</source>
-        <translation>连接中</translation>
+        <location filename="../ui/qml/main2.qml" line="354"/>
+        <source>This legacy Amnezia subscription type can no longer be used to connect in this application version.
+Remove the server from the app to continue.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="127"/>
-        <source>Connected</source>
-        <translation>已连接</translation>
+        <location filename="../ui/qml/main2.qml" line="355"/>
+        <source>Continue</source>
+        <translation type="unfinished">继续</translation>
     </message>
     <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="128"/>
-        <source>Disconnecting...</source>
-        <translation>断开中</translation>
+        <location filename="../ui/qml/main2.qml" line="356"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
     </message>
     <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="129"/>
-        <source>Reconnecting...</source>
-        <translation>重连中</translation>
-    </message>
-    <message>
-        <location filename="../core/protocols/vpnProtocol.cpp" line="130"/>
-        <source>Error</source>
-        <translation>错误</translation>
+        <location filename="../ui/qml/main2.qml" line="360"/>
+        <source>Cannot remove server during active connection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
