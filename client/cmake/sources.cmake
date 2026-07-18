@@ -150,9 +150,6 @@ set(COMMON_FILES_CPP
     ${CLIENT_ROOT_DIR}/vpnConnection.cpp
 )
 
-file(GLOB_RECURSE PAGE_LOGIC_H ${CLIENT_ROOT_DIR}/ui/pages_logic/*.h)
-file(GLOB_RECURSE PAGE_LOGIC_CPP ${CLIENT_ROOT_DIR}/ui/pages_logic/*.cpp)
-
 file(GLOB CONFIGURATORS_H ${CLIENT_ROOT_DIR}/core/configurators/*.h)
 file(GLOB CONFIGURATORS_CPP ${CLIENT_ROOT_DIR}/core/configurators/*.cpp)
 
@@ -163,14 +160,12 @@ file(GLOB UI_MODELS_H
     ${CLIENT_ROOT_DIR}/ui/models/*.h
     ${CLIENT_ROOT_DIR}/ui/models/protocols/*.h
     ${CLIENT_ROOT_DIR}/ui/models/services/*.h
-    ${CLIENT_ROOT_DIR}/ui/models/utils/*.h
     ${CLIENT_ROOT_DIR}/ui/models/api/*.h
 )
 file(GLOB UI_MODELS_CPP
     ${CLIENT_ROOT_DIR}/ui/models/*.cpp
     ${CLIENT_ROOT_DIR}/ui/models/protocols/*.cpp
     ${CLIENT_ROOT_DIR}/ui/models/services/*.cpp
-    ${CLIENT_ROOT_DIR}/ui/models/utils/*.cpp
     ${CLIENT_ROOT_DIR}/ui/models/api/*.cpp
 )
 
@@ -178,18 +173,15 @@ file(GLOB UI_CONTROLLERS_H
     ${CLIENT_ROOT_DIR}/ui/controllers/*.h
     ${CLIENT_ROOT_DIR}/ui/controllers/api/*.h
     ${CLIENT_ROOT_DIR}/ui/controllers/qml/*.h
-    ${CLIENT_ROOT_DIR}/ui/controllers/selfhosted/*.h
 )
 file(GLOB UI_CONTROLLERS_CPP
     ${CLIENT_ROOT_DIR}/ui/controllers/*.cpp
     ${CLIENT_ROOT_DIR}/ui/controllers/api/*.cpp
     ${CLIENT_ROOT_DIR}/ui/controllers/qml/*.cpp
-    ${CLIENT_ROOT_DIR}/ui/controllers/selfhosted/*.cpp
 )
 
 set(HEADERS ${HEADERS}
     ${COMMON_FILES_H}
-    ${PAGE_LOGIC_H}
     ${CONFIGURATORS_H}
     ${CORE_MODELS_H}
     ${UI_MODELS_H}
@@ -197,7 +189,6 @@ set(HEADERS ${HEADERS}
 )
 set(SOURCES ${SOURCES}
     ${COMMON_FILES_CPP}
-    ${PAGE_LOGIC_CPP}
     ${CONFIGURATORS_CPP}
     ${CORE_MODELS_CPP}
     ${UI_MODELS_CPP}

@@ -18,6 +18,8 @@ project(${PROJECT} VERSION ${AMNEZIAVPN_VERSION}
         HOMEPAGE_URL "https://amnezia.org/"
 )
 
+option(AMNEZIA_BUILD_TESTS "Build AmneziaVPN unit tests" OFF)
+
 # trigger conan to kick off `conan install` globally
 find_package(OpenSSL REQUIRED)
 if (PREBUILTS_ONLY)
@@ -71,6 +73,15 @@ add_subdirectory(client)
 
 if(NOT IOS AND NOT ANDROID AND NOT MACOS_NE)
     add_subdirectory(service)
+endif()
+
+if(AMNEZIA_BUILD_TESTS)
+    if(CMAKE_CROSSCOMPILING OR IOS OR ANDROID OR MACOS_NE)
+        message(WARNING "Unit tests are only available for native desktop builds")
+    else()
+        enable_testing()
+        add_subdirectory(tests)
+    endif()
 endif()
 
 if ((LINUX AND NOT ANDROID) OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (WIN32))

@@ -148,17 +148,6 @@ PageType {
                     }
                 }
             }
-
-            ParagraphTextType {
-                Layout.fillWidth: true
-                Layout.topMargin: 32
-                Layout.rightMargin: 16
-                Layout.leftMargin: 16
-                Layout.bottomMargin: 24
-
-                color: AmneziaStyle.color.charcoalGray
-                text: qsTr("Other connection options")
-            }
         }
 
         model: variants
