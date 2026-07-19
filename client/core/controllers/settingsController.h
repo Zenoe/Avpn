@@ -69,9 +69,6 @@ public:
 
     void enableDevMode();
     
-    bool isPremV1MigrationReminderActive() const;
-    void disablePremV1MigrationReminder();
-    
     QString nextAvailableServerName() const;
     bool isDevModeEnabled() const;
 
@@ -80,9 +77,6 @@ public:
     QString getGatewayEndpoint() const;
     bool isDevGatewayEnv() const;
     void toggleDevGatewayEnv(bool enabled);
-
-    bool isHomeAdLabelVisible() const;
-    void disableHomeAdLabel();
 
     void checkIfNeedDisableLogs();
 

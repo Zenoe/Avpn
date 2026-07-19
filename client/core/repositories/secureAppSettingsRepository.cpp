@@ -407,26 +407,6 @@ void SecureAppSettingsRepository::setReadNewsIds(const QStringList &ids)
     setValue("News/readIds", ids);
 }
 
-bool SecureAppSettingsRepository::isHomeAdLabelVisible() const
-{
-    return value("Conf/homeAdLabelVisible", true).toBool();
-}
-
-void SecureAppSettingsRepository::disableHomeAdLabel()
-{
-    setValue("Conf/homeAdLabelVisible", false);
-}
-
-bool SecureAppSettingsRepository::isPremV1MigrationReminderActive() const
-{
-    return value("Conf/premV1MigrationReminderActive", true).toBool();
-}
-
-void SecureAppSettingsRepository::disablePremV1MigrationReminder()
-{
-    setValue("Conf/premV1MigrationReminderActive", false);
-}
-
 QByteArray SecureAppSettingsRepository::backupAppConfig() const
 {
     return m_settings->backupAppConfig();

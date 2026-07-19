@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QOperatingSystemVersion>
 #include <QFile>
+#include <QIODevice>
 
 #include "core/utils/errorCodes.h"
 #include "core/utils/routeModes.h"
@@ -346,15 +347,4 @@ bool SettingsUiController::isOnTv()
 #else
     return false;
 #endif
-}
-
-bool SettingsUiController::isHomeAdLabelVisible()
-{
-    return m_settingsController->isHomeAdLabelVisible();
-}
-
-void SettingsUiController::disableHomeAdLabel()
-{
-    m_settingsController->disableHomeAdLabel();
-    emit isHomeAdLabelVisibleChanged(false);
 }

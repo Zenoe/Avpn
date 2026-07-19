@@ -65,7 +65,6 @@ namespace amnezia
         NoInstalledContainersError = 902,
         ImportBackupFileUseRestoreInstead = 903,
         RestoreBackupInvalidError = 904,
-        LegacyApiV1NotSupportedError = 905,
         LegacyContainerNotSupportedError = 906,
 
         // Android errors

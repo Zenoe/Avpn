@@ -48,7 +48,6 @@ public:
     QString getServerId(int serverIndex) const;
     int indexOfServerId(const QString &serverId) const;
     QString notificationDisplayName(const QString &serverId) const;
-    std::optional<ApiV2ServerConfig> apiV2Config(const QString &serverId) const;
     std::optional<SelfHostedAdminServerConfig> selfHostedAdminConfig(const QString &serverId) const;
     ServerCredentials getServerCredentials(const QString &serverId) const;
     QMap<DockerContainer, ContainerConfig> getServerContainersMap(const QString &serverId) const;
@@ -57,9 +56,7 @@ public:
     ErrorCode updateClientConfig(const QString &serverId, DockerContainer container, const ContainerConfig &config);
 
     // Validation
-    bool isServerFromApiAlreadyExists(const QString &userCountryCode, const QString &serviceType, const QString &serviceProtocol) const;
     bool hasInstalledContainers(const QString &serverId) const;
-    bool isLegacyApiV1Server(const QString &serverId) const;
 
 private:
     void ensureDefaultServerValid();

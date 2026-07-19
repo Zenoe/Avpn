@@ -301,43 +301,6 @@ Window  {
     }
 
     Item {
-        objectName: "subscriptionExpiredDrawerItem"
-
-        anchors.fill: parent
-
-        SubscriptionExpiredDrawer {
-            id: subscriptionExpiredDrawer
-
-            anchors.fill: parent
-        }
-    }
-
-    Connections {
-        target: PageController
-
-        function onUnsupportedConnectDrawerRequested() {
-            root.showUnsupportedConnectDrawer()
-        }
-    }
-
-    Connections {
-        target: SubscriptionUiController
-
-        function onSubscriptionExpiredOnServer() {
-            subscriptionExpiredDrawer.openTriggered()
-        }
-
-    }
-
-    Connections {
-        target: SubscriptionUiController
-
-        function onRenewalLinkReceived(url) {
-            Qt.openUrlExternally(url)
-        }
-    }
-
-    Item {
         objectName: "busyIndicatorItem"
 
         anchors.fill: parent
@@ -347,28 +310,6 @@ Window  {
             anchors.centerIn: parent
             z: 1
         }
-    }
-
-    function showUnsupportedConnectDrawer() {
-        let headerText = qsTr("This subscription format is no longer supported")
-        let descriptionText = qsTr("This legacy Amnezia subscription type can no longer be used to connect in this application version.\nRemove the server from the app to continue.")
-        let yesButtonText = qsTr("Continue")
-        let noButtonText = qsTr("Cancel")
-
-        let yesButtonFunction = function() {
-            if (ConnectionController.isConnected) {
-                PageController.showNotificationMessage(qsTr("Cannot remove server during active connection"))
-                return
-            }
-
-            PageController.showBusyIndicator(true)
-            ServersUiController.removeServer(ServersUiController.defaultServerId)
-            PageController.showBusyIndicator(false)
-        }
-        let noButtonFunction = function() {
-        }
-
-        showQuestionDrawer(headerText, descriptionText, yesButtonText, noButtonText, yesButtonFunction, noButtonFunction)
     }
 
     function showQuestionDrawer(headerText, descriptionText, yesButtonText, noButtonText, yesButtonFunction, noButtonFunction) {

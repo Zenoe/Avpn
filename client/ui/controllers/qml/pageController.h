@@ -27,20 +27,11 @@ namespace PageLoader
         PageSettingsConnection,
         PageSettingsDns,
         PageSettingsApplication,
-        PageSettingsNewsNotifications,
-        PageSettingsNewsDetail,
         PageSettingsBackup,
         PageSettingsLogging,
         PageSettingsSplitTunneling,
         PageSettingsAppSplitTunneling,
         PageSettingsKillSwitch,
-        PageSettingsApiServerInfo,
-        PageSettingsApiAvailableCountries,
-        PageSettingsApiSupport,
-        PageSettingsApiInstructions,
-        PageSettingsApiNativeConfigs,
-        PageSettingsApiDevices,
-        PageSettingsApiSubscriptionKey,
         PageSettingsKillSwitchExceptions,
 
 
@@ -132,8 +123,6 @@ signals:
 
     void showPassphraseRequestDrawer();
     void passphraseRequestDrawerClosed(QString passphrase);
-
-    void unsupportedConnectDrawerRequested();
 
     void escapePressed();
     void closeTopDrawer();

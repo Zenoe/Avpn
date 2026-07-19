@@ -93,17 +93,6 @@ void CoreController::initModels()
     m_telemtConfigModel = new TelemtConfigModel(this);
     setQmlContextProperty("TelemtConfigModel", m_telemtConfigModel);
 
-    m_apiCountryModel = new ApiCountryModel(this);
-    setQmlContextProperty("ApiCountryModel", m_apiCountryModel);
-
-    m_apiAccountInfoModel = new ApiAccountInfoModel(this);
-    setQmlContextProperty("ApiAccountInfoModel", m_apiAccountInfoModel);
-
-    m_apiDevicesModel = new ApiDevicesModel(this);
-    setQmlContextProperty("ApiDevicesModel", m_apiDevicesModel);
-
-    m_newsModel = new NewsModel(m_appSettingsRepository, this);
-    setQmlContextProperty("NewsModel", m_newsModel);
 }
 
 void CoreController::initRepositories()
@@ -122,8 +111,6 @@ void CoreController::initCoreControllers()
     m_appSplitTunnelingController = new AppSplitTunnelingController(m_appSettingsRepository);
     m_ipSplitTunnelingController = new IpSplitTunnelingController(m_appSettingsRepository, this);
     m_allowedDnsController = new AllowedDnsController(m_appSettingsRepository);
-    m_subscriptionController = new SubscriptionController(m_serversRepository, m_appSettingsRepository);
-    m_newsController = new NewsController(m_appSettingsRepository, m_serversRepository);
     m_updateController = new UpdateController(m_appSettingsRepository, this);
     
     m_importCoreController = new ImportController(m_serversRepository, m_appSettingsRepository, this);
@@ -173,14 +160,6 @@ void CoreController::initControllers()
     m_networkReachabilityController = new NetworkReachabilityController(this);
     setQmlContextProperty("NetworkReachabilityController", m_networkReachabilityController);
     setQmlContextProperty("NetworkReachability", m_networkReachabilityController);
-
-    m_subscriptionUiController = new SubscriptionUiController(m_serversController, m_subscriptionController, m_apiAccountInfoModel,
-                                                              m_apiCountryModel, m_apiDevicesModel, m_settingsController,
-                                                              m_connectionController, this);
-    setQmlContextProperty("SubscriptionUiController", m_subscriptionUiController);
-
-    m_apiNewsUiController = new ApiNewsUiController(m_newsModel, m_newsController, this);
-    setQmlContextProperty("ApiNewsController", m_apiNewsUiController);
 
     m_updateUiController = new UpdateUiController(m_updateController, this);
     setQmlContextProperty("UpdateController", m_updateUiController);
@@ -233,9 +212,6 @@ void CoreController::initSignalHandlers()
 
     // Trigger initial update after handlers are connected
     m_serversUiController->updateModel();
-    if (m_serversUiController->hasServersFromGatewayApi()) {
-        m_apiNewsUiController->fetchNews(false);
-    }
 }
 
 void CoreController::updateTranslator(const QLocale &locale)

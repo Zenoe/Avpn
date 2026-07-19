@@ -315,16 +315,6 @@ void SettingsController::toggleDevGatewayEnv(bool enabled)
     }
 }
 
-bool SettingsController::isHomeAdLabelVisible() const
-{
-    return m_appSettingsRepository->isHomeAdLabelVisible();
-}
-
-void SettingsController::disableHomeAdLabel()
-{
-    m_appSettingsRepository->disableHomeAdLabel();
-}
-
 void SettingsController::checkIfNeedDisableLogs()
 {
     if (m_appSettingsRepository->isSaveLogs()) {
@@ -349,16 +339,6 @@ QLocale SettingsController::getAppLanguage() const
 void SettingsController::setAppLanguage(const QLocale &locale)
 {
     m_appSettingsRepository->setAppLanguage(locale);
-}
-
-bool SettingsController::isPremV1MigrationReminderActive() const
-{
-    return m_appSettingsRepository->isPremV1MigrationReminderActive();
-}
-
-void SettingsController::disablePremV1MigrationReminder()
-{
-    m_appSettingsRepository->disablePremV1MigrationReminder();
 }
 
 QString SettingsController::nextAvailableServerName() const

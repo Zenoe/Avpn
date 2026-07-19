@@ -26,8 +26,6 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/controllers/allowedDnsController.h
     ${CLIENT_ROOT_DIR}/core/controllers/connectionController.h
     ${CLIENT_ROOT_DIR}/core/controllers/settingsController.h
-    ${CLIENT_ROOT_DIR}/core/controllers/api/subscriptionController.h
-    ${CLIENT_ROOT_DIR}/core/controllers/api/newsController.h
     ${CLIENT_ROOT_DIR}/core/controllers/updateController.h
     ${CLIENT_ROOT_DIR}/core/repositories/secureServersRepository.h
     ${CLIENT_ROOT_DIR}/core/repositories/secureAppSettingsRepository.h
@@ -38,7 +36,6 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/protocols/vpnProtocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/version.h
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.h
-    ${CLIENT_ROOT_DIR}/core/utils/payloadSender.h
     ${CLIENT_ROOT_DIR}/../common/logger/logger.h
     ${CLIENT_ROOT_DIR}/../common/crypto/cryptoUtils.h
     ${CLIENT_ROOT_DIR}/ui/utils/qmlUtils.h
@@ -85,8 +82,6 @@ set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/core/controllers/allowedDnsController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/connectionController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/settingsController.cpp
-    ${CLIENT_ROOT_DIR}/core/controllers/api/subscriptionController.cpp
-    ${CLIENT_ROOT_DIR}/core/controllers/api/newsController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/updateController.cpp
     ${CLIENT_ROOT_DIR}/core/repositories/secureServersRepository.cpp
     ${CLIENT_ROOT_DIR}/core/repositories/secureAppSettingsRepository.cpp
@@ -94,7 +89,6 @@ set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/ui/utils/mtProxyPublicHostInput.cpp
     ${CLIENT_ROOT_DIR}/core/protocols/vpnProtocol.cpp
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/payloadSender.cpp
     ${CLIENT_ROOT_DIR}/../common/logger/logger.cpp
     ${CLIENT_ROOT_DIR}/../common/crypto/cryptoUtils.cpp
     ${CLIENT_ROOT_DIR}/ui/utils/qmlUtils.cpp
@@ -160,23 +154,19 @@ file(GLOB UI_MODELS_H
     ${CLIENT_ROOT_DIR}/ui/models/*.h
     ${CLIENT_ROOT_DIR}/ui/models/protocols/*.h
     ${CLIENT_ROOT_DIR}/ui/models/services/*.h
-    ${CLIENT_ROOT_DIR}/ui/models/api/*.h
 )
 file(GLOB UI_MODELS_CPP
     ${CLIENT_ROOT_DIR}/ui/models/*.cpp
     ${CLIENT_ROOT_DIR}/ui/models/protocols/*.cpp
     ${CLIENT_ROOT_DIR}/ui/models/services/*.cpp
-    ${CLIENT_ROOT_DIR}/ui/models/api/*.cpp
 )
 
 file(GLOB UI_CONTROLLERS_H
     ${CLIENT_ROOT_DIR}/ui/controllers/*.h
-    ${CLIENT_ROOT_DIR}/ui/controllers/api/*.h
     ${CLIENT_ROOT_DIR}/ui/controllers/qml/*.h
 )
 file(GLOB UI_CONTROLLERS_CPP
     ${CLIENT_ROOT_DIR}/ui/controllers/*.cpp
-    ${CLIENT_ROOT_DIR}/ui/controllers/api/*.cpp
     ${CLIENT_ROOT_DIR}/ui/controllers/qml/*.cpp
 )
 

@@ -66,12 +66,8 @@ ListViewType {
                     Layout.fillWidth: true
 
                     text: name
-                    descriptionText: isServerFromGatewayApi && (isSubscriptionExpired || isSubscriptionExpiringSoon)
-                        ? (isSubscriptionExpired ? qsTr("Subscription expired. Please renew") : qsTr("Subscription expiring soon"))
-                        : serverDescription
-                    descriptionColor: isServerFromGatewayApi && (isSubscriptionExpired || isSubscriptionExpiringSoon)
-                        ? (isSubscriptionExpired ? AmneziaStyle.color.vibrantRed : AmneziaStyle.color.goldenApricot)
-                        : AmneziaStyle.color.mutedGray
+                    descriptionText: serverDescription
+                    descriptionColor: AmneziaStyle.color.mutedGray
 
                     checked: index === root.selectedIndex
                     checkable: !ConnectionController.isConnected
@@ -108,22 +104,7 @@ ListViewType {
                     onClicked: function() {
                         ServersUiController.setProcessedServerId(serverId)
 
-                        if (ServersUiController.isServerFromApi(ServersUiController.processedServerId)) {
-                            if (ServersUiController.isServerCountrySelectionAvailable(ServersUiController.processedServerId)) {
-                                PageController.goToPage(PageEnum.PageSettingsApiAvailableCountries)
-                            } else {
-                                PageController.showBusyIndicator(true)
-                                let result = SubscriptionUiController.getAccountInfo(ServersUiController.processedServerId, false)
-                                PageController.showBusyIndicator(false)
-                                if (!result) {
-                                    return
-                                }
-
-                                PageController.goToPage(PageEnum.PageSettingsApiServerInfo)
-                            }
-                        } else {
-                            PageController.goToPage(PageEnum.PageSettingsServerInfo)
-                        }
+                        PageController.goToPage(PageEnum.PageSettingsServerInfo)
 
                         drawer.closeTriggered()
                     }

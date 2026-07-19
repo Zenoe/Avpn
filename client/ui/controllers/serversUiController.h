@@ -29,17 +29,9 @@ class ServersUiController : public QObject
     Q_PROPERTY(QString defaultServerImagePathCollapsed READ getDefaultServerImagePathCollapsed NOTIFY defaultServerIdChanged)
     Q_PROPERTY(QString defaultServerDescriptionExpanded READ getDefaultServerDescriptionExpanded NOTIFY defaultServerIdChanged)
     Q_PROPERTY(bool isDefaultServerDefaultContainerHasSplitTunneling READ isDefaultServerDefaultContainerHasSplitTunneling NOTIFY defaultServerIdChanged)
-    Q_PROPERTY(bool isDefaultServerFromApi READ isDefaultServerFromApi NOTIFY defaultServerIdChanged)
     
     Q_PROPERTY(QString processedServerId READ getProcessedServerId WRITE setProcessedServerId NOTIFY processedServerIdChanged)
     Q_PROPERTY(int processedContainerIndex READ getProcessedContainerIndex WRITE setProcessedContainerIndex NOTIFY processedContainerIndexChanged)
-    Q_PROPERTY(bool processedServerIsPremium READ processedServerIsPremium NOTIFY processedServerIdChanged)
-    
-    Q_PROPERTY(bool hasServersFromGatewayApi READ hasServersFromGatewayApi NOTIFY hasServersFromGatewayApiChanged)
-    
-    Q_PROPERTY(bool isAdVisible READ isAdVisible NOTIFY defaultServerIdChanged)
-    Q_PROPERTY(QString adHeader READ adHeader NOTIFY defaultServerIdChanged)
-    Q_PROPERTY(QString adDescription READ adDescription NOTIFY defaultServerIdChanged)
     
 public:
     explicit ServersUiController(ServersController* serversController,
@@ -77,36 +69,23 @@ public slots:
     QString getDefaultServerImagePathCollapsed() const;
     QString getDefaultServerDescriptionExpanded() const;
     bool isDefaultServerDefaultContainerHasSplitTunneling() const;
-    bool isDefaultServerFromApi() const;
     bool hasServerWithWriteAccess() const;
 
     QString serverName(const QString &serverId) const;
     QString serverHostName(const QString &serverId) const;
     int serverDefaultContainer(const QString &serverId) const;
-    bool isServerFromApi(const QString &serverId) const;
-    bool isServerCountrySelectionAvailable(const QString &serverId) const;
     bool isServerHasWriteAccess(const QString &serverId) const;
     bool serverHasInstalledContainers(const QString &serverId) const;
-    QString serverAdEndpoint(const QString &serverId) const;
-    bool isServerRenewalAvailable(const QString &serverId) const;
-    bool isServerSubscriptionExpired(const QString &serverId) const;
-    bool isServerSubscriptionExpiringSoon(const QString &serverId) const;
     
     QString getProcessedServerId() const;
     void setProcessedServerId(const QString &serverId);
 
     int getProcessedContainerIndex() const;
     void setProcessedContainerIndex(int index);
-    bool processedServerIsPremium() const;
     
     bool isDefaultServerCurrentlyProcessed() const;
     bool isProcessedServerHasWriteAccess() const;
     
-    bool hasServersFromGatewayApi() const;
-    
-    bool isAdVisible() const;
-    QString adHeader() const;
-    QString adDescription() const;
     
     QString getServerId(int index) const;
     int getServerIndexById(const QString &serverId) const;
@@ -119,8 +98,6 @@ signals:
     void defaultServerIdChanged(const QString &serverId);
     void processedServerIdChanged(const QString &serverId);
     void processedContainerIndexChanged(int index);
-    void hasServersFromGatewayApiChanged();
-    void updateApiCountryModel();
 
 public:
     void updateModel();
@@ -129,7 +106,6 @@ private:
     const ServerDescription &serverDescriptionById(const QString &serverId) const;
     const ServerDescription &processedServerDescription() const;
     int serverIndexForId(const QString &serverId) const;
-    bool listHasServersFromGatewayApi() const;
 
     void updateContainersModel();
     void updateDefaultServerContainersModel();

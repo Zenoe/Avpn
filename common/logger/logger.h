@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QIODevice>
 #include <QString>
 #include <QTextStream>
 

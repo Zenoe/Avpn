@@ -9,8 +9,6 @@
     #include "ui/utils/systemTrayNotificationHandler.h"
 #endif
 
-#include "ui/controllers/api/subscriptionUiController.h"
-#include "ui/controllers/api/apiNewsUiController.h"
 #include "ui/controllers/appSplitTunnelingUiController.h"
 #include "ui/controllers/allowedDnsUiController.h"
 #include "ui/controllers/connectionUiController.h"
@@ -30,8 +28,6 @@
 #include "core/controllers/appSplitTunnelingController.h"
 #include "core/controllers/ipSplitTunnelingController.h"
 #include "core/controllers/allowedDnsController.h"
-#include "core/controllers/api/subscriptionController.h"
-#include "core/controllers/api/newsController.h"
 #include "core/controllers/settingsController.h"
 #include "core/controllers/connectionController.h"
 #include "core/controllers/updateController.h"
@@ -43,9 +39,6 @@
 #include "ui/models/allowedDnsModel.h"
 #include "ui/models/containersModel.h"
 #include "ui/models/languageModel.h"
-#include "ui/models/api/apiAccountInfoModel.h"
-#include "ui/models/api/apiCountryModel.h"
-#include "ui/models/api/apiDevicesModel.h"
 #include "ui/models/appSplitTunnelingModel.h"
 #include "ui/models/protocols/awgConfigModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
@@ -57,7 +50,6 @@
 #include "ui/models/services/telemtConfigModel.h"
 
 #include "ui/models/ipSplitTunnelingModel.h"
-#include "ui/models/newsModel.h"
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     #include "ui/utils/notificationHandler.h"
@@ -91,7 +83,6 @@ protected:
     SecureAppSettingsRepository* appSettingsRepositoryProtected() const { return m_appSettingsRepository; }
     ServersModel* serversModelProtected() const { return m_serversModel; }
     ContainersModel* containersModelProtected() const { return m_containersModel; }
-    NewsModel* newsModelProtected() const { return m_newsModel; }
     AllowedDnsModel* allowedDnsModelProtected() const { return m_allowedDnsModel; }
     AppSplitTunnelingModel* appSplitTunnelingModelProtected() const { return m_appSplitTunnelingModel; }
     IpSplitTunnelingModel* ipSplitTunnelingModelProtected() const { return m_ipSplitTunnelingModel; }
@@ -109,7 +100,6 @@ protected:
     AppSplitTunnelingController* appSplitTunnelingControllerProtected() const { return m_appSplitTunnelingController; }
     AppSplitTunnelingUiController* appSplitTunnelingUiControllerProtected() const { return m_appSplitTunnelingUiController; }
     ServersUiController* serversUiControllerProtected() const { return m_serversUiController; }
-    ApiNewsUiController* apiNewsUiControllerProtected() const { return m_apiNewsUiController; }
 
 private:
     void initRepositories();
@@ -151,16 +141,12 @@ private:
     LanguageUiController* m_languageUiController;
     UpdateUiController* m_updateUiController;
 
-    SubscriptionUiController* m_subscriptionUiController;
-    ApiNewsUiController* m_apiNewsUiController;
     
 
     ServersController* m_serversController;
     AppSplitTunnelingController* m_appSplitTunnelingController;
     IpSplitTunnelingController* m_ipSplitTunnelingController;
     AllowedDnsController* m_allowedDnsController;
-    SubscriptionController* m_subscriptionController;
-    NewsController* m_newsController;
     UpdateController* m_updateController;
     ConnectionController* m_connectionController;
     SettingsController* m_settingsController;
@@ -171,13 +157,9 @@ private:
     LanguageModel* m_languageModel;
     ProtocolsModel* m_protocolsModel;
     IpSplitTunnelingModel* m_ipSplitTunnelingModel;
-    NewsModel* m_newsModel;
     AllowedDnsModel* m_allowedDnsModel;
     AppSplitTunnelingModel* m_appSplitTunnelingModel;
 
-    ApiCountryModel* m_apiCountryModel;
-    ApiAccountInfoModel* m_apiAccountInfoModel;
-    ApiDevicesModel* m_apiDevicesModel;
 
     WireGuardConfigModel* m_wireGuardConfigModel;
     AwgConfigModel* m_awgConfigModel;
