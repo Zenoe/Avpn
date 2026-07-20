@@ -43,7 +43,6 @@ namespace amnezia
 
         bool isShareable(DockerContainer container);
 
-        bool isAwgContainer(DockerContainer container);
 
         bool isUnsupportedContainer(DockerContainer container);
 

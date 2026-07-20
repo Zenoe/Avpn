@@ -11,8 +11,7 @@ namespace amnezia
         Q_NAMESPACE
         enum DockerContainer {
             None = 0,
-            Awg = 1,
-            Awg2 = 2,
+            // Preserve the persisted value used by existing WireGuard profiles.
             WireGuard = 3,
 
             // Preserve persisted numeric values for retained non-VPN services.

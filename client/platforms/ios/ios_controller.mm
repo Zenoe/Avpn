@@ -99,7 +99,7 @@ namespace {
 constexpr int kHandshakeTimeoutMs = 12000;
 constexpr uint64_t kHandshakeRxThreshold = 4096;
 bool isWireGuardBasedProto(amnezia::Proto proto) {
-    return proto == amnezia::Proto::WireGuard || proto == amnezia::Proto::Awg;
+    return proto == amnezia::Proto::WireGuard;
 }
 
 uint64_t uint64FromResponse(NSDictionary *response, NSString *key, uint64_t fallback = 0) {
@@ -297,9 +297,6 @@ bool IosController::connectVpn(amnezia::Proto proto, const QJsonObject& configur
 
     if (proto == amnezia::Proto::WireGuard) {
         return setupWireGuard();
-    }
-    if (proto == amnezia::Proto::Awg) {
-        return setupAwg();
     }
     return false;
 }
@@ -554,91 +551,6 @@ bool IosController::setupWireGuard()
     } else {
         wgConfig.insert(configKey::persistentKeepAlive, "25");
     }
-
-    if (config.contains(configKey::isObfuscationEnabled) && config.value(configKey::isObfuscationEnabled).toBool()) {
-        wgConfig.insert(configKey::initPacketMagicHeader, config[configKey::initPacketMagicHeader]);
-        wgConfig.insert(configKey::responsePacketMagicHeader, config[configKey::responsePacketMagicHeader]);
-        wgConfig.insert(configKey::underloadPacketMagicHeader, config[configKey::underloadPacketMagicHeader]);
-        wgConfig.insert(configKey::transportPacketMagicHeader, config[configKey::transportPacketMagicHeader]);
-
-        wgConfig.insert(configKey::initPacketJunkSize, config[configKey::initPacketJunkSize]);
-        wgConfig.insert(configKey::responsePacketJunkSize, config[configKey::responsePacketJunkSize]);
-        wgConfig.insert(configKey::cookieReplyPacketJunkSize, config[configKey::cookieReplyPacketJunkSize]);
-        wgConfig.insert(configKey::transportPacketJunkSize, config[configKey::transportPacketJunkSize]);
-
-        wgConfig.insert(configKey::junkPacketCount, config[configKey::junkPacketCount]);
-        wgConfig.insert(configKey::junkPacketMinSize, config[configKey::junkPacketMinSize]);
-        wgConfig.insert(configKey::junkPacketMaxSize, config[configKey::junkPacketMaxSize]);
-    }
-
-    QJsonDocument wgConfigDoc(wgConfig);
-    QString wgConfigDocStr(wgConfigDoc.toJson(QJsonDocument::Compact));
-
-    return startWireGuard(wgConfigDocStr);
-}
-
-bool IosController::setupAwg()
-{
-    QJsonObject config = m_rawConfig[ProtocolUtils::key_proto_config_data(amnezia::Proto::Awg)].toObject();
-
-    QJsonObject wgConfig {};
-    wgConfig.insert(configKey::dns1, m_rawConfig[configKey::dns1]);
-    wgConfig.insert(configKey::dns2, m_rawConfig[configKey::dns2]);
-
-    if (config.contains(configKey::mtu)) {
-        wgConfig.insert(configKey::mtu, config[configKey::mtu]);
-    } else {
-        wgConfig.insert(configKey::mtu, protocols::awg::defaultMtu);
-    }
-
-    wgConfig.insert(configKey::hostName, config[configKey::hostName]);
-    wgConfig.insert(configKey::port, config[configKey::port]);
-    wgConfig.insert(configKey::clientIp, config[configKey::clientIp]);
-    wgConfig.insert(configKey::clientPrivKey, config[configKey::clientPrivKey]);
-    wgConfig.insert(configKey::serverPubKey, config[configKey::serverPubKey]);
-    wgConfig.insert(configKey::pskKey, config[configKey::pskKey]);
-    wgConfig.insert(configKey::splitTunnelType, m_rawConfig[configKey::splitTunnelType]);
-
-    QJsonArray splitTunnelSites = m_rawConfig[configKey::splitTunnelSites].toArray();
-
-    for(int index = 0; index < splitTunnelSites.count(); index++) {
-        splitTunnelSites[index] = splitTunnelSites[index].toString().remove(" ");
-    }
-
-    wgConfig.insert(configKey::splitTunnelSites, splitTunnelSites);
-
-    if (config.contains(configKey::allowedIps) && config[configKey::allowedIps].isArray()) {
-        wgConfig.insert(configKey::allowedIps, config[configKey::allowedIps]);
-    } else {
-        QJsonArray allowed_ips { "0.0.0.0/0", "::/0" };
-        wgConfig.insert(configKey::allowedIps, allowed_ips);
-    }
-
-    if (config.contains(configKey::persistentKeepAlive)) {
-        wgConfig.insert(configKey::persistentKeepAlive, config[configKey::persistentKeepAlive]);
-    } else {
-        wgConfig.insert(configKey::persistentKeepAlive, "25");
-    }
-
-    wgConfig.insert(configKey::initPacketMagicHeader, config[configKey::initPacketMagicHeader]);
-    wgConfig.insert(configKey::responsePacketMagicHeader, config[configKey::responsePacketMagicHeader]);
-    wgConfig.insert(configKey::underloadPacketMagicHeader, config[configKey::underloadPacketMagicHeader]);
-    wgConfig.insert(configKey::transportPacketMagicHeader, config[configKey::transportPacketMagicHeader]);
-
-    wgConfig.insert(configKey::initPacketJunkSize, config[configKey::initPacketJunkSize]);
-    wgConfig.insert(configKey::responsePacketJunkSize, config[configKey::responsePacketJunkSize]);
-    wgConfig.insert(configKey::cookieReplyPacketJunkSize, config[configKey::cookieReplyPacketJunkSize]);
-    wgConfig.insert(configKey::transportPacketJunkSize, config[configKey::transportPacketJunkSize]);
-
-    wgConfig.insert(configKey::junkPacketCount, config[configKey::junkPacketCount]);
-    wgConfig.insert(configKey::junkPacketMinSize, config[configKey::junkPacketMinSize]);
-    wgConfig.insert(configKey::junkPacketMaxSize, config[configKey::junkPacketMaxSize]);
-
-    wgConfig.insert(configKey::specialJunk1, config[configKey::specialJunk1]);
-    wgConfig.insert(configKey::specialJunk2, config[configKey::specialJunk2]);
-    wgConfig.insert(configKey::specialJunk3, config[configKey::specialJunk3]);
-    wgConfig.insert(configKey::specialJunk4, config[configKey::specialJunk4]);
-    wgConfig.insert(configKey::specialJunk5, config[configKey::specialJunk5]);
 
     QJsonDocument wgConfigDoc(wgConfig);
     QString wgConfigDocStr(wgConfigDoc.toJson(QJsonDocument::Compact));

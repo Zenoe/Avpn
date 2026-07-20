@@ -52,42 +52,6 @@ namespace amnezia
 
         } // namespace sftp
 
-        namespace awg
-        {
-            constexpr char defaultPort[] = "55424";
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(MACOS_NE)
-            constexpr char defaultMtu[] = "1280";
-#else
-            constexpr char defaultMtu[] = "1376";
-#endif
-
-            constexpr char serverConfigPath[] = "/opt/amnezia/awg/awg0.conf";
-            constexpr char serverLegacyConfigPath[] = "/opt/amnezia/awg/wg0.conf";
-            constexpr char serverPublicKeyPath[] = "/opt/amnezia/awg/wireguard_server_public_key.key";
-            constexpr char serverPskKeyPath[] = "/opt/amnezia/awg/wireguard_psk.key";
-
-            constexpr char defaultJunkPacketCount[] = "3";
-            constexpr char defaultJunkPacketMinSize[] = "10";
-            constexpr char defaultJunkPacketMaxSize[] = "30";
-            constexpr char defaultInitPacketJunkSize[] = "15";
-            constexpr char defaultResponsePacketJunkSize[] = "18";
-            constexpr char defaultCookieReplyPacketJunkSize[] = "20";
-            constexpr char defaultTransportPacketJunkSize[] = "23";
-
-            constexpr char defaultInitPacketMagicHeader[] = "1020325451";
-            constexpr char defaultResponsePacketMagicHeader[] = "3288052141";
-            constexpr char defaultTransportPacketMagicHeader[] = "2528465083";
-            constexpr char defaultUnderloadPacketMagicHeader[] = "1766607858";
-            constexpr char defaultSpecialJunk1[] = "<r 2><b 0x858000010001000000000669636c6f756403636f6d0000010001c00c000100010000105a00044d583737>";
-            constexpr char defaultSpecialJunk2[] = "";
-            constexpr char defaultSpecialJunk3[] = "";
-            constexpr char defaultSpecialJunk4[] = "";
-            constexpr char defaultSpecialJunk5[] = "";
-
-            constexpr char awgV1_5[] = "1.5";
-            constexpr char awgV2[] = "2";
-        }
-
         namespace socks5Proxy
         {
             constexpr char defaultUserName[] = "proxy_user";

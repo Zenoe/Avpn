@@ -17,7 +17,6 @@ public:
         IsClientProtocolExistsRole,
         // Protocol type check roles
         IsWireGuardRole,
-        IsAwgRole,
         IsSftpRole,
         IsSocks5ProxyRole,
         IsMtProxyRole,

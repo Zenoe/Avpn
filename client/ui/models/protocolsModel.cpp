@@ -6,7 +6,6 @@
 #include "core/utils/constants/protocolConstants.h"
 #include "core/utils/containerEnum.h"
 #include "core/utils/containers/containerUtils.h"
-#include "core/models/protocols/awgProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
 
 using namespace amnezia;
@@ -32,7 +31,6 @@ QHash<int, QByteArray> ProtocolsModel::roleNames() const
     roles[RawConfigRole] = "rawConfig";
     roles[IsClientProtocolExistsRole] = "isClientProtocolExists";
     roles[IsWireGuardRole] = "isWireGuard";
-    roles[IsAwgRole] = "isAwg";
     roles[IsSftpRole] = "isSftp";
     roles[IsSocks5ProxyRole] = "isSocks5Proxy";
     roles[IsMtProxyRole] = "isMtProxy";
@@ -56,7 +54,6 @@ QVariant ProtocolsModel::data(const QModelIndex &index, int role) const
     case ProtocolIndexRole: return static_cast<int>(proto);
     case ProtocolStringRole: return amnezia::ProtocolUtils::protoToString(proto);
     case IsWireGuardRole: return proto == Proto::WireGuard;
-    case IsAwgRole: return proto == Proto::Awg;
     case IsSftpRole: return proto == Proto::Sftp;
     case IsSocks5ProxyRole: return proto == Proto::Socks5Proxy;
     case IsMtProxyRole: return proto == Proto::MtProxy;

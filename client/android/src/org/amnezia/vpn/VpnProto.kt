@@ -1,7 +1,6 @@
 package org.amnezia.vpn
 
 import org.amnezia.vpn.protocol.Protocol
-import org.amnezia.vpn.protocol.awg.Awg
 import org.amnezia.vpn.protocol.wireguard.Wireguard
 
 enum class VpnProto(
@@ -11,18 +10,10 @@ enum class VpnProto(
 ) {
     WIREGUARD(
         "WireGuard",
-        "org.amnezia.vpn:amneziaAwgService",
-        AwgService::class.java
+        "org.amnezia.vpn:wireguardService",
+        WireguardService::class.java
     ) {
         override fun createProtocol(): Protocol = Wireguard()
-    },
-
-    AWG(
-        "AmneziaWG",
-        "org.amnezia.vpn:amneziaAwgService",
-        AwgService::class.java
-    ) {
-        override fun createProtocol(): Protocol = Awg()
     };
 
     private var _protocol: Protocol? = null

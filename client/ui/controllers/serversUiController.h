@@ -14,7 +14,6 @@
 #include "ui/models/serversModel.h"
 #include "ui/models/containersModel.h"
 #include "ui/models/protocolsModel.h"
-#include "ui/models/protocols/awgConfigModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
 
 class ServersUiController : public QObject
@@ -40,7 +39,6 @@ public:
                                  ContainersModel* containersModel,
                                  ContainersModel* defaultServerContainersModel,
                                  ProtocolsModel* protocolsModel,
-                                 AwgConfigModel* awgConfigModel,
                                  WireGuardConfigModel* wireGuardConfigModel,
                                  QObject *parent = nullptr);
 
@@ -116,7 +114,6 @@ private:
     ContainersModel* m_containersModel;
     ContainersModel* m_defaultServerContainersModel;
     ProtocolsModel* m_protocolsModel;
-    AwgConfigModel* m_awgConfigModel;
     WireGuardConfigModel* m_wireGuardConfigModel;
 
     QVector<amnezia::ServerDescription> m_orderedServerDescriptions;

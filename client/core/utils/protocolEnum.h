@@ -19,8 +19,8 @@ namespace amnezia
 
         enum Proto {
             Unknown = 0,
+            // Preserve the persisted value used by existing WireGuard profiles.
             WireGuard = 2,
-            Awg = 3,
 
             // Preserve persisted numeric values for retained non-VPN services.
             Dns = 8,

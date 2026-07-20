@@ -241,11 +241,9 @@ QJsonObject ConnectionController::createConnectionConfiguration(const QPair<QStr
                                                                                   containerConfig.protocolConfig);
 
     QJsonObject vpnConfigData = processedConfig.getClientConfigJson();
-    if (ContainerUtils::isAwgContainer(container) || container == DockerContainer::WireGuard) {
+    if (container == DockerContainer::WireGuard) {
         if (vpnConfigData[configKey::mtu].toString().isEmpty()) {
-            vpnConfigData[configKey::mtu] =
-                    ContainerUtils::isAwgContainer(container) ? protocols::awg::defaultMtu :
-                    protocols::wireguard::defaultMtu;
+            vpnConfigData[configKey::mtu] = protocols::wireguard::defaultMtu;
         }
     }
 

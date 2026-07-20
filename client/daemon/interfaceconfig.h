@@ -6,7 +6,6 @@
 #define INTERFACECONFIG_H
 
 #include <QList>
-#include <QMap>
 #include <QString>
 #include <QMap>
 #include "ipaddress.h"
@@ -44,19 +43,6 @@ class InterfaceConfig {
 #if defined(MZ_ANDROID) || defined(MZ_IOS)
   QString m_installationId;
 #endif
-
-  QString m_junkPacketCount;
-  QString m_junkPacketMinSize;
-  QString m_junkPacketMaxSize;
-  QString m_initPacketJunkSize;
-  QString m_responsePacketJunkSize;
-  QString m_cookieReplyPacketJunkSize;
-  QString m_transportPacketJunkSize;
-  QString m_initPacketMagicHeader;
-  QString m_responsePacketMagicHeader;
-  QString m_underloadPacketMagicHeader;
-  QString m_transportPacketMagicHeader;
-  QMap<QString, QString> m_specialJunk;
 
   QJsonObject toJson() const;
   QString toWgConf(

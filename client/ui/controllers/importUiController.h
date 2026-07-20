@@ -27,7 +27,6 @@ public slots:
     QString getConfigFileName();
     QString getMaliciousWarningText();
     bool isNativeWireGuardConfig();
-    void processNativeWireGuardConfig();
     QString readTextFile(const QString &fileName);
 
 #if defined Q_OS_ANDROID || defined Q_OS_IOS

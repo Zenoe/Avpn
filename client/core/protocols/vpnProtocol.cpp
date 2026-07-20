@@ -105,8 +105,6 @@ VpnProtocol *VpnProtocol::factory(DockerContainer container, const QJsonObject &
     switch (container) {
 #if defined(Q_OS_WINDOWS) || defined(Q_OS_MACX) and !defined MACOS_NE || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
     case DockerContainer::WireGuard: return new WireguardProtocol(configuration);
-    case DockerContainer::Awg2: return new WireguardProtocol(configuration);
-    case DockerContainer::Awg: return new WireguardProtocol(configuration);
 #endif
     default: return nullptr;
     }

@@ -28,6 +28,18 @@ bool hasThirdPartyConfig(const QJsonObject &json)
     return false;
 }
 
+bool hasAwgContainer(const QJsonObject &json)
+{
+    const QJsonArray containersArray = json.value(amnezia::configKey::containers).toArray();
+    for (const QJsonValue &value : containersArray) {
+        const QString container = value.toObject().value(amnezia::configKey::container).toString();
+        if (container == QStringLiteral("amnezia-awg") || container == QStringLiteral("amnezia-awg2")) {
+            return true;
+        }
+    }
+    return false;
+}
+
 } // namespace
 
 namespace serverConfigUtils
@@ -35,7 +47,8 @@ namespace serverConfigUtils
 
 ConfigType configTypeFromJson(const QJsonObject &serverConfigObject)
 {
-    if (serverConfigObject.value(amnezia::configKey::configVersion).toInt() != 0
+    if (hasAwgContainer(serverConfigObject)
+        || serverConfigObject.value(amnezia::configKey::configVersion).toInt() != 0
         || serverConfigObject.contains(QStringLiteral("api_key"))
         || serverConfigObject.contains(QStringLiteral("auth_data"))) {
         return ConfigType::Invalid;

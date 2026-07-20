@@ -106,10 +106,6 @@ QJsonObject WireGuardClientConfig::toJson() const
         obj[configKey::mtu] = mtu;
     }
     
-    if (isObfuscationEnabled) {
-        obj[configKey::isObfuscationEnabled] = isObfuscationEnabled;
-    }
-    
     return obj;
 }
 
@@ -133,8 +129,6 @@ WireGuardClientConfig WireGuardClientConfig::fromJson(const QJsonObject& json)
     }
     config.persistentKeepAlive = json.value(configKey::persistentKeepAlive).toString();
     config.mtu = json.value(configKey::mtu).toString();
-    
-    config.isObfuscationEnabled = json.value(configKey::isObfuscationEnabled).toBool(false);
     
     return config;
 }

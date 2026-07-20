@@ -13,7 +13,6 @@
 #include "core/utils/containers/containerUtils.h"
 #include "core/utils/protocolEnum.h"
 
-#include "core/models/protocols/awgProtocolConfig.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
 #include "core/models/protocols/sftpProtocolConfig.h"
 #include "core/models/protocols/socks5ProxyProtocolConfig.h"
@@ -28,7 +27,6 @@ using Proto = ProtocolEnumNS::Proto;
 
 struct ProtocolConfig {
     using Variant = std::variant<
-        AwgProtocolConfig,
         WireGuardProtocolConfig,
         SftpProtocolConfig,
         Socks5ProxyProtocolConfig,

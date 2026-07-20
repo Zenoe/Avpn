@@ -19,10 +19,6 @@ QString ContainerUtils::containerToString(DockerContainer c)
 {
     if (c == DockerContainer::None)
         return "none";
-    if (c == DockerContainer::Awg)
-        return "amnezia-awg";
-    if (c == DockerContainer::Awg2)
-        return "amnezia-awg2";
     QMetaEnum metaEnum = QMetaEnum::fromType<DockerContainer>();
     QString containerKey = metaEnum.valueToKey(static_cast<int>(c));
 
@@ -33,10 +29,6 @@ QString ContainerUtils::containerTypeToString(DockerContainer c)
 {
     if (c == DockerContainer::None)
         return "none";
-    if (c == DockerContainer::Awg)
-        return "awg";
-    if (c == DockerContainer::Awg2)
-        return "awg";
     QMetaEnum metaEnum = QMetaEnum::fromType<DockerContainer>();
     QString containerKey = metaEnum.valueToKey(static_cast<int>(c));
 
@@ -48,8 +40,6 @@ QList<DockerContainer> ContainerUtils::allContainers()
     return {
         DockerContainer::None,
         DockerContainer::WireGuard,
-        DockerContainer::Awg,
-        DockerContainer::Awg2,
         DockerContainer::Dns,
         DockerContainer::Sftp,
         DockerContainer::Socks5Proxy,
@@ -62,8 +52,6 @@ QMap<DockerContainer, QString> ContainerUtils::containerHumanNames()
 {
     return { { DockerContainer::None, "Not installed" },
              { DockerContainer::WireGuard, "WireGuard" },
-             { DockerContainer::Awg, "AmneziaWG" },
-             { DockerContainer::Awg2, "AmneziaWG" },
              { DockerContainer::Dns, QObject::tr("AmneziaDNS") },
              { DockerContainer::Sftp, QObject::tr("SFTP file sharing service") },
              { DockerContainer::Socks5Proxy, QObject::tr("SOCKS5 proxy server") },
@@ -77,12 +65,6 @@ QMap<DockerContainer, QString> ContainerUtils::containerDescriptions()
     return { { DockerContainer::WireGuard,
                QObject::tr("WireGuard - popular VPN protocol with high performance, high speed and low power "
                            "consumption.") },
-             { DockerContainer::Awg,
-               QObject::tr("AmneziaWG is a special protocol from Amnezia based on WireGuard. "
-                           "It provides high connection speed and ensures stable operation even in the most challenging network conditions.") },
-             { DockerContainer::Awg2,
-               QObject::tr("AmneziaWG is a special protocol from Amnezia based on WireGuard. "
-                           "It provides high connection speed and ensures stable operation even in the most challenging network conditions.") },
              { DockerContainer::Dns,
                QObject::tr("Replace the current DNS server with your own. This will increase your privacy level.") },
              { DockerContainer::Sftp,
@@ -108,18 +90,6 @@ QMap<DockerContainer, QString> ContainerUtils::containerDetailedDescriptions()
                       "* Low power consumption on mobile devices\n"
                       "* Minimal configuration required\n"
                       "* Easily detected by DPI systems (susceptible to blocking)\n"
-                      "* Operates over UDP protocol") },
-        { DockerContainer::Awg2,
-          QObject::tr("AmneziaWG is a modern VPN protocol based on WireGuard, "
-                      "combining simplified architecture with high performance across all devices. "
-                      "It addresses WireGuard's main vulnerability (easy detection by DPI systems) through advanced obfuscation techniques, "
-                      "making VPN traffic indistinguishable from regular internet traffic.\n"
-                      "\nAmneziaWG is an excellent choice for those seeking a fast, stealthy VPN connection.\n"
-                      "\nFeatures:\n"
-                      "* Available on all AmneziaVPN platforms\n"
-                      "* Low battery consumption on mobile devices\n"
-                      "* Minimal settings required\n"
-                      "* Undetectable by traffic analysis systems (DPI)\n"
                       "* Operates over UDP protocol") },
         { DockerContainer::Dns, QObject::tr("DNS Service") },
         { DockerContainer::Sftp,
@@ -149,8 +119,6 @@ Proto ContainerUtils::defaultProtocol(DockerContainer c)
     switch (c) {
     case DockerContainer::None: return Proto::Unknown;
     case DockerContainer::WireGuard: return Proto::WireGuard;
-    case DockerContainer::Awg2: return Proto::Awg;
-    case DockerContainer::Awg: return Proto::Awg;
     case DockerContainer::Dns: return Proto::Dns;
     case DockerContainer::Sftp: return Proto::Sftp;
     case DockerContainer::Socks5Proxy: return Proto::Socks5Proxy;
@@ -178,8 +146,6 @@ bool ContainerUtils::isSupportedByCurrentPlatform(DockerContainer c)
     // Standard iOS build (without Network Extension limitations)
     switch (c) {
     case DockerContainer::WireGuard: return true;
-    case DockerContainer::Awg2: return true;
-    case DockerContainer::Awg: return true;
     case DockerContainer::MtProxy: return true;
     case DockerContainer::Telemt: return true;
     default:
@@ -189,8 +155,6 @@ bool ContainerUtils::isSupportedByCurrentPlatform(DockerContainer c)
 #elif defined(MACOS_NE)
     switch (c) {
     case DockerContainer::WireGuard: return true;
-    case DockerContainer::Awg2: return true;
-    case DockerContainer::Awg: return true;
     case DockerContainer::MtProxy: return true;
     case DockerContainer::Telemt: return true;
     default:
@@ -202,8 +166,6 @@ bool ContainerUtils::isSupportedByCurrentPlatform(DockerContainer c)
 #elif defined(Q_OS_ANDROID)
     switch (c) {
     case DockerContainer::WireGuard: return true;
-    case DockerContainer::Awg2: return true;
-    case DockerContainer::Awg: return true;
     case DockerContainer::MtProxy: return true;
     case DockerContainer::Telemt: return true;
     default: return false;
@@ -226,7 +188,6 @@ QStringList ContainerUtils::fixedPortsForContainer(DockerContainer c)
 bool ContainerUtils::isEasySetupContainer(DockerContainer container)
 {
     switch (container) {
-    case DockerContainer::Awg2: return true;
     default: return false;
     }
 }
@@ -234,7 +195,6 @@ bool ContainerUtils::isEasySetupContainer(DockerContainer container)
 QString ContainerUtils::easySetupHeader(DockerContainer container)
 {
     switch (container) {
-    case DockerContainer::Awg2: return QObject::tr("Automatic");
     default: return "";
     }
 }
@@ -242,8 +202,6 @@ QString ContainerUtils::easySetupHeader(DockerContainer container)
 QString ContainerUtils::easySetupDescription(DockerContainer container)
 {
     switch (container) {
-    case DockerContainer::Awg2: return QObject::tr("AmneziaWG protocol will be installed. "
-                                         "It provides high connection speed and ensures stable operation even in the most challenging network conditions.");
     default: return "";
     }
 }
@@ -251,7 +209,6 @@ QString ContainerUtils::easySetupDescription(DockerContainer container)
 int ContainerUtils::easySetupOrder(DockerContainer container)
 {
     switch (container) {
-    case DockerContainer::Awg2: return 1;
     default: return 0;
     }
 }
@@ -272,11 +229,6 @@ bool ContainerUtils::isShareable(DockerContainer container)
     }
 }
 
-bool ContainerUtils::isAwgContainer(DockerContainer container)
-{
-    return container == DockerContainer::Awg || container == DockerContainer::Awg2;
-}
-
 bool ContainerUtils::isUnsupportedContainer(DockerContainer container)
 {
     return !allContainers().contains(container);
@@ -295,8 +247,7 @@ QJsonObject ContainerUtils::getProtocolConfigFromContainer(const Proto protocol,
 int ContainerUtils::installPageOrder(DockerContainer container)
 {
     switch (container) {
-    case DockerContainer::WireGuard: return 2;
-    case DockerContainer::Awg2: return 1;
+    case DockerContainer::WireGuard: return 1;
     case DockerContainer::MtProxy:
     case DockerContainer::Telemt:
         return 20;

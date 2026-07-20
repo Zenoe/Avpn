@@ -94,7 +94,6 @@ private:
     explicit IosController();
 
     bool setupWireGuard();
-    bool setupAwg();
 
     bool startWireGuard(const QString &jsonConfig);
 

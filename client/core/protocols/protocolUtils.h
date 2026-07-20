@@ -4,7 +4,6 @@
 #include <QList>
 #include <QMap>
 #include <QString>
-#include <QJsonObject>
 
 #include "core/utils/protocolEnum.h"
 #include "core/utils/constants/configKeys.h"
@@ -39,8 +38,6 @@ namespace amnezia
         QString key_proto_config_data(Proto p);
         QString key_proto_config_path(Proto p);
 
-        QString getProtocolVersion(const QJsonObject &protocolConfig);
-        QString getProtocolVersionString(const QJsonObject &protocolConfig);
     }
 }
 

@@ -40,7 +40,6 @@
 #include "ui/models/containersModel.h"
 #include "ui/models/languageModel.h"
 #include "ui/models/appSplitTunnelingModel.h"
-#include "ui/models/protocols/awgConfigModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
 #include "ui/models/protocolsModel.h"
 #include "ui/models/serversModel.h"
@@ -162,7 +161,6 @@ private:
 
 
     WireGuardConfigModel* m_wireGuardConfigModel;
-    AwgConfigModel* m_awgConfigModel;
     SftpConfigModel* m_sftpConfigModel;
     Socks5ProxyConfigModel* m_socks5ConfigModel;
     MtProxyConfigModel* m_mtProxyConfigModel;

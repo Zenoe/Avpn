@@ -199,7 +199,6 @@ if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
         ${CLIENT_ROOT_DIR}/core/utils/ipcClient.h
         ${CLIENT_ROOT_DIR}/ui/utils/systemTrayNotificationHandler.h
         ${CLIENT_ROOT_DIR}/core/protocols/wireGuardProtocol.h
-        ${CLIENT_ROOT_DIR}/core/protocols/awgProtocol.h
         ${CLIENT_ROOT_DIR}/mozilla/localsocketcontroller.h
     )
 
@@ -208,7 +207,6 @@ if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
         ${CLIENT_ROOT_DIR}/mozilla/localsocketcontroller.cpp
         ${CLIENT_ROOT_DIR}/ui/utils/systemTrayNotificationHandler.cpp
         ${CLIENT_ROOT_DIR}/core/protocols/wireGuardProtocol.cpp
-        ${CLIENT_ROOT_DIR}/core/protocols/awgProtocol.cpp
     )
 endif()
 

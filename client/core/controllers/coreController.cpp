@@ -78,9 +78,6 @@ void CoreController::initModels()
     m_wireGuardConfigModel = new WireGuardConfigModel(this);
     setQmlContextProperty("WireGuardConfigModel", m_wireGuardConfigModel);
 
-    m_awgConfigModel = new AwgConfigModel(this);
-    setQmlContextProperty("AwgConfigModel", m_awgConfigModel);
-
     m_sftpConfigModel = new SftpConfigModel(this);
     setQmlContextProperty("SftpConfigModel", m_sftpConfigModel);
 
@@ -141,7 +138,7 @@ void CoreController::initControllers()
     setQmlContextProperty("PageController", m_pageController);
 
     m_serversUiController = new ServersUiController(m_serversController, m_settingsController, m_serversModel, m_containersModel,
-                                                    m_defaultServerContainersModel, m_protocolsModel, m_awgConfigModel,
+                                                    m_defaultServerContainersModel, m_protocolsModel,
                                                     m_wireGuardConfigModel, this);
     setQmlContextProperty("ServersUiController", m_serversUiController);
 

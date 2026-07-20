@@ -21,9 +21,7 @@ Proto ProtocolConfig::type() const
 {
     return std::visit([](auto&& arg) -> Proto {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            return Proto::Awg;
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             return Proto::WireGuard;
         } else if constexpr (std::is_same_v<T, SftpProtocolConfig>) {
             return Proto::Sftp;
@@ -44,9 +42,7 @@ QString ProtocolConfig::port() const
 {
     return std::visit([](auto&& arg) -> QString {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            return arg.serverConfig.port;
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             return arg.serverConfig.port;
         } else if constexpr (std::is_same_v<T, SftpProtocolConfig>) {
             return arg.port;
@@ -67,9 +63,7 @@ QString ProtocolConfig::transportProto() const
 {
     return std::visit([](auto&& arg) -> QString {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            return arg.serverConfig.transportProto;
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             return arg.serverConfig.transportProto;
         } else if constexpr (std::is_same_v<T, DnsProtocolConfig>) {
             return QString();
@@ -86,8 +80,7 @@ bool ProtocolConfig::hasClientConfig() const
 {
     return std::visit([](auto&& arg) -> bool {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig> ||
-                      std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             return arg.hasClientConfig();
         }
         return false;
@@ -98,11 +91,7 @@ QString ProtocolConfig::clientId() const
 {
     return std::visit([](auto&& arg) -> QString {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            if (arg.clientConfig.has_value()) {
-                return arg.clientConfig->clientId;
-            }
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             if (arg.clientConfig.has_value()) {
                 return arg.clientConfig->clientId;
             }
@@ -115,11 +104,7 @@ QJsonObject ProtocolConfig::getClientConfigJson() const
 {
     return std::visit([](auto&& arg) -> QJsonObject {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            if (arg.hasClientConfig()) {
-                return arg.clientConfig->toJson();
-            }
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             if (arg.hasClientConfig()) {
                 return arg.clientConfig->toJson();
             }
@@ -132,9 +117,7 @@ void ProtocolConfig::setClientConfigJson(const QJsonObject& json)
 {
     std::visit([&json](auto&& arg) {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            arg.setClientConfig(AwgClientConfig::fromJson(json));
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             arg.setClientConfig(WireGuardClientConfig::fromJson(json));
         }
     }, data);
@@ -144,8 +127,7 @@ void ProtocolConfig::clearClientConfig()
 {
     std::visit([](auto&& arg) {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig> ||
-                      std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             arg.clearClientConfig();
         }
     }, data);
@@ -155,11 +137,7 @@ QString ProtocolConfig::nativeConfig() const
 {
     return std::visit([](auto&& arg) -> QString {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            if (arg.clientConfig.has_value()) {
-                return arg.clientConfig->nativeConfig;
-            }
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             if (arg.clientConfig.has_value()) {
                 return arg.clientConfig->nativeConfig;
             }
@@ -172,11 +150,7 @@ void ProtocolConfig::setNativeConfig(const QString &config)
 {
     std::visit([&config](auto&& arg) {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig>) {
-            if (arg.clientConfig.has_value()) {
-                arg.clientConfig->nativeConfig = config;
-            }
-        } else if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             if (arg.clientConfig.has_value()) {
                 arg.clientConfig->nativeConfig = config;
             }
@@ -188,8 +162,7 @@ bool ProtocolConfig::isThirdPartyConfig() const
 {
     return std::visit([](auto&& arg) -> bool {
         using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, AwgProtocolConfig> ||
-                      std::is_same_v<T, WireGuardProtocolConfig>) {
+        if constexpr (std::is_same_v<T, WireGuardProtocolConfig>) {
             return arg.serverConfig.isThirdPartyConfig;
         }
         return false;
@@ -206,8 +179,6 @@ QJsonObject ProtocolConfig::toJson() const
 ProtocolConfig ProtocolConfig::fromJson(const QJsonObject& json, Proto type)
 {
     switch (type) {
-    case Proto::Awg:
-        return ProtocolConfig{AwgProtocolConfig::fromJson(json)};
     case Proto::WireGuard:
         return ProtocolConfig{WireGuardProtocolConfig::fromJson(json)};
     case Proto::Sftp:
@@ -221,7 +192,7 @@ ProtocolConfig ProtocolConfig::fromJson(const QJsonObject& json, Proto type)
     case Proto::Telemt:
         return ProtocolConfig{TelemtProtocolConfig::fromJson(json)};
     default:
-        return ProtocolConfig{AwgProtocolConfig{}};
+        return ProtocolConfig{WireGuardProtocolConfig{}};
     }
 }
 

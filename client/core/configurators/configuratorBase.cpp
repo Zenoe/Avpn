@@ -1,6 +1,5 @@
 #include "configuratorBase.h"
 
-#include "core/configurators/awgConfigurator.h"
 #include "core/configurators/wireguardConfigurator.h"
 
 using namespace amnezia;
@@ -14,7 +13,6 @@ QScopedPointer<ConfiguratorBase> ConfiguratorBase::create(Proto protocol)
 {
     switch (protocol) {
     case Proto::WireGuard: return QScopedPointer<ConfiguratorBase>(new WireguardConfigurator(false));
-    case Proto::Awg: return QScopedPointer<ConfiguratorBase>(new AwgConfigurator());
     default: return QScopedPointer<ConfiguratorBase>();
     }
 }

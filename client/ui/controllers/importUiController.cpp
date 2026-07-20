@@ -118,12 +118,6 @@ bool ImportUiController::isNativeWireGuardConfig()
     return m_isNativeWireGuardConfig;
 }
 
-void ImportUiController::processNativeWireGuardConfig()
-{
-    m_config = m_importController->processNativeWireGuardConfig(m_config);
-    emit importConfigChanged();
-}
-
 void ImportUiController::importConfig()
 {
     m_importController->importConfig(m_config);

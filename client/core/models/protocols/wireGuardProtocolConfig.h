@@ -36,7 +36,6 @@ struct WireGuardClientConfig {
     QStringList allowedIps;
     QString persistentKeepAlive;
     QString mtu;
-    bool isObfuscationEnabled = false;
     
     QJsonObject toJson() const;
     static WireGuardClientConfig fromJson(const QJsonObject& json);

@@ -106,34 +106,10 @@ open class Wireguard : Protocol() {
         val port = configData.getInt("port")
         setEndpoint(InetEndpoint(host, port))
 
-        if (configData.optBoolean("isObfuscationEnabled")) {
-            setUseProtocolExtension(true)
-            configExtensionParameters(configData)
-        }
-
         configData.optStringOrNull("persistent_keep_alive")?.let { setPersistentKeepalive(it.toInt()) }
         configData.getString("client_priv_key").let { setPrivateKeyHex(it.base64ToHex()) }
         configData.getString("server_pub_key").let { setPublicKeyHex(it.base64ToHex()) }
         configData.optStringOrNull("psk_key")?.let { setPreSharedKeyHex(it.base64ToHex()) }
-    }
-
-    protected fun WireguardConfig.Builder.configExtensionParameters(configData: JSONObject) {
-        configData.optStringOrNull("Jc")?.let { setJc(it.toInt()) }
-        configData.optStringOrNull("Jmin")?.let { setJmin(it.toInt()) }
-        configData.optStringOrNull("Jmax")?.let { setJmax(it.toInt()) }
-        configData.optStringOrNull("S1")?.let { setS1(it.toInt()) }
-        configData.optStringOrNull("S2")?.let { setS2(it.toInt()) }
-        configData.optStringOrNull("S3")?.let { setS3(it.toInt()) }
-        configData.optStringOrNull("S4")?.let { setS4(it.toInt()) }
-        configData.optStringOrNull("H1")?.trim()?.let { if (it.isNotEmpty()) setH1(it) }
-        configData.optStringOrNull("H2")?.trim()?.let { if (it.isNotEmpty()) setH2(it) }
-        configData.optStringOrNull("H3")?.trim()?.let { if (it.isNotEmpty()) setH3(it) }
-        configData.optStringOrNull("H4")?.trim()?.let { if (it.isNotEmpty()) setH4(it) }
-        configData.optStringOrNull("I1")?.let { setI1(it) }
-        configData.optStringOrNull("I2")?.let { setI2(it) }
-        configData.optStringOrNull("I3")?.let { setI3(it) }
-        configData.optStringOrNull("I4")?.let { setI4(it) }
-        configData.optStringOrNull("I5")?.let { setI5(it) }
     }
 
     private fun start(

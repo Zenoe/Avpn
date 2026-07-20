@@ -34,7 +34,6 @@ ServersUiController::ServersUiController(ServersController* serversController,
                                          ContainersModel* containersModel,
                                          ContainersModel* defaultServerContainersModel,
                                          ProtocolsModel* protocolsModel,
-                                         AwgConfigModel* awgConfigModel,
                                          WireGuardConfigModel* wireGuardConfigModel,
                                          QObject *parent)
     : QObject(parent),
@@ -44,7 +43,6 @@ ServersUiController::ServersUiController(ServersController* serversController,
       m_containersModel(containersModel),
       m_defaultServerContainersModel(defaultServerContainersModel),
       m_protocolsModel(protocolsModel),
-      m_awgConfigModel(awgConfigModel),
       m_wireGuardConfigModel(wireGuardConfigModel)
 {
 }
@@ -74,9 +72,6 @@ void ServersUiController::openClientProtocolSettings(const QString &serverId, in
     m_protocolsModel->updateModel(config);
 
     switch (static_cast<Proto>(protocolIndex)) {
-    case Proto::Awg:
-        if (auto *protocol = config.getAwgProtocolConfig()) m_awgConfigModel->updateModel(container, *protocol);
-        break;
     case Proto::WireGuard:
         if (auto *protocol = config.getWireGuardProtocolConfig()) m_wireGuardConfigModel->updateModel(container, *protocol);
         break;
@@ -90,7 +85,6 @@ void ServersUiController::saveClientProtocolSettings(const QString &serverId, in
     ContainerConfig config;
     config.container = container;
     switch (static_cast<Proto>(protocolIndex)) {
-    case Proto::Awg: config.protocolConfig = m_awgConfigModel->getProtocolConfig(); break;
     case Proto::WireGuard: config.protocolConfig = m_wireGuardConfigModel->getProtocolConfig(); break;
     default: return;
     }
@@ -234,7 +228,7 @@ bool ServersUiController::isDefaultServerDefaultContainerHasSplitTunneling() con
     const DockerContainer defaultContainer = m_serversController->getDefaultContainer(defaultServerId);
     const ContainerConfig containerConfig = m_serversController->getContainerConfig(defaultServerId, defaultContainer);
     
-    if (defaultContainer == DockerContainer::Awg || defaultContainer == DockerContainer::WireGuard) {
+    if (defaultContainer == DockerContainer::WireGuard) {
         auto hasSplitTunnelingFromAllowedIps = [](const QStringList& allowedIps, const QString& nativeConfig) -> bool {
             bool hasSplitTunneling = !allowedIps.isEmpty() && !allowedIps.contains("0.0.0.0/0");
             if (!hasSplitTunneling && !nativeConfig.isEmpty()) {
@@ -244,16 +238,7 @@ bool ServersUiController::isDefaultServerDefaultContainerHasSplitTunneling() con
             return hasSplitTunneling;
         };
         
-        if (defaultContainer == DockerContainer::Awg) {
-            if (const auto* awgConfig = containerConfig.getAwgProtocolConfig()) {
-                if (awgConfig->hasClientConfig()) {
-                    return hasSplitTunnelingFromAllowedIps(
-                        awgConfig->clientConfig->allowedIps,
-                        awgConfig->clientConfig->nativeConfig
-                    );
-                }
-            }
-        } else if (defaultContainer == DockerContainer::WireGuard) {
+        if (defaultContainer == DockerContainer::WireGuard) {
             if (const auto* wgConfig = containerConfig.getWireGuardProtocolConfig()) {
                 if (wgConfig->hasClientConfig()) {
                     return hasSplitTunnelingFromAllowedIps(

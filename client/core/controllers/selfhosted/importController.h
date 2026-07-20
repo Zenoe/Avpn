@@ -17,7 +17,6 @@ namespace
     enum class ConfigTypes {
         Amnezia,
         WireGuard,
-        Awg,
         Backup,
         Invalid
     };
@@ -61,7 +60,6 @@ public:
     int qrChunksTotal() const;
 
     void importConfig(const QJsonObject &config);
-    QJsonObject processNativeWireGuardConfig(const QJsonObject &config);
 
 signals:
     void importFinished();

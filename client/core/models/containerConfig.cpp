@@ -53,16 +53,6 @@ ContainerConfig ContainerConfig::fromJson(const QJsonObject& json)
     return config;
 }
 
-AwgProtocolConfig* ContainerConfig::getAwgProtocolConfig()
-{
-    return protocolConfig.as<AwgProtocolConfig>();
-}
-
-const AwgProtocolConfig* ContainerConfig::getAwgProtocolConfig() const
-{
-    return protocolConfig.as<AwgProtocolConfig>();
-}
-
 WireGuardProtocolConfig* ContainerConfig::getWireGuardProtocolConfig()
 {
     return protocolConfig.as<WireGuardProtocolConfig>();

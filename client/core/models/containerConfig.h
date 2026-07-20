@@ -39,9 +39,6 @@ struct ContainerConfig {
         return std::visit(std::forward<Visitor>(visitor), protocolConfig);
     }
     
-    AwgProtocolConfig* getAwgProtocolConfig();
-    const AwgProtocolConfig* getAwgProtocolConfig() const;
-    
     WireGuardProtocolConfig* getWireGuardProtocolConfig();
     const WireGuardProtocolConfig* getWireGuardProtocolConfig() const;
     

@@ -114,7 +114,7 @@ void VpnConnection::onConnectionStateChanged(Vpn::ConnectionState state)
                 else
                     qWarning() << "VpnConnection::onConnectionStateChanged: Failed to flush DNS";
 
-                if (!ContainerUtils::isAwgContainer(container) && container != DockerContainer::WireGuard) {
+                if (container != DockerContainer::WireGuard) {
                     QString dns1 = m_vpnConfiguration.value(configKey::dns1).toString();
                     QString dns2 = m_vpnConfiguration.value(configKey::dns2).toString();
 
@@ -365,7 +365,7 @@ void VpnConnection::appendSplitTunnelingConfig()
 
     // this block is for old native configs and for old self-hosted configs
     auto protocolName = m_vpnConfiguration.value(configKey::vpnProto).toString();
-    if (protocolName == ProtocolUtils::protoToString(Proto::Awg) || protocolName == ProtocolUtils::protoToString(Proto::WireGuard)) {
+    if (protocolName == ProtocolUtils::protoToString(Proto::WireGuard)) {
         allowSiteBasedSplitTunneling = false;
         auto configData = m_vpnConfiguration.value(protocolName + "_config_data").toObject();
         if (configData.value(configKey::allowedIps).isString()) {

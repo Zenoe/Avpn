@@ -153,8 +153,8 @@
         </activity>
 
         <service
-            android:name=".AwgService"
-            android:process=":amneziaAwgService"
+            android:name=".WireguardService"
+            android:process=":wireguardService"
             android:permission="android.permission.BIND_VPN_SERVICE"
             android:foregroundServiceType="systemExempted"
             android:exported="false"

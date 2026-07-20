@@ -91,7 +91,6 @@ ImportController::ImportResult ImportController::extractConfigFromData(const QSt
     result.configType = configType;
 
     switch (configType) {
-    case ConfigTypes::Awg:
     case ConfigTypes::WireGuard: {
         result.config = extractWireGuardConfig(config, result.configType);
         result.isNativeWireGuardConfig = (result.configType == ConfigTypes::WireGuard);
@@ -287,43 +286,6 @@ void ImportController::importConfig(const QJsonObject &config)
     }
 }
 
-QJsonObject ImportController::processNativeWireGuardConfig(const QJsonObject &config)
-{
-    QJsonObject result = config;
-    auto containers = result.value(configKey::containers).toArray();
-    if (!containers.isEmpty()) {
-        auto container = containers.at(0).toObject();
-        auto serverProtocolConfig = container.value(ContainerUtils::containerTypeToProtocolString(DockerContainer::WireGuard)).toObject();
-        auto clientProtocolConfig = QJsonDocument::fromJson(serverProtocolConfig.value(configKey::lastConfig).toString().toUtf8()).object();
-
-        QString junkPacketCount = QString::number(QRandomGenerator::global()->bounded(4, 7));
-        QString junkPacketMinSize = QString::number(10);
-        QString junkPacketMaxSize = QString::number(50);
-        clientProtocolConfig[configKey::junkPacketCount] = junkPacketCount;
-        clientProtocolConfig[configKey::junkPacketMinSize] = junkPacketMinSize;
-        clientProtocolConfig[configKey::junkPacketMaxSize] = junkPacketMaxSize;
-        clientProtocolConfig[configKey::initPacketJunkSize] = "0";
-        clientProtocolConfig[configKey::responsePacketJunkSize] = "0";
-        clientProtocolConfig[configKey::initPacketMagicHeader] = "1";
-        clientProtocolConfig[configKey::responsePacketMagicHeader] = "2";
-        clientProtocolConfig[configKey::underloadPacketMagicHeader] = "3";
-        clientProtocolConfig[configKey::transportPacketMagicHeader] = "4";
-
-        clientProtocolConfig[configKey::cookieReplyPacketJunkSize] = "0";
-        clientProtocolConfig[configKey::transportPacketJunkSize] = "0";
-
-        clientProtocolConfig[configKey::specialJunk1] = protocols::awg::defaultSpecialJunk1;
-
-        clientProtocolConfig[configKey::isObfuscationEnabled] = true;
-
-        serverProtocolConfig[configKey::lastConfig] = QString(QJsonDocument(clientProtocolConfig).toJson());
-        container[configKey::wireguard] = serverProtocolConfig;
-        containers.replace(0, container);
-        result[configKey::containers] = containers;
-    }
-    return result;
-}
-
 ConfigTypes ImportController::checkConfigFormat(const QString &config) const
 {
     return ::checkConfigFormat(config);
@@ -399,57 +361,22 @@ QJsonObject ImportController::extractWireGuardConfig(const QString &data, Config
     lastConfig[configKey::allowedIps] = allowedIpsJsonArray;
 
     QString protocolName = configKey::wireguard;
-    QString protocolVersion;
     ConfigTypes detectedType = ConfigTypes::WireGuard;
 
-    const QStringList requiredJunkFields = { configKey::junkPacketCount,           configKey::junkPacketMinSize,
-                                             configKey::junkPacketMaxSize,         configKey::initPacketJunkSize,
-                                             configKey::responsePacketJunkSize,    configKey::initPacketMagicHeader,
-                                             configKey::responsePacketMagicHeader, configKey::underloadPacketMagicHeader,
-                                             configKey::transportPacketMagicHeader };
-
-    const QStringList optionalJunkFields = { configKey::cookieReplyPacketJunkSize,
-                                             configKey::transportPacketJunkSize,
-                                             configKey::specialJunk1,    configKey::specialJunk2,    configKey::specialJunk3,
-                                             configKey::specialJunk4,    configKey::specialJunk5
-    };
+    const QStringList requiredJunkFields = { QStringLiteral("Jc"), QStringLiteral("Jmin"), QStringLiteral("Jmax"),
+                                             QStringLiteral("S1"), QStringLiteral("S2"), QStringLiteral("H1"),
+                                             QStringLiteral("H2"), QStringLiteral("H3"), QStringLiteral("H4") };
 
     bool hasAllRequiredFields = std::all_of(requiredJunkFields.begin(), requiredJunkFields.end(),
                                             [&configMap](const QString &field) { return !configMap.value(field).isEmpty(); });
     if (hasAllRequiredFields) {
-        for (const QString &field : requiredJunkFields) {
-            lastConfig[field] = configMap.value(field);
-        }
-
-        for (const QString &field : optionalJunkFields) {
-            if (!configMap.value(field).isEmpty()) {
-                lastConfig[field] = configMap.value(field);
-            }
-        }
-
-        bool hasCookieReplyPacketJunkSize = !configMap.value(configKey::cookieReplyPacketJunkSize).isEmpty();
-        bool hasTransportPacketJunkSize = !configMap.value(configKey::transportPacketJunkSize).isEmpty();
-        bool hasSpecialJunk = !configMap.value(configKey::specialJunk1).isEmpty() ||
-                              !configMap.value(configKey::specialJunk2).isEmpty() ||
-                              !configMap.value(configKey::specialJunk3).isEmpty() ||
-                              !configMap.value(configKey::specialJunk4).isEmpty() ||
-                              !configMap.value(configKey::specialJunk5).isEmpty();
-
-        if (hasCookieReplyPacketJunkSize && hasTransportPacketJunkSize) {
-            protocolVersion = "2";
-        } else if (hasSpecialJunk && !hasCookieReplyPacketJunkSize && !hasTransportPacketJunkSize) {
-            protocolVersion = "1.5";
-        }
-        protocolName = configKey::awg;
-        detectedType = ConfigTypes::Awg;
+        return QJsonObject();
     }
 
     if (!configMap.value(protocols::wireguard::MTU).isEmpty()) {
         lastConfig[configKey::mtu] = configMap.value(protocols::wireguard::MTU);
     } else {
-        lastConfig[configKey::mtu] = (protocolName == configKey::awg) 
-                                       ? protocols::awg::defaultMtu 
-                                       : protocols::wireguard::defaultMtu;
+        lastConfig[configKey::mtu] = protocols::wireguard::defaultMtu;
     }
 
     QJsonObject wireguardConfig;
@@ -457,12 +384,9 @@ QJsonObject ImportController::extractWireGuardConfig(const QString &data, Config
     wireguardConfig[configKey::isThirdPartyConfig] = true;
     wireguardConfig[configKey::port] = port;
     wireguardConfig[configKey::transportProto] = QStringLiteral("udp");
-    if (protocolName == configKey::awg && !protocolVersion.isEmpty()) {
-        wireguardConfig[configKey::protocolVersion] = protocolVersion;
-    }
 
     QJsonObject containers;
-    QString containerName = (protocolName == configKey::awg) ? configKey::amneziaAwg : configKey::amneziaWireguard;
+    QString containerName = configKey::amneziaWireguard;
     containers.insert(configKey::container, QJsonValue(containerName));
     containers.insert(protocolName, QJsonValue(wireguardConfig));
 
@@ -496,7 +420,7 @@ void ImportController::processAmneziaConfig(QJsonObject &config) const
     for (const auto &value : std::as_const(containers)) {
         const auto object = value.toObject();
         const auto container = ContainerUtils::containerFromString(object.value(configKey::container).toString());
-        if (container == DockerContainer::WireGuard || ContainerUtils::isAwgContainer(container)) {
+        if (container == DockerContainer::WireGuard) {
             supportedContainers.append(object);
         }
     }
@@ -508,7 +432,7 @@ void ImportController::processAmneziaConfig(QJsonObject &config) const
     for (auto i = 0; i < containers.size(); i++) {
         auto container = containers.at(i).toObject();
         auto dockerContainer = ContainerUtils::containerFromString(container.value(configKey::container).toString());
-        if (ContainerUtils::isAwgContainer(dockerContainer) || dockerContainer == DockerContainer::WireGuard) {
+        if (dockerContainer == DockerContainer::WireGuard) {
             auto containerConfig = container.value(ContainerUtils::containerTypeToProtocolString(dockerContainer)).toObject();
             auto protocolConfig = containerConfig.value(configKey::lastConfig).toString();
             if (protocolConfig.isEmpty()) {
@@ -516,8 +440,7 @@ void ImportController::processAmneziaConfig(QJsonObject &config) const
             }
 
             QJsonObject jsonConfig = QJsonDocument::fromJson(protocolConfig.toUtf8()).object();
-            jsonConfig[configKey::mtu] =
-                    ContainerUtils::isAwgContainer(dockerContainer) ? protocols::awg::defaultMtu : protocols::wireguard::defaultMtu;
+            jsonConfig[configKey::mtu] = protocols::wireguard::defaultMtu;
 
             containerConfig[configKey::lastConfig] = QString(QJsonDocument(jsonConfig).toJson());
 

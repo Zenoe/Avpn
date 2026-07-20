@@ -6,7 +6,6 @@
 #include "core/utils/constants/protocolConstants.h"
 #include "core/utils/containers/containerUtils.h"
 #include "core/protocols/protocolUtils.h"
-#include "core/models/protocols/awgProtocolConfig.h"
 
 using namespace amnezia;
 
@@ -55,21 +54,7 @@ QString getBaseDescription(const QMap<DockerContainer, ContainerConfig> &contain
 QString getProtocolName(DockerContainer defaultContainer, const QMap<DockerContainer, ContainerConfig> &containers)
 {
     QString containerName = ContainerUtils::containerHumanNames().value(defaultContainer);
-    QString protocolVersion;
-
-    if (ContainerUtils::isAwgContainer(defaultContainer)) {
-        const auto it = containers.constFind(defaultContainer);
-        if (it != containers.cend()) {
-            if (const AwgProtocolConfig *awg = it->getAwgProtocolConfig()) {
-                protocolVersion = ProtocolUtils::getProtocolVersionString(awg->toJson());
-                if (defaultContainer == DockerContainer::Awg && !awg->serverConfig.isThirdPartyConfig) {
-                    containerName = QStringLiteral("AmneziaWG Legacy");
-                }
-            }
-        }
-    }
-
-    return containerName + protocolVersion + QStringLiteral(" | ");
+    return containerName + QStringLiteral(" | ");
 }
 
 } // namespace

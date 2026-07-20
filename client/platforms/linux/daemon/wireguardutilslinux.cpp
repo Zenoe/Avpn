@@ -106,44 +106,6 @@ bool WireguardUtilsLinux::addInterface(const InterfaceConfig& config) {
     out << "replace_peers=true\n";
 
 
-    if (!config.m_junkPacketCount.isEmpty()) {
-        out << "jc=" << config.m_junkPacketCount << "\n";
-    }
-    if (!config.m_junkPacketMinSize.isEmpty()) {
-        out << "jmin=" << config.m_junkPacketMinSize << "\n";
-    }
-    if (!config.m_junkPacketMaxSize.isEmpty()) {
-        out << "jmax=" << config.m_junkPacketMaxSize << "\n";
-    }
-    if (!config.m_initPacketJunkSize.isEmpty()) {
-        out << "s1=" << config.m_initPacketJunkSize << "\n";
-    }
-    if (!config.m_responsePacketJunkSize.isEmpty()) {
-        out << "s2=" << config.m_responsePacketJunkSize << "\n";
-    }
-    if (!config.m_cookieReplyPacketJunkSize.isEmpty()) {
-        out << "s3=" << config.m_cookieReplyPacketJunkSize << "\n";
-    }
-    if (!config.m_transportPacketJunkSize.isEmpty()) {
-        out << "s4=" << config.m_transportPacketJunkSize << "\n";
-    }
-    if (!config.m_initPacketMagicHeader.isEmpty()) {
-        out << "h1=" << config.m_initPacketMagicHeader << "\n";
-    }
-    if (!config.m_responsePacketMagicHeader.isEmpty()) {
-        out << "h2=" << config.m_responsePacketMagicHeader << "\n";
-    }
-    if (!config.m_underloadPacketMagicHeader.isEmpty()) {
-        out << "h3=" << config.m_underloadPacketMagicHeader << "\n";
-    }
-    if (!config.m_transportPacketMagicHeader.isEmpty()) {
-        out << "h4=" << config.m_transportPacketMagicHeader << "\n";
-    }
-
-    for (const QString& key : config.m_specialJunk.keys()) {
-        out << key.toLower() << "=" << config.m_specialJunk.value(key) << "\n";
-    }
-
     int err = uapiErrno(uapiCommand(message));
     if (err != 0) {
         logger.error() << "Interface configuration failed:" << strerror(err);

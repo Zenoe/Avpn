@@ -119,18 +119,6 @@ PageType {
                 }
             }
 
-            CheckBoxType {
-                id: cloakingCheckBox
-                objectName: "cloakingCheckBox"
-
-                visible: ImportController.isNativeWireGuardConfig
-
-                Layout.fillWidth: true
-                Layout.leftMargin: 16
-                Layout.rightMargin: 16
-
-                text: qsTr("Enable WireGuard obfuscation. It may be useful if WireGuard is blocked on your provider.")
-            }
         }
 
         model: 1 // fake model to force the ListView to be created without a model
@@ -206,21 +194,6 @@ PageType {
 
                 text: qsTr("Connect")
                 clickedFunc: function() {
-                    const headerItem = listView.headerItem;
-                    if (!headerItem) {
-                        console.error("Header item not found in ListView")
-                        return
-                    }
-
-                    const cloakingCheckBoxItem = listView.findChildWithObjectName(headerItem.children, "cloakingCheckBox");
-                    if (!cloakingCheckBoxItem) {
-                        console.error("cloakingCheckBox not found")
-                        return
-                    }
-
-                    if (cloakingCheckBoxItem.checked) {
-                        ImportController.processNativeWireGuardConfig()
-                    }
                     PageController.showBusyIndicator(true)
                     ImportController.importConfig()
                 }

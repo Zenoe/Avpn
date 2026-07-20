@@ -30,20 +30,8 @@ QVariant ContainersModel::data(const QModelIndex &index, int role) const
     }
 
     switch (role) {
-    case NameRole: {
-        if (container == DockerContainer::Awg && !isThirdPartyConfig) {
-            return "AmneziaWG Legacy";
-        }
-        return ContainerUtils::containerHumanNames().value(container);
-    }
-    case DescriptionRole: {
-        if (container == DockerContainer::Awg && !isThirdPartyConfig) {
-            return QObject::tr("AmneziaWG is a special protocol from Amnezia based on WireGuard. "
-                           "It provides high connection speed and ensures stable operation even in the most challenging network conditions.");
-        }
-
-        return ContainerUtils::containerDescriptions().value(container);
-    }
+    case NameRole: return ContainerUtils::containerHumanNames().value(container);
+    case DescriptionRole: return ContainerUtils::containerDescriptions().value(container);
     case DetailedDescriptionRole: return ContainerUtils::containerDetailedDescriptions().value(container);
     case ConfigRole: {
         if (container == DockerContainer::None) {
@@ -141,8 +129,7 @@ bool ContainersModel::hasInstalledProtocols()
 
 bool ContainersModel::isInstallationAllowed(DockerContainer container)
 {
-    return container != DockerContainer::Awg
-           && !ContainerUtils::isUnsupportedContainer(container);
+    return !ContainerUtils::isUnsupportedContainer(container);
 }
 
 void ContainersModel::openContainerSettings(int containerIndex)
