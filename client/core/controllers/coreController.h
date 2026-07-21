@@ -6,7 +6,7 @@
 #include <QThread>
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    #include "ui/utils/systemTrayNotificationHandler.h"
+    #include "ui/utils/notificationHandler.h"
 #endif
 
 #include "ui/controllers/appSplitTunnelingUiController.h"
@@ -50,10 +50,6 @@
 
 #include "ui/models/ipSplitTunnelingModel.h"
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    #include "ui/utils/notificationHandler.h"
-#endif
-
 class CoreSignalHandlers;
 
 class CoreController : public QObject
@@ -75,7 +71,6 @@ public:
 
 signals:
     void translationsUpdated();
-    void websiteUrlChanged(const QString &newUrl);
 
 protected:
     SecureServersRepository* serversRepositoryProtected() const { return m_serversRepository; }

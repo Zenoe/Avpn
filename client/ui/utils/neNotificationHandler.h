@@ -29,7 +29,6 @@ private:
     QAction* m_actionShow;
     QAction* m_actionConnect;
     QAction* m_actionDisconnect;
-    QAction* m_actionVisitWebsite;
     QAction* m_actionQuit;
 };
 

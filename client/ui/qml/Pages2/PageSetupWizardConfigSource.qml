@@ -178,40 +178,12 @@ PageType {
             }
         }
 
-        footer: ColumnLayout {
-            width: listView.width
-
-            BasicButtonType {
-                id: siteLink2
-                Layout.topMargin: 24
-                Layout.bottomMargin: 16
-                Layout.alignment: Qt.AlignHCenter
-                implicitHeight: 32
-
-                visible: Qt.platform.os !== "ios" && !IsMacOsNeBuild
-
-                defaultColor: AmneziaStyle.color.transparent
-                hoveredColor: AmneziaStyle.color.translucentWhite
-                pressedColor: AmneziaStyle.color.sheerWhite
-                disabledColor: AmneziaStyle.color.mutedGray
-                textColor: AmneziaStyle.color.goldenApricot
-
-                text: qsTr("Site Amnezia")
-
-                rightImageSource: "qrc:/images/controls/external-link.svg"
-
-                clickedFunc: function() {
-                    Qt.openUrlExternally(LanguageUiController.getCurrentSiteUrl())
-                }
-            }
-        }
     }
 
     property list<QtObject> variants: [
         backupRestore,
         fileOpen,
-        qrScan,
-        siteLink
+        qrScan
     ]
     
     QtObject {
@@ -272,15 +244,4 @@ PageType {
         }
     }
 
-    QtObject {
-        id: siteLink
-
-        property string title: qsTr("I have nothing")
-        property string description: qsTr("")
-        property string imageSource: "qrc:/images/controls/help-circle.svg"
-        property bool isVisible: PageController.isStartPageVisible() && Qt.platform.os !== "ios" && !IsMacOsNeBuild
-        property var handler: function() {
-            Qt.openUrlExternally(LanguageUiController.getCurrentSiteUrl())
-        }
-    }
 }

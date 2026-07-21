@@ -35,7 +35,6 @@ namespace PageLoader
         PageSettingsKillSwitchExceptions,
 
 
-        PageSetupWizardStart,
         PageSetupWizardConfigSource,
         PageSetupWizardViewConfig,
         PageSetupWizardQrReader,

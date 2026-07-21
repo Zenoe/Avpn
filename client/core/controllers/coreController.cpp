@@ -247,9 +247,6 @@ void CoreController::updateTranslator(const QLocale &locale)
     }
 
     emit translationsUpdated();
-    if (m_languageUiController) {
-        emit websiteUrlChanged(m_languageUiController->getCurrentSiteUrl());
-    }
 }
 
 void CoreController::setQmlRoot()

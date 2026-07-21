@@ -31,7 +31,6 @@
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     #include "ui/utils/notificationHandler.h"
-    #include "ui/utils/systemTrayNotificationHandler.h"
 #endif
 
 #ifdef Q_OS_ANDROID
@@ -273,7 +272,5 @@ void CoreSignalHandlers::initNotificationHandler()
             &ConnectionUiController::closeConnection);
     connect(m_coreController, &CoreController::translationsUpdated, m_coreController->m_notificationHandler, &NotificationHandler::onTranslationsUpdated);
 
-    auto* trayHandler = qobject_cast<SystemTrayNotificationHandler*>(m_coreController->m_notificationHandler);
-    connect(m_coreController, &CoreController::websiteUrlChanged, trayHandler, &SystemTrayNotificationHandler::updateWebsiteUrl);
 #endif
 }

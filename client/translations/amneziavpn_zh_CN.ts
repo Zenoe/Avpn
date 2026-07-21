@@ -1932,11 +1932,6 @@ Can&apos;t be disabled for current server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="210"/>
-        <source>Site Amnezia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="231"/>
         <source>Restore from backup</source>
         <translation type="unfinished">从备份还原</translation>
@@ -1945,7 +1940,6 @@ Can&apos;t be disabled for current server</source>
         <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="232"/>
         <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="257"/>
         <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="275"/>
-        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="290"/>
         <source></source>
         <translation></translation>
     </message>
@@ -1974,11 +1968,6 @@ Can&apos;t be disabled for current server</source>
         <source>QR code</source>
         <translation>二维码</translation>
     </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSetupWizardConfigSource.qml" line="289"/>
-        <source>I have nothing</source>
-        <translation type="unfinished">我没有</translation>
-    </message>
 </context>
 <context>
     <name>PageSetupWizardQrReader</name>
@@ -1986,14 +1975,6 @@ Can&apos;t be disabled for current server</source>
         <location filename="../ui/qml/Pages2/PageSetupWizardQrReader.qml" line="38"/>
         <source>Point the camera at the QR code and hold for a couple of seconds. </source>
         <translation>将相机对准二维码并按住几秒钟</translation>
-    </message>
-</context>
-<context>
-    <name>PageSetupWizardStart</name>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSetupWizardStart.qml" line="42"/>
-        <source>Let&apos;s get started</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

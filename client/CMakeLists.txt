@@ -68,7 +68,6 @@ endif()
 
 qt6_add_resources(QRC ${QRC}
     ${CMAKE_CURRENT_LIST_DIR}/images/images.qrc
-    ${CMAKE_CURRENT_LIST_DIR}/images/flagKit.qrc
     ${CMAKE_CURRENT_LIST_DIR}/client_scripts/clientScripts.qrc
     ${CMAKE_CURRENT_LIST_DIR}/ui/qml/qml.qrc
 )

@@ -85,7 +85,6 @@
         <file>Pages2/PageSettingsSplitTunneling.qml</file>
         <file>Pages2/PageSetupWizardConfigSource.qml</file>
         <file>Pages2/PageSetupWizardQrReader.qml</file>
-        <file>Pages2/PageSetupWizardStart.qml</file>
         <file>Pages2/PageSetupWizardViewConfig.qml</file>
         <file>Pages2/PageStart.qml</file>
         <file>Components/RenameServerDrawer.qml</file>

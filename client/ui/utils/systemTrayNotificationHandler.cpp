@@ -2,7 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#include <QDebug>
 #include "systemTrayNotificationHandler.h"
 
 
@@ -11,7 +10,6 @@
 #endif
 
 #include <QApplication>
-#include <QDesktopServices>
 #include <QIcon>
 #include <QWindow>
 
@@ -34,10 +32,6 @@ SystemTrayNotificationHandler::SystemTrayNotificationHandler(QObject* parent) :
 
     m_menu.addSeparator();
 
-    m_trayActionVisitWebSite = m_menu.addAction(QIcon(":/images/tray/link.png"), tr("Visit Website"), [&](){
-        QDesktopServices::openUrl(QUrl(websiteUrl));
-    });
-
     // Quit action: disconnect VPN first on macOS NE, else quit directly
     m_trayActionQuit = m_menu.addAction(QIcon(":/images/tray/cancel.png"),
                                        tr("Quit") + " " + APPLICATION_NAME,
@@ -59,16 +53,10 @@ void SystemTrayNotificationHandler::setConnectionState(Vpn::ConnectionState stat
 
 void SystemTrayNotificationHandler::onTranslationsUpdated()
 {
-    m_trayActionShow->setText(tr("Show") + " " + APPLICATION_NAME);
+    m_trayActionShow->setText(tr("Show"));
     m_trayActionConnect->setText(tr("Connect"));
     m_trayActionDisconnect->setText(tr("Disconnect"));
-    m_trayActionVisitWebSite->setText(tr("Visit Website"));
-    m_trayActionQuit->setText(tr("Quit")+ " " + APPLICATION_NAME);
-}
-
-void SystemTrayNotificationHandler::updateWebsiteUrl(const QString &newWebsiteUrl) {
-    qDebug() << "Updated website URL:" << newWebsiteUrl;
-    websiteUrl = newWebsiteUrl;
+    m_trayActionQuit->setText(tr("Quit"));
 }
 
 void SystemTrayNotificationHandler::setTrayIcon(const QString &iconPath)

@@ -26,7 +26,7 @@ PageType {
         function onGoToPageHome() {
             if (PageController.isStartPageVisible()) {
                 tabBar.visible = false
-                tabBarStackView.goToTabBarPage(PageEnum.PageSetupWizardStart)
+                tabBarStackView.goToTabBarPage(PageEnum.PageSetupWizardConfigSource)
             } else {
                 tabBar.visible = true
                 tabBar.setCurrentIndex(0)
@@ -151,7 +151,7 @@ PageType {
             var pagePath
             if (PageController.isStartPageVisible()) {
                 tabBar.visible = false
-                pagePath = PageController.getPagePath(PageEnum.PageSetupWizardStart)
+                pagePath = PageController.getPagePath(PageEnum.PageSetupWizardConfigSource)
             } else {
                 tabBar.visible = true
                 pagePath = PageController.getPagePath(PageEnum.PageHome)
