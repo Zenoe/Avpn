@@ -5,7 +5,7 @@
 #include "core/utils/constants/configKeys.h"
 #include "core/utils/constants/protocolConstants.h"
 
-using namespace amnezia;
+using namespace caelispect;
 using namespace ProtocolUtils;
 
 WireGuardConfigModel::WireGuardConfigModel(QObject *parent) : QAbstractListModel(parent)
@@ -31,7 +31,7 @@ bool WireGuardConfigModel::setData(const QModelIndex &index, const QVariant &val
     case Roles::PortRole: m_protocolConfig.serverConfig.port = strValue; break;
     case Roles::ClientMtuRole: {
         if (!m_protocolConfig.clientConfig.has_value()) {
-            m_protocolConfig.clientConfig = amnezia::WireGuardClientConfig{};
+            m_protocolConfig.clientConfig = caelispect::WireGuardClientConfig{};
         }
         m_protocolConfig.clientConfig->mtu = strValue;
         break;
@@ -64,7 +64,7 @@ QVariant WireGuardConfigModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void WireGuardConfigModel::updateModel(amnezia::DockerContainer container, const amnezia::WireGuardProtocolConfig &protocolConfig)
+void WireGuardConfigModel::updateModel(caelispect::DockerContainer container, const caelispect::WireGuardProtocolConfig &protocolConfig)
 {
     beginResetModel();
     m_container = container;
@@ -74,7 +74,7 @@ void WireGuardConfigModel::updateModel(amnezia::DockerContainer container, const
     applyDefaultsToServerConfig(m_protocolConfig.serverConfig);
     
     if (!m_protocolConfig.clientConfig.has_value()) {
-        m_protocolConfig.clientConfig = amnezia::WireGuardClientConfig{};
+        m_protocolConfig.clientConfig = caelispect::WireGuardClientConfig{};
     }
     applyDefaultsToClientConfig(m_protocolConfig.clientConfig.value());
     
@@ -83,7 +83,7 @@ void WireGuardConfigModel::updateModel(amnezia::DockerContainer container, const
     endResetModel();
 }
 
-void WireGuardConfigModel::applyDefaultsToServerConfig(amnezia::WireGuardServerConfig& config)
+void WireGuardConfigModel::applyDefaultsToServerConfig(caelispect::WireGuardServerConfig& config)
 {
     if (config.subnetAddress.isEmpty()) {
         config.subnetAddress = protocols::wireguard::defaultSubnetAddress;
@@ -93,18 +93,18 @@ void WireGuardConfigModel::applyDefaultsToServerConfig(amnezia::WireGuardServerC
     }
     if (config.transportProto.isEmpty()) {
         config.transportProto = ProtocolUtils::transportProtoToString(
-            ProtocolUtils::defaultTransportProto(amnezia::Proto::WireGuard), amnezia::Proto::WireGuard);
+            ProtocolUtils::defaultTransportProto(caelispect::Proto::WireGuard), caelispect::Proto::WireGuard);
     }
 }
 
-void WireGuardConfigModel::applyDefaultsToClientConfig(amnezia::WireGuardClientConfig& config)
+void WireGuardConfigModel::applyDefaultsToClientConfig(caelispect::WireGuardClientConfig& config)
 {
     if (config.mtu.isEmpty()) {
         config.mtu = protocols::wireguard::defaultMtu;
     }
 }
 
-amnezia::WireGuardProtocolConfig WireGuardConfigModel::getProtocolConfig()
+caelispect::WireGuardProtocolConfig WireGuardConfigModel::getProtocolConfig()
 {
     bool serverSettingsChanged = !m_protocolConfig.serverConfig.hasEqualServerSettings(m_originalProtocolConfig.serverConfig);
     

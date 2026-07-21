@@ -3,7 +3,7 @@
 #include <QRandomGenerator>
 #include <QObject>
 
-using namespace amnezia;
+using namespace caelispect;
 
 QList<Proto> ProtocolUtils::allProtocols()
 {

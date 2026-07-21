@@ -28,16 +28,16 @@ Item {
     property alias rightButton: rightImage
     property alias eyeButton: eyeImage
 
-    property string textColor: AmneziaStyle.color.paleGray
-    property string textDisabledColor: AmneziaStyle.color.mutedGray
-    property string descriptionColor: AmneziaStyle.color.mutedGray
-    property string descriptionDisabledColor: AmneziaStyle.color.charcoalGray
+    property string textColor: CaelispectStyle.color.paleGray
+    property string textDisabledColor: CaelispectStyle.color.mutedGray
+    property string descriptionColor: CaelispectStyle.color.mutedGray
+    property string descriptionDisabledColor: CaelispectStyle.color.charcoalGray
     property real textOpacity: 1.0
 
-    property string borderFocusedColor: AmneziaStyle.color.paleGray
+    property string borderFocusedColor: CaelispectStyle.color.paleGray
     property int borderFocusedWidth: 1
 
-    property string rightImageColor: AmneziaStyle.color.paleGray
+    property string rightImageColor: CaelispectStyle.color.paleGray
     property string leftImageColor: ""
 
     property bool descriptionOnTop: false
@@ -131,7 +131,7 @@ Item {
             Layout.rightMargin: isSmallLeftImage ? 8 : (rightImageSource || !isLeftImageHoverEnabled) ? 16 : 0
 
             radius: 12
-            color: AmneziaStyle.color.transparent
+            color: CaelispectStyle.color.transparent
 
             Behavior on color {
                 PropertyAnimation { duration: 200 }
@@ -242,7 +242,7 @@ Item {
                 id: eyeImageBackground
                 anchors.fill: parent
                 radius: 12
-                color: AmneziaStyle.color.transparent
+                color: CaelispectStyle.color.transparent
 
                 Behavior on color {
                     PropertyAnimation { duration: 200 }
@@ -279,7 +279,7 @@ Item {
                 id: rightImageBackground
                 anchors.fill: parent
                 radius: 12
-                color: AmneziaStyle.color.transparent
+                color: CaelispectStyle.color.transparent
 
                 Behavior on color {
                     PropertyAnimation { duration: 200 }
@@ -296,9 +296,9 @@ Item {
     Rectangle {
         id: background
         anchors.fill: root
-        color: AmneziaStyle.color.transparent
+        color: CaelispectStyle.color.transparent
 
-        border.color: root.activeFocus ? root.borderFocusedColor : AmneziaStyle.color.transparent
+        border.color: root.activeFocus ? root.borderFocusedColor : CaelispectStyle.color.transparent
         border.width: root.activeFocus ? root.borderFocusedWidth : 0
 
 

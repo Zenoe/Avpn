@@ -46,7 +46,7 @@ set(SOURCES ${SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/QRCodeReaderBase.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/QtAppDelegate.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/StoreKitController.mm
-    ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/AmneziaSceneDelegateHooks.mm
+    ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/CaelispectSceneDelegateHooks.mm
 )
 
 
@@ -56,8 +56,8 @@ target_include_directories(${PROJECT} PRIVATE ${Qt6Gui_PRIVATE_INCLUDE_DIRS})
 set_target_properties(${PROJECT} PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/Info.plist.in
     MACOSX_BUNDLE_ICON_FILE "AppIcon"
-    MACOSX_BUNDLE_INFO_STRING "AmneziaVPN"
-    MACOSX_BUNDLE_BUNDLE_NAME "AmneziaVPN"
+    MACOSX_BUNDLE_INFO_STRING "Caelispect"
+    MACOSX_BUNDLE_BUNDLE_NAME "Caelispect"
     MACOSX_BUNDLE_GUI_IDENTIFIER "${BUILD_IOS_APP_IDENTIFIER}"
     MACOSX_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION_TWEAK}"
     MACOSX_BUNDLE_LONG_VERSION_STRING "${APPLE_PROJECT_VERSION}-${CMAKE_PROJECT_VERSION_TWEAK}"
@@ -66,8 +66,8 @@ set_target_properties(${PROJECT} PROPERTIES
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/ios/app/main.entitlements"
     XCODE_ATTRIBUTE_MARKETING_VERSION "${APPLE_PROJECT_VERSION}"
     XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION "${CMAKE_PROJECT_VERSION_TWEAK}"
-    XCODE_ATTRIBUTE_PRODUCT_NAME "AmneziaVPN"
-    XCODE_ATTRIBUTE_BUNDLE_INFO_STRING "AmneziaVPN"
+    XCODE_ATTRIBUTE_PRODUCT_NAME "Caelispect"
+    XCODE_ATTRIBUTE_BUNDLE_INFO_STRING "Caelispect"
     XCODE_GENERATE_SCHEME TRUE
     XCODE_ATTRIBUTE_ENABLE_BITCODE "NO"
     XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
@@ -83,8 +83,8 @@ if(DEFINED DEPLOY)
         XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Distribution"
         XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY[variant=Debug] "Apple Development"
         XCODE_ATTRIBUTE_CODE_SIGN_STYLE Manual
-        XCODE_ATTRIBUTE_PROVISIONING_PROFILE_SPECIFIER "distr ios.org.amnezia.AmneziaVPN"
-        XCODE_ATTRIBUTE_PROVISIONING_PROFILE_SPECIFIER[variant=Debug] "dev ios.org.amnezia.AmneziaVPN"
+        XCODE_ATTRIBUTE_PROVISIONING_PROFILE_SPECIFIER "distr ios.org.caelispect.Caelispect"
+        XCODE_ATTRIBUTE_PROVISIONING_PROFILE_SPECIFIER[variant=Debug] "dev ios.org.caelispect.Caelispect"
     )
 else()
     set_target_properties(${PROJECT} PROPERTIES
@@ -96,7 +96,7 @@ set_target_properties(${PROJECT} PROPERTIES
     XCODE_ATTRIBUTE_SWIFT_VERSION "5.0"
     XCODE_ATTRIBUTE_CLANG_ENABLE_MODULES "YES"
     XCODE_ATTRIBUTE_SWIFT_PRECOMPILE_BRIDGING_HEADER "NO"
-    XCODE_ATTRIBUTE_SWIFT_OBJC_INTERFACE_HEADER_NAME "AmneziaVPN-Swift.h"
+    XCODE_ATTRIBUTE_SWIFT_OBJC_INTERFACE_HEADER_NAME "Caelispect-Swift.h"
     XCODE_ATTRIBUTE_SWIFT_OBJC_INTEROP_MODE "objcxx"
 )
 set_target_properties(${PROJECT} PROPERTIES
@@ -127,13 +127,13 @@ set_source_files_properties(
 )
 
 target_sources(${PROJECT} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/AmneziaVPNLaunchScreen.storyboard
+    ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/CaelispectLaunchScreen.storyboard
     ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/Media.xcassets
     ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/PrivacyInfo.xcprivacy
 )
 
 set_property(TARGET ${PROJECT} APPEND PROPERTY RESOURCE
-    ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/AmneziaVPNLaunchScreen.storyboard
+    ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/CaelispectLaunchScreen.storyboard
     ${CMAKE_CURRENT_SOURCE_DIR}/ios/app/PrivacyInfo.xcprivacy
 )
 

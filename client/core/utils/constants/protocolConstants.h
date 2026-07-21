@@ -1,7 +1,7 @@
 #ifndef PROTOCOLCONSTANTS_H
 #define PROTOCOLCONSTANTS_H
 
-namespace amnezia
+namespace caelispect
 {
 
     namespace protocols
@@ -9,7 +9,7 @@ namespace amnezia
 
         namespace dns
         {
-            constexpr char amneziaDnsIp[] = "172.29.172.254";
+            constexpr char caelispectDnsIp[] = "172.29.172.254";
         }
 
 
@@ -40,9 +40,9 @@ namespace amnezia
 #else
             constexpr char defaultMtu[] = "1376";
 #endif
-            constexpr char serverConfigPath[] = "/opt/amnezia/wireguard/wg0.conf";
-            constexpr char serverPublicKeyPath[] = "/opt/amnezia/wireguard/wireguard_server_public_key.key";
-            constexpr char serverPskKeyPath[] = "/opt/amnezia/wireguard/wireguard_psk.key";
+            constexpr char serverConfigPath[] = "/opt/caelispect/wireguard/wg0.conf";
+            constexpr char serverPublicKeyPath[] = "/opt/caelispect/wireguard/wireguard_server_public_key.key";
+            constexpr char serverPskKeyPath[] = "/opt/caelispect/wireguard/wireguard_psk.key";
 
         }
 
@@ -117,7 +117,7 @@ namespace amnezia
 
             constexpr char defaultPort[]           = "443";
             constexpr char defaultTlsDomain[]      = "googletagmanager.com";
-            constexpr char defaultUserName[]       = "amnezia";
+            constexpr char defaultUserName[]       = "caelispect";
             constexpr char defaultWorkers[]        = "2";
             constexpr char workersModeAuto[]       = "auto";
             constexpr char workersModeManual[]     = "manual";

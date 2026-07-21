@@ -35,7 +35,7 @@ int IpcServer::createPrivilegedProcess()
 
     pd.localServer->setSocketOptions(QLocalServer::WorldAccessOption);
 
-    if (!pd.localServer->listen(amnezia::getIpcProcessUrl(m_localpid))) {
+    if (!pd.localServer->listen(caelispect::getIpcProcessUrl(m_localpid))) {
         qDebug() << QString("Unable to start the server: %1.").arg(pd.localServer->errorString());
         return -1;
     }

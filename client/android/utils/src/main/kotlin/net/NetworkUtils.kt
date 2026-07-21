@@ -1,4 +1,4 @@
-package org.amnezia.vpn.util.net
+package org.caelispect.vpn.util.net
 
 import android.content.Context
 import android.net.ConnectivityManager

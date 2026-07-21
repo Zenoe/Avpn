@@ -27,15 +27,15 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 public slots:
-    void updateModel(amnezia::DockerContainer container, const amnezia::Socks5ProxyProtocolConfig &protocolConfig);
-    amnezia::Socks5ProxyProtocolConfig getProtocolConfig();
+    void updateModel(caelispect::DockerContainer container, const caelispect::Socks5ProxyProtocolConfig &protocolConfig);
+    caelispect::Socks5ProxyProtocolConfig getProtocolConfig();
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    amnezia::DockerContainer m_container;
-    amnezia::Socks5ProxyProtocolConfig m_protocolConfig;
+    caelispect::DockerContainer m_container;
+    caelispect::Socks5ProxyProtocolConfig m_protocolConfig;
 };
 
 #endif // SOCKS5PROXYCONFIGMODEL_H

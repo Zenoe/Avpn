@@ -14,14 +14,14 @@
 
 #include <openssl/rsa.h>
 
-#include "amneziaApplication.h"
+#include "caelispectApplication.h"
 #include "core/repositories/secureAppSettingsRepository.h"
 #include "core/utils/api/apiUtils.h"
 #include "core/utils/constants/apiKeys.h"
 #include "core/utils/networkUtilities.h"
 #include "cryptoUtils.h"
 
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     #include "core/utils/ipcClient.h"
 #endif
 
@@ -133,7 +133,7 @@ GatewayController::EncryptedRequestData GatewayController::prepareRequest(const 
     encRequestData.request.setUrl(endpoint.arg(m_proxyUrl.isEmpty() ? m_gatewayEndpoint : m_proxyUrl));
 
     // bypass killSwitch exceptions for API-gateway
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     if (m_isStrictKillSwitchEnabled) {
         QString host = QUrl(encRequestData.request.url()).host();
         QString ip = NetworkUtilities::getIPAddress(host);

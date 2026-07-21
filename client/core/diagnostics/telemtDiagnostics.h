@@ -5,7 +5,7 @@
 
 #include <QString>
 
-namespace amnezia
+namespace caelispect
 {
     struct TelemtDiagnostics : ContainerDiagnostics
     {
@@ -15,6 +15,6 @@ namespace amnezia
         QString statsEndpoint;
     };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // TELEMTDIAGNOSTICS_H

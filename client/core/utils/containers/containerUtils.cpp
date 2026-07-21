@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QJsonDocument>
 
-using namespace amnezia;
+using namespace caelispect;
 
 DockerContainer ContainerUtils::containerFromString(const QString &container)
 {
@@ -22,7 +22,7 @@ QString ContainerUtils::containerToString(DockerContainer c)
     QMetaEnum metaEnum = QMetaEnum::fromType<DockerContainer>();
     QString containerKey = metaEnum.valueToKey(static_cast<int>(c));
 
-    return "amnezia-" + containerKey.toLower();
+    return "caelispect-" + containerKey.toLower();
 }
 
 QString ContainerUtils::containerTypeToString(DockerContainer c)
@@ -52,7 +52,7 @@ QMap<DockerContainer, QString> ContainerUtils::containerHumanNames()
 {
     return { { DockerContainer::None, "Not installed" },
              { DockerContainer::WireGuard, "WireGuard" },
-             { DockerContainer::Dns, QObject::tr("AmneziaDNS") },
+             { DockerContainer::Dns, QObject::tr("CaelispectDNS") },
              { DockerContainer::Sftp, QObject::tr("SFTP file sharing service") },
              { DockerContainer::Socks5Proxy, QObject::tr("SOCKS5 proxy server") },
              { DockerContainer::MtProxy, QObject::tr("MTProxy (Telegram)") },
@@ -86,14 +86,14 @@ QMap<DockerContainer, QString> ContainerUtils::containerDetailedDescriptions()
                       "It uses fixed encryption settings, delivering low latency and high data transfer speeds. "
                       "However, WireGuard is easily identifiable by DPI systems due to its distinctive packet signatures, making it susceptible to blocking.\n"
                       "\nFeatures:\n"
-                      "* Available on all AmneziaVPN platforms\n"
+                      "* Available on all Caelispect platforms\n"
                       "* Low power consumption on mobile devices\n"
                       "* Minimal configuration required\n"
                       "* Easily detected by DPI systems (susceptible to blocking)\n"
                       "* Operates over UDP protocol") },
         { DockerContainer::Dns, QObject::tr("DNS Service") },
         { DockerContainer::Sftp,
-          QObject::tr("After installation, Amnezia will create a\n\n file storage on your server. "
+          QObject::tr("After installation, Caelispect will create a\n\n file storage on your server. "
                       "You will be able to access it using\n FileZilla or other SFTP clients, "
                       "as well as mount the disk on your device to access\n it directly from your device.\n\n"
                       "For more detailed information, you can\n find it in the support section under \"Create SFTP file storage.\" ") },

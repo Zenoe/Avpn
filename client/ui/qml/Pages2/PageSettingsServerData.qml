@@ -17,7 +17,7 @@ PageType {
             LabelWithButtonType {
                 Layout.fillWidth: true
                 text: qsTr("Remove server from application")
-                textColor: AmneziaStyle.color.vibrantRed
+                textColor: CaelispectStyle.color.vibrantRed
                 clickedFunction: function() {
                     showQuestionDrawer(
                         qsTr("Do you want to remove the server from application?"),

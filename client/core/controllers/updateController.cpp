@@ -8,7 +8,7 @@
 #include <QSysInfo>
 #include <QTimer>
 
-#include "amneziaApplication.h"
+#include "caelispectApplication.h"
 #include "logger.h"
 #include "version.h"
 #include "core/controllers/gatewayController.h"
@@ -19,14 +19,14 @@ namespace
     Logger logger("UpdateController");
 
 #if defined(Q_OS_WINDOWS)
-    const QLatin1String kInstallerRemoteFileNamePattern("AmneziaVPN_%1_windows_x64.exe");
-    const QString kInstallerLocalPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/AmneziaVPN_installer.exe";
+    const QLatin1String kInstallerRemoteFileNamePattern("Caelispect_%1_windows_x64.exe");
+    const QString kInstallerLocalPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/Caelispect_installer.exe";
 #elif defined(Q_OS_MACOS) && !defined(MACOS_NE)
-    const QLatin1String kInstallerRemoteFileNamePattern("AmneziaVPN_%1_macos_x64.pkg");
-    const QString kInstallerLocalPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/AmneziaVPN.pkg";
+    const QLatin1String kInstallerRemoteFileNamePattern("Caelispect_%1_macos_x64.pkg");
+    const QString kInstallerLocalPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/Caelispect.pkg";
 #elif defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
-    const QLatin1String kInstallerRemoteFileNamePattern("AmneziaVPN_%1_linux_x64.run");
-    const QString kInstallerLocalPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/AmneziaVPN.run";
+    const QLatin1String kInstallerRemoteFileNamePattern("Caelispect_%1_linux_x64.run");
+    const QString kInstallerLocalPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/Caelispect.run";
 #endif
 }
 

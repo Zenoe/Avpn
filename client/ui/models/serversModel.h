@@ -36,7 +36,7 @@ public:
     QVariant data(const int index, int role = Qt::DisplayRole) const;
 
 public slots:
-    void updateModel(const QVector<amnezia::ServerDescription> &descriptions,
+    void updateModel(const QVector<caelispect::ServerDescription> &descriptions,
                      const QString &defaultServerId);
     void setDefaultServerId(const QString &serverId);
 
@@ -44,9 +44,9 @@ protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    amnezia::ServerCredentials serverCredentials(int index) const;
+    caelispect::ServerCredentials serverCredentials(int index) const;
 
-    QVector<amnezia::ServerDescription> m_descriptions;
+    QVector<caelispect::ServerDescription> m_descriptions;
 
     QString m_defaultServerId;
 };

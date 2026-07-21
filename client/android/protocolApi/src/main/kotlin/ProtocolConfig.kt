@@ -1,12 +1,12 @@
-package org.amnezia.vpn.protocol
+package org.caelispect.vpn.protocol
 
 import android.net.ProxyInfo
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.net.InetAddress
-import org.amnezia.vpn.util.net.InetNetwork
-import org.amnezia.vpn.util.net.IpRange
-import org.amnezia.vpn.util.net.IpRangeSet
+import org.caelispect.vpn.util.net.InetNetwork
+import org.caelispect.vpn.util.net.IpRange
+import org.caelispect.vpn.util.net.IpRangeSet
 
 open class ProtocolConfig protected constructor(
     val addresses: Set<InetNetwork>,

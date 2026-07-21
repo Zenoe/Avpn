@@ -1,9 +1,9 @@
 # User settings
 *.user
 macOSPackage/
-AmneziaVPN.dmg
-AmneziaVPN.exe
-AmneziaVPN_*.exe
+Caelispect.dmg
+Caelispect.exe
+Caelispect_*.exe
 deploy/build/*
 deploy/build_32/*
 deploy/build_64/*
@@ -50,10 +50,10 @@ client/ui_*.cpp
 client/Makefile*
 client/fastlane/build/
 client/*build-*
-client/AmneziaVPN.xcodeproj
+client/Caelispect.xcodeproj
 client/Debug-iphonesimulator/
-client/amneziavpn_plugin_import.cpp
-client/amneziavpn_qml_plugin_import.cpp
+client/caelispect_plugin_import.cpp
+client/caelispect_qml_plugin_import.cpp
 client/qmlcache_loader.cpp
 client/rep_ipc_interface_replica.h
 client/resources_qmlcache.qrc
@@ -74,7 +74,7 @@ CMakeLists.txt.user*
 *.7z
 deploy/AppDir
 deploy/Tools
-deploy/AmneziaVPN*Installer*
+deploy/Caelispect*Installer*
 
 # MACOS files
 .DS_Store

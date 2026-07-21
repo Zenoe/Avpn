@@ -5,7 +5,7 @@
 
 #include <QString>
 
-namespace amnezia {
+namespace caelispect {
     struct MtProxyDiagnostics : ContainerDiagnostics {
         bool upstreamReachable = false;
         int clientsConnected = -1;
@@ -13,6 +13,6 @@ namespace amnezia {
         QString statsEndpoint;
     };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // MTPROXYDIAGNOSTICS_H

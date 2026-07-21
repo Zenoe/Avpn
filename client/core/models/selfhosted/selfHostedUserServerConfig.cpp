@@ -10,7 +10,7 @@
 #include "core/utils/protocolEnum.h"
 #include "core/utils/networkUtilities.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 using namespace ContainerEnumNS;
@@ -128,4 +128,4 @@ SelfHostedUserServerConfig SelfHostedUserServerConfig::fromJson(const QJsonObjec
     return config;
 }
 
-} // namespace amnezia
+} // namespace caelispect

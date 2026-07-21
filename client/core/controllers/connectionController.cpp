@@ -15,7 +15,7 @@
 #include "core/models/containerConfig.h"
 #include "core/models/protocolConfig.h"
 
-using namespace amnezia;
+using namespace caelispect;
 using namespace ProtocolUtils;
 
 ConnectionController::ConnectionController(SecureServersRepository* serversRepository,
@@ -90,7 +90,7 @@ ErrorCode ConnectionController::isConnectionSupported(const QString &serverId) c
     }
 
     if (!isServiceReady()) {
-        return ErrorCode::AmneziaServiceNotRunning;
+        return ErrorCode::CaelispectServiceNotRunning;
     }
 
     const serverConfigUtils::ConfigType kind = m_serversRepository->serverKind(serverId);
@@ -134,7 +134,7 @@ ErrorCode ConnectionController::prepareConnection(const QString &serverId,
         if (!cfg.has_value()) return ErrorCode::InternalError;
         container = cfg->defaultContainer;
         containerConfigModel = cfg->containerConfig(container);
-        dns = cfg->getDnsPair(m_appSettingsRepository->useAmneziaDns(), primaryDns, secondaryDns);
+        dns = cfg->getDnsPair(m_appSettingsRepository->useCaelispectDns(), primaryDns, secondaryDns);
         hostName = cfg->hostName;
         description = cfg->description;
         break;

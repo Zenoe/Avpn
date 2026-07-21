@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 
-set(PROJECT AmneziaVPN-service)
-project(${PROJECT} VERSION ${AMNEZIAVPN_VERSION})
+set(PROJECT Caelispect-service)
+project(${PROJECT} VERSION ${CAELISPECT_VERSION})
 
 if (APPLE)
     # CMAKE_INSTALL_BINDIR must be called before find_package(Qt6) for
     # Qt to configure prefixes properly
-    # FIXME: make Amnezia-service a bundle and remove this hack completely
-    set(CMAKE_INSTALL_BINDIR "AmneziaVPN.app/Contents/MacOS")
+    # FIXME: make Caelispect-service a bundle and remove this hack completely
+    set(CMAKE_INSTALL_BINDIR "Caelispect.app/Contents/MacOS")
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
@@ -121,8 +121,8 @@ set(RESOURCES)
 
 if(WIN32)
     configure_file(
-        ${CMAKE_CURRENT_LIST_DIR}/amneziavpn-service.rc.in
-        ${CMAKE_CURRENT_BINARY_DIR}/amneziavpn-service.rc
+        ${CMAKE_CURRENT_LIST_DIR}/caelispect-service.rc.in
+        ${CMAKE_CURRENT_BINARY_DIR}/caelispect-service.rc
     )
 
     set(HEADERS ${HEADERS}
@@ -164,7 +164,7 @@ if(WIN32)
     )
 
     set(RESOURCES ${RESOURCES}
-        ${CMAKE_CURRENT_BINARY_DIR}/amneziavpn-service.rc
+        ${CMAKE_CURRENT_BINARY_DIR}/caelispect-service.rc
     )
 
     set(LIBS
@@ -324,7 +324,7 @@ qt_add_repc_sources(${PROJECT} ${CMAKE_CURRENT_LIST_DIR}/../../ipc/ipc_process_i
 if(APPLE)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/deploy/data/macos/pf
         DESTINATION ${CMAKE_INSTALL_BINDIR}
-        COMPONENT AmneziaVPN
+        COMPONENT Caelispect
     )
 endif()
 
@@ -352,12 +352,12 @@ if(WIN32)
     # to the files so just omit it for it
     install(FILES ${CONAN_EXECS}
         DESTINATION ${CMAKE_INSTALL_BINDIR}
-        COMPONENT AmneziaVPN
+        COMPONENT Caelispect
     )
 else()
     install(FILES ${CONAN_EXECS}
         DESTINATION ${CMAKE_INSTALL_BINDIR}
-        COMPONENT AmneziaVPN
+        COMPONENT Caelispect
         PERMISSIONS
             OWNER_READ OWNER_EXECUTE
             GROUP_READ GROUP_EXECUTE
@@ -366,7 +366,7 @@ else()
 endif()
 install(FILES ${CONAN_BINS}
     DESTINATION ${CMAKE_INSTALL_BINDIR}
-    COMPONENT AmneziaVPN
+    COMPONENT Caelispect
 )
 
 # install drivers
@@ -379,7 +379,7 @@ if (WIN32)
     )
     install(DIRECTORY "${WIN_SPLIT_TUNNEL_BIN}/"
         DESTINATION ${CMAKE_INSTALL_BINDIR}
-        COMPONENT AmneziaVPN
+        COMPONENT Caelispect
     )
 endif()
 
@@ -387,7 +387,7 @@ endif()
 install(TARGETS ${PROJECT}
     DESTINATION ${CMAKE_INSTALL_BINDIR}
     RUNTIME_DEPENDENCY_SET service_deps
-    COMPONENT AmneziaVPN
+    COMPONENT Caelispect
 )
 
 if(APPLE)
@@ -410,7 +410,7 @@ install(RUNTIME_DEPENDENCY_SET service_deps
         [[^/lib.*]]
         [[^/usr/lib.*]]
     DIRECTORIES ${CONAN_RUNTIME_LIB_DIRS}
-    COMPONENT AmneziaVPN
+    COMPONENT Caelispect
     DESTINATION "${RUNTIME_DEPS_DIR}"
 )
 
@@ -420,5 +420,5 @@ qt_generate_deploy_app_script(
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
 install(SCRIPT ${QT_DEPLOY_SCRIPT}
-    COMPONENT AmneziaVPN
+    COMPONENT Caelispect
 )

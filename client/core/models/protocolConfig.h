@@ -20,7 +20,7 @@
 #include "core/models/protocols/mtProxyProtocolConfig.h"
 #include "core/models/protocols/telemtProtocolConfig.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 using Proto = ProtocolEnumNS::Proto;
@@ -81,6 +81,6 @@ struct ProtocolConfig {
     }
 };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // PROTOCOLCONFIG_H

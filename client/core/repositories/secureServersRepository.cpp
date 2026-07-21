@@ -9,7 +9,7 @@
 #include "core/utils/serverConfigUtils.h"
 #include "core/utils/constants/configKeys.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 namespace {
 

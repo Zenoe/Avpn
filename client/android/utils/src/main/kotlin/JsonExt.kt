@@ -1,4 +1,4 @@
-package org.amnezia.vpn.util
+package org.caelispect.vpn.util
 
 import org.json.JSONArray
 import org.json.JSONObject

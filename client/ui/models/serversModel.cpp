@@ -10,11 +10,11 @@
 #include "core/utils/networkUtilities.h"
 
 #if defined(Q_OS_IOS) || defined(MACOS_NE)
-    #include <AmneziaVPN-Swift.h>
+    #include <Caelispect-Swift.h>
 #endif
 
 
-using namespace amnezia;
+using namespace caelispect;
 
 namespace {
 int rowForServerId(const QVector<ServerDescription> &descriptions, const QString &serverId)

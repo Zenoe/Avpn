@@ -15,7 +15,7 @@
 #include "core/utils/commonStructs.h"
 #include "core/repositories/secureAppSettingsRepository.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 class IpSplitTunnelingController : public QObject
 {

@@ -8,7 +8,7 @@
 #include "core/models/serverDescription.h"
 
 #if defined(Q_OS_IOS) || defined(MACOS_NE)
-    #include <AmneziaVPN-Swift.h>
+    #include <Caelispect-Swift.h>
 #endif
 
 
@@ -111,7 +111,7 @@ void ServersController::setDefaultContainer(const QString &serverId, DockerConta
     }
 }
 
-QVector<ServerDescription> ServersController::buildServerDescriptions(bool isAmneziaDnsEnabled) const
+QVector<ServerDescription> ServersController::buildServerDescriptions(bool isCaelispectDnsEnabled) const
 {
     QVector<ServerDescription> out;
     const QVector<QString> ids = m_serversRepository->orderedServerIds();
@@ -127,7 +127,7 @@ QVector<ServerDescription> ServersController::buildServerDescriptions(bool isAmn
             if (!cfg) {
                 continue;
             }
-            d = buildServerDescription(*cfg, isAmneziaDnsEnabled);
+            d = buildServerDescription(*cfg, isCaelispectDnsEnabled);
             break;
         }
         case Kind::SelfHostedUser: {
@@ -135,7 +135,7 @@ QVector<ServerDescription> ServersController::buildServerDescriptions(bool isAmn
             if (!cfg) {
                 continue;
             }
-            d = buildServerDescription(*cfg, isAmneziaDnsEnabled);
+            d = buildServerDescription(*cfg, isCaelispectDnsEnabled);
             break;
         }
         case Kind::Native: {
@@ -143,7 +143,7 @@ QVector<ServerDescription> ServersController::buildServerDescriptions(bool isAmn
             if (!cfg) {
                 continue;
             }
-            d = buildServerDescription(*cfg, isAmneziaDnsEnabled);
+            d = buildServerDescription(*cfg, isCaelispectDnsEnabled);
             break;
         }
         case Kind::Invalid:

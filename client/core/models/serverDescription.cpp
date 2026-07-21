@@ -7,7 +7,7 @@
 #include "core/utils/containers/containerUtils.h"
 #include "core/protocols/protocolUtils.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 namespace
 {
@@ -29,24 +29,24 @@ ServerDescription buildBaseDescription(const T &server)
     ServerDescription row;
     row.hostName = server.hostName;
     row.defaultContainer = server.defaultContainer;
-    row.primaryDnsIsAmnezia = (server.dns1 == protocols::dns::amneziaDnsIp);
+    row.primaryDnsIsCaelispect = (server.dns1 == protocols::dns::caelispectDnsIp);
     row.hasInstalledVpnContainers = computeHasInstalledVpnContainers(server.containers);
     return row;
 }
 
 QString getBaseDescription(const QMap<DockerContainer, ContainerConfig> &containers,
-                         bool isAmneziaDnsEnabled,
+                         bool isCaelispectDnsEnabled,
                          bool hasWriteAccess,
-                         bool primaryDnsIsAmnezia)
+                         bool primaryDnsIsCaelispect)
 {
     QString description;
     if (hasWriteAccess) {
         const bool isDnsInstalled = containers.contains(DockerContainer::Dns);
-        if (isAmneziaDnsEnabled && isDnsInstalled) {
-            description += QStringLiteral("Amnezia DNS | ");
+        if (isCaelispectDnsEnabled && isDnsInstalled) {
+            description += QStringLiteral("Caelispect DNS | ");
         }
-    } else if (primaryDnsIsAmnezia) {
-        description += QStringLiteral("Amnezia DNS | ");
+    } else if (primaryDnsIsCaelispect) {
+        description += QStringLiteral("Caelispect DNS | ");
     }
     return description;
 }
@@ -59,10 +59,10 @@ QString getProtocolName(DockerContainer defaultContainer, const QMap<DockerConta
 
 } // namespace
 
-namespace amnezia
+namespace caelispect
 {
 
-ServerDescription buildServerDescription(const SelfHostedAdminServerConfig &server, bool isAmneziaDnsEnabled)
+ServerDescription buildServerDescription(const SelfHostedAdminServerConfig &server, bool isCaelispectDnsEnabled)
 {
     ServerDescription row = buildBaseDescription(server);
     row.selfHostedSshCredentials.hostName = server.hostName;
@@ -74,7 +74,7 @@ ServerDescription buildServerDescription(const SelfHostedAdminServerConfig &serv
                          && !row.selfHostedSshCredentials.secretData.isEmpty();
 
     row.serverName = server.displayName;
-    row.baseDescription = getBaseDescription(server.containers, isAmneziaDnsEnabled, row.hasWriteAccess, row.primaryDnsIsAmnezia);
+    row.baseDescription = getBaseDescription(server.containers, isCaelispectDnsEnabled, row.hasWriteAccess, row.primaryDnsIsCaelispect);
 
     const QString protocolName = getProtocolName(server.defaultContainer, server.containers);
     row.expandedServerDescription = row.baseDescription + row.hostName;
@@ -82,7 +82,7 @@ ServerDescription buildServerDescription(const SelfHostedAdminServerConfig &serv
     return row;
 }
 
-ServerDescription buildServerDescription(const SelfHostedUserServerConfig &server, bool isAmneziaDnsEnabled)
+ServerDescription buildServerDescription(const SelfHostedUserServerConfig &server, bool isCaelispectDnsEnabled)
 {
     ServerDescription row = buildBaseDescription(server);
     row.selfHostedSshCredentials.hostName = server.hostName;
@@ -90,7 +90,7 @@ ServerDescription buildServerDescription(const SelfHostedUserServerConfig &serve
     row.hasWriteAccess = false;
 
     row.serverName = server.displayName;
-    row.baseDescription = getBaseDescription(server.containers, isAmneziaDnsEnabled, row.hasWriteAccess, row.primaryDnsIsAmnezia);
+    row.baseDescription = getBaseDescription(server.containers, isCaelispectDnsEnabled, row.hasWriteAccess, row.primaryDnsIsCaelispect);
 
     const QString protocolName = getProtocolName(server.defaultContainer, server.containers);
     row.expandedServerDescription = row.baseDescription + row.hostName;
@@ -98,13 +98,13 @@ ServerDescription buildServerDescription(const SelfHostedUserServerConfig &serve
     return row;
 }
 
-ServerDescription buildServerDescription(const NativeServerConfig &server, bool isAmneziaDnsEnabled)
+ServerDescription buildServerDescription(const NativeServerConfig &server, bool isCaelispectDnsEnabled)
 {
     ServerDescription row = buildBaseDescription(server);
     row.hasWriteAccess = false;
 
     row.serverName = server.displayName;
-    row.baseDescription = getBaseDescription(server.containers, isAmneziaDnsEnabled, row.hasWriteAccess, row.primaryDnsIsAmnezia);
+    row.baseDescription = getBaseDescription(server.containers, isCaelispectDnsEnabled, row.hasWriteAccess, row.primaryDnsIsCaelispect);
 
     const QString protocolName = getProtocolName(server.defaultContainer, server.containers);
     row.expandedServerDescription = row.baseDescription + row.hostName;
@@ -112,4 +112,4 @@ ServerDescription buildServerDescription(const NativeServerConfig &server, bool 
     return row;
 }
 
-} // namespace amnezia
+} // namespace caelispect

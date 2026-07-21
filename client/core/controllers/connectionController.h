@@ -17,7 +17,7 @@
 #include "core/protocols/vpnProtocol.h"
 #include "vpnConnection.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 class ConnectionController : public QObject
 {

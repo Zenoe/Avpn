@@ -6,7 +6,7 @@
 
 #include "core/protocols/vpnProtocol.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 class AndroidController : public QObject
 {
@@ -18,7 +18,7 @@ public:
 
     bool initialize();
 
-    // keep synchronized with org.amnezia.vpn.protocol.ProtocolState
+    // keep synchronized with org.caelispect.vpn.protocol.ProtocolState
     enum class ConnectionState
     {
         DISCONNECTED,

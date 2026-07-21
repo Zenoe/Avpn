@@ -89,11 +89,11 @@ void NetworkWatcher::initialize() {
     logger.error() << "Unknown exception in m_impl->start()";
   }
   m_active = true;
-  m_reportUnsecuredNetwork = false; // Disable unsecured network alerts for Amnezia
+  m_reportUnsecuredNetwork = false; // Disable unsecured network alerts for Caelispect
 }
 
 void NetworkWatcher::settingsChanged() {
-  // For Amnezia: Keep NetworkWatcher always active for sleep/wake monitoring
+  // For Caelispect: Keep NetworkWatcher always active for sleep/wake monitoring
   logger.debug() << "NetworkWatcher settings changed - keeping sleep monitoring active";
 }
 
@@ -106,7 +106,7 @@ void NetworkWatcher::unsecuredNetwork(const QString& networkName,
     logger.debug() << "Disabled. Ignoring unsecured network";
     return;
   }
-// TODO: IMPL FOR AMNEZIA
+// TODO: IMPL FOR CAELISPECT
 #if 0
   MozillaVPN* vpn = MozillaVPN::instance();
 

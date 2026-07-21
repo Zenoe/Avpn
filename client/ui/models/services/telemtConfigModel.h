@@ -44,13 +44,13 @@ public:
 
 public slots:
 
-    void updateModel(amnezia::DockerContainer container, const amnezia::TelemtProtocolConfig &protocolConfig);
+    void updateModel(caelispect::DockerContainer container, const caelispect::TelemtProtocolConfig &protocolConfig);
 
     void updateModel(const QJsonObject &config);
 
     QJsonObject getConfig();
 
-    amnezia::TelemtProtocolConfig getProtocolConfig();
+    caelispect::TelemtProtocolConfig getProtocolConfig();
 
     Q_INVOKABLE void generateSecret();
 
@@ -152,13 +152,13 @@ protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    static void applyDefaults(amnezia::TelemtProtocolConfig &c);
+    static void applyDefaults(caelispect::TelemtProtocolConfig &c);
 
     QString normalizeFakeTlsDomainInput(const QString &input) const;
 
-    amnezia::DockerContainer m_container = amnezia::DockerContainer::None;
+    caelispect::DockerContainer m_container = caelispect::DockerContainer::None;
     QJsonObject m_fullConfig;
-    amnezia::TelemtProtocolConfig m_protocolConfig;
+    caelispect::TelemtProtocolConfig m_protocolConfig;
 };
 
 #endif // TELEMTCONFIGMODEL_H

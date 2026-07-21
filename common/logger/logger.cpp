@@ -12,12 +12,12 @@
 #include "core/utils/utilities.h"
 #include "version.h"
 
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     #include <core/utils/ipcClient.h>
 #endif
 
 #ifdef Q_OS_IOS
-    #include <AmneziaVPN-Swift.h>
+    #include <Caelispect-Swift.h>
 #endif
 
 QFile Logger::m_file;
@@ -90,7 +90,7 @@ void Logger::deInit()
 
 bool Logger::setServiceLogsEnabled(bool enabled)
 {
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     return IpcClient::withInterface([enabled](QSharedPointer<IpcInterfaceReplica> iface) {
         iface->setLogsEnabled(enabled);
         qDebug() << "Logger::setServiceLogsEnabled(): Logs transitioned to be " << (enabled ? "enabled" : "disabled");
@@ -146,7 +146,7 @@ QString Logger::getLogFile()
     QString qtLog = file.readAll();
 
 #ifdef Q_OS_IOS
-    return QString().fromStdString(AmneziaVPN::swiftUpdateLogData(qtLog.toStdString()));
+    return QString().fromStdString(Caelispect::swiftUpdateLogData(qtLog.toStdString()));
 #else
     return qtLog;
 #endif
@@ -163,7 +163,7 @@ QString Logger::getServiceLogFile()
     QString qtLog = file.readAll();
 
 #ifdef Q_OS_IOS
-    return QString().fromStdString(AmneziaVPN::swiftUpdateLogData(qtLog.toStdString()));
+    return QString().fromStdString(Caelispect::swiftUpdateLogData(qtLog.toStdString()));
 #else
     return qtLog;
 #endif
@@ -194,7 +194,7 @@ void Logger::clearLogs(bool isServiceLogger)
     file.close();
 
 #ifdef Q_OS_IOS
-    AmneziaVPN::swiftDeleteLog();
+    Caelispect::swiftDeleteLog();
 #endif
 
     if (isLogActive) {
@@ -204,7 +204,7 @@ void Logger::clearLogs(bool isServiceLogger)
 
 void Logger::clearServiceLogs()
 {
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     IpcClient::withInterface([](QSharedPointer<IpcInterfaceReplica> iface) {
         iface->clearLogs();
         qDebug() << "Logger::clearServiceLogs(): Logs cleared";
@@ -239,7 +239,7 @@ Logger::LogStreamer::~LogStreamer()
     case LogLevel::Error: logLevelString = "[ERROR]"; break;
     }
 
-    const QString message = QString("%1 %2 Amnezia %3 : %4")
+    const QString message = QString("%1 %2 Caelispect %3 : %4")
                                     .arg(QDateTime::currentDateTimeUtc().toString("[yyyy-MM-dd hh:mm:ss.zzzZ]"),
                                          logLevelString, m_logger->className(), m_data->m_buffer.trimmed());
 

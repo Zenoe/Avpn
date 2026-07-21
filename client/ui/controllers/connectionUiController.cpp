@@ -6,7 +6,7 @@
     #include <QApplication>
 #endif
 
-#include "amneziaApplication.h"
+#include "caelispectApplication.h"
 #include "core/controllers/serversController.h"
 #include "core/models/containerConfig.h"
 #include "core/utils/containerEnum.h"

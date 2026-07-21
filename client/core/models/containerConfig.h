@@ -13,7 +13,7 @@
 #include "core/utils/constants/protocolConstants.h"
 #include "core/models/protocolConfig.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 using namespace ContainerEnumNS;
@@ -58,7 +58,7 @@ struct ContainerConfig {
     const DnsProtocolConfig* getDnsProtocolConfig() const;
 };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // CONTAINERCONFIG_H
 

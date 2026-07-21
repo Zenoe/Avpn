@@ -16,7 +16,7 @@
 
 #if defined(Q_OS_IOS)
     #include "platforms/ios/ios_controller.h"
-    #include <AmneziaVPN-Swift.h>
+    #include <Caelispect-Swift.h>
 #endif
 
 CoreController::CoreController(const QSharedPointer<VpnConnection> &vpnConnection, SecureQSettings* settings,
@@ -185,7 +185,7 @@ void CoreController::initAppleController()
 {
 #ifdef Q_OS_IOS
     IosController::Instance()->initialize();
-    QTimer::singleShot(0, this, [this]() { AmneziaVPN::toggleScreenshots(m_appSettingsRepository->isScreenshotsEnabled()); });
+    QTimer::singleShot(0, this, [this]() { Caelispect::toggleScreenshots(m_appSettingsRepository->isScreenshotsEnabled()); });
 #endif
 }
 
@@ -218,15 +218,15 @@ void CoreController::updateTranslator(const QLocale &locale)
     }
 
     QStringList availableTranslations;
-    QDirIterator it(":/translations", QStringList("amneziavpn_*.qm"), QDir::Files);
+    QDirIterator it(":/translations", QStringList("caelispect_*.qm"), QDir::Files);
     while (it.hasNext()) {
         availableTranslations << it.next();
     }
 
     // This code allow to load translation for the language only, without country code
     const QString lang = locale.name().split("_").first();
-    const QString translationFilePrefix = QString(":/translations/amneziavpn_") + lang;
-    QString strFileName = QString(":/translations/amneziavpn_%1.qm").arg(locale.name());
+    const QString translationFilePrefix = QString(":/translations/caelispect_") + lang;
+    QString strFileName = QString(":/translations/caelispect_%1.qm").arg(locale.name());
     for (const QString &translation : availableTranslations) {
         if (translation.contains(translationFilePrefix)) {
             strFileName = translation;
@@ -237,7 +237,7 @@ void CoreController::updateTranslator(const QLocale &locale)
     if (m_translator->load(strFileName)) {
         QCoreApplication::installTranslator(m_translator);
     } else {
-        if (m_translator->load(QString(":/translations/amneziavpn_en.qm"))) {
+        if (m_translator->load(QString(":/translations/caelispect_en.qm"))) {
             QCoreApplication::installTranslator(m_translator);
         }
     }

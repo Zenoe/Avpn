@@ -10,7 +10,7 @@
 #include "core/utils/protocolEnum.h"
 #include "core/utils/networkUtilities.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 using namespace ContainerEnumNS;
@@ -64,7 +64,7 @@ void SelfHostedAdminServerConfig::clearCachedClientProfile(DockerContainer conta
     containers[container] = cleared;
 }
 
-QPair<QString, QString> SelfHostedAdminServerConfig::getDnsPair(bool isAmneziaDnsEnabled, const QString &primaryDns,
+QPair<QString, QString> SelfHostedAdminServerConfig::getDnsPair(bool isCaelispectDnsEnabled, const QString &primaryDns,
                                                                 const QString &secondaryDns) const
 {
     QString d1 = dns1;
@@ -72,7 +72,7 @@ QPair<QString, QString> SelfHostedAdminServerConfig::getDnsPair(bool isAmneziaDn
     const bool dnsOnServer = containers.contains(DockerContainer::Dns);
 
     if (d1.isEmpty() || !NetworkUtilities::checkIPv4Format(d1)) {
-        d1 = (isAmneziaDnsEnabled && dnsOnServer) ? protocols::dns::amneziaDnsIp : primaryDns;
+        d1 = (isCaelispectDnsEnabled && dnsOnServer) ? protocols::dns::caelispectDnsIp : primaryDns;
     }
     if (d2.isEmpty() || !NetworkUtilities::checkIPv4Format(d2)) {
         d2 = secondaryDns;
@@ -163,4 +163,4 @@ SelfHostedAdminServerConfig SelfHostedAdminServerConfig::fromJson(const QJsonObj
     return config;
 }
 
-} // namespace amnezia
+} // namespace caelispect

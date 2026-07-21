@@ -216,8 +216,8 @@ PageType {
                 PathLine { x: 0; y: 0 }
 
                 strokeWidth: 1
-                strokeColor: AmneziaStyle.color.slateGray
-                fillColor: AmneziaStyle.color.onyxBlack
+                strokeColor: CaelispectStyle.color.slateGray
+                fillColor: CaelispectStyle.color.onyxBlack
             }
         }
 

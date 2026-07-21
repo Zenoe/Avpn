@@ -6,7 +6,7 @@
 #include <QStringList>
 #include <optional>
 
-namespace amnezia
+namespace caelispect
 {
 
 struct WireGuardServerConfig {
@@ -53,7 +53,7 @@ struct WireGuardProtocolConfig {
     void clearClientConfig();
 };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // WIREGUARDPROTOCOLCONFIG_H
 

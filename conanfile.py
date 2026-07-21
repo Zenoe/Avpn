@@ -1,6 +1,6 @@
 from conan import ConanFile
 
-class AmneziaVPN(ConanFile):
+class Caelispect(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "VirtualBuildEnv", "CMakeConfigDeps"
 

@@ -61,7 +61,7 @@ public:
     QVariant data(const int index, int role) const;
 
 public slots:
-    void updateModel(const QMap<amnezia::DockerContainer, amnezia::ContainerConfig> &containers);
+    void updateModel(const QMap<caelispect::DockerContainer, caelispect::ContainerConfig> &containers);
 
     void setProcessedContainerIndex(int containerIndex);
 
@@ -75,7 +75,7 @@ public slots:
     bool hasInstalledServices();
     bool hasInstalledProtocols();
 
-    static bool isInstallationAllowed(amnezia::DockerContainer container);
+    static bool isInstallationAllowed(caelispect::DockerContainer container);
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
@@ -84,7 +84,7 @@ signals:
     void containersModelUpdated();
 
 private:
-    QMap<amnezia::DockerContainer, amnezia::ContainerConfig> m_containers;
+    QMap<caelispect::DockerContainer, caelispect::ContainerConfig> m_containers;
 
     int m_processedContainerIndex = -1;
 };

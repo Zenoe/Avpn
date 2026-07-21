@@ -37,7 +37,7 @@ while [[ $# -gt 0 ]]; do
             echo "Usage: $0 [options]"
             echo "  Options:"
             echo "  -b|--build <path>         - specify build folder"
-            echo "  -s|--source <path>        - specify path to amnezia-client root folder"
+            echo "  -s|--source <path>        - specify path to caelispect-client root folder"
             echo "  -t|--target <name>        - specify build target"
             echo "  -f|--force                - force removal of build folder prior cmake configuration"
             echo "  -g|--generator <name>     - use specified generator for CMake"

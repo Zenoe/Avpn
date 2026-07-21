@@ -7,7 +7,7 @@ inputs:
   keychain-name:
     description: Name of the keychain
     required: false
-    default: "ci-amnezia"
+    default: "ci-caelispect"
   keychain-password:
     description: The keychain password
     required: true

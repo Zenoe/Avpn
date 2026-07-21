@@ -10,30 +10,30 @@ Switch {
     id: root
 
     property alias descriptionText: description.text
-    property string descriptionTextColor: AmneziaStyle.color.mutedGray
-    property string descriptionTextDisabledColor: AmneziaStyle.color.charcoalGray
+    property string descriptionTextColor: CaelispectStyle.color.mutedGray
+    property string descriptionTextDisabledColor: CaelispectStyle.color.charcoalGray
 
-    property string textColor: AmneziaStyle.color.paleGray
-    property string textDisabledColor: AmneziaStyle.color.mutedGray
+    property string textColor: CaelispectStyle.color.paleGray
+    property string textDisabledColor: CaelispectStyle.color.mutedGray
 
-    property string checkedIndicatorColor: AmneziaStyle.color.richBrown
-    property string defaultIndicatorColor: AmneziaStyle.color.transparent
-    property string checkedDisabledIndicatorColor: AmneziaStyle.color.deepBrown
+    property string checkedIndicatorColor: CaelispectStyle.color.richBrown
+    property string defaultIndicatorColor: CaelispectStyle.color.transparent
+    property string checkedDisabledIndicatorColor: CaelispectStyle.color.deepBrown
 
-    property string borderFocusedColor: AmneziaStyle.color.paleGray
+    property string borderFocusedColor: CaelispectStyle.color.paleGray
     property int borderFocusedWidth: 1
 
-    property string checkedIndicatorBorderColor: AmneziaStyle.color.richBrown
-    property string defaultIndicatorBorderColor: AmneziaStyle.color.charcoalGray
-    property string checkedDisabledIndicatorBorderColor: AmneziaStyle.color.deepBrown
+    property string checkedIndicatorBorderColor: CaelispectStyle.color.richBrown
+    property string defaultIndicatorBorderColor: CaelispectStyle.color.charcoalGray
+    property string checkedDisabledIndicatorBorderColor: CaelispectStyle.color.deepBrown
 
-    property string checkedInnerCircleColor: AmneziaStyle.color.goldenApricot
-    property string defaultInnerCircleColor: AmneziaStyle.color.paleGray
-    property string checkedDisabledInnerCircleColor: AmneziaStyle.color.mutedBrown
-    property string defaultDisabledInnerCircleColor: AmneziaStyle.color.charcoalGray
+    property string checkedInnerCircleColor: CaelispectStyle.color.goldenApricot
+    property string defaultInnerCircleColor: CaelispectStyle.color.paleGray
+    property string checkedDisabledInnerCircleColor: CaelispectStyle.color.mutedBrown
+    property string defaultDisabledInnerCircleColor: CaelispectStyle.color.charcoalGray
 
-    property string hoveredIndicatorBackgroundColor: AmneziaStyle.color.translucentWhite
-    property string defaultIndicatorBackgroundColor: AmneziaStyle.color.transparent
+    property string hoveredIndicatorBackgroundColor: CaelispectStyle.color.translucentWhite
+    property string defaultIndicatorBackgroundColor: CaelispectStyle.color.transparent
 
     property bool isFocusable: true
 

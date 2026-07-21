@@ -4,7 +4,7 @@
 #include <QJsonObject>
 #include <QString>
 
-namespace amnezia
+namespace caelispect
 {
 
 struct Socks5ProxyProtocolConfig {
@@ -16,7 +16,7 @@ struct Socks5ProxyProtocolConfig {
     static Socks5ProxyProtocolConfig fromJson(const QJsonObject& json);
 };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // SOCKS5PROXYPROTOCOLCONFIG_H
 

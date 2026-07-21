@@ -4,7 +4,7 @@
 #include <QFile>
 
 
-@implementation QIOSApplicationDelegate (AmneziaVPNDelegate)
+@implementation QIOSApplicationDelegate (CaelispectDelegate)
 #if !MACOS_NE
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

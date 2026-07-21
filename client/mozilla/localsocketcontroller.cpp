@@ -103,11 +103,11 @@ void LocalSocketController::initializeInternal() {
   m_daemonState = eInitializing;
 
 #ifdef MZ_WINDOWS
-  QString path = "\\\\.\\pipe\\amneziavpn";
+  QString path = "\\\\.\\pipe\\caelispect";
 #else
-  QString path = "/var/run/amneziavpn/daemon.socket";
+  QString path = "/var/run/caelispect/daemon.socket";
   if (!QFileInfo::exists(path)) {
-    path = "/tmp/amneziavpn.socket";
+    path = "/tmp/caelispect.socket";
   }
 #endif
 
@@ -127,18 +127,18 @@ void LocalSocketController::activate(const QJsonObject &rawConfig) {
   int splitTunnelType = rawConfig.value("splitTunnelType").toInt();
   QJsonArray splitTunnelSites = rawConfig.value("splitTunnelSites").toArray();
 
-  int appSplitTunnelType = rawConfig.value(amnezia::configKey::appSplitTunnelType).toInt();
-  QJsonArray splitTunnelApps = rawConfig.value(amnezia::configKey::splitTunnelApps).toArray();
-  QJsonArray allowedDns = rawConfig.value(amnezia::configKey::allowedDnsServers).toArray();
+  int appSplitTunnelType = rawConfig.value(caelispect::configKey::appSplitTunnelType).toInt();
+  QJsonArray splitTunnelApps = rawConfig.value(caelispect::configKey::splitTunnelApps).toArray();
+  QJsonArray allowedDns = rawConfig.value(caelispect::configKey::allowedDnsServers).toArray();
 
   QJsonObject wgConfig = rawConfig.value(protocolName + "_config_data").toObject();
 
   QJsonObject json;
   json.insert("type", "activate");
   //  json.insert("hopindex", QJsonValue((double)hop.m_hopindex));
-  json.insert("privateKey", wgConfig.value(amnezia::configKey::clientPrivKey));
-  json.insert("deviceIpv4Address", wgConfig.value(amnezia::configKey::clientIp));
-  m_deviceIpv4 = wgConfig.value(amnezia::configKey::clientIp).toString();
+  json.insert("privateKey", wgConfig.value(caelispect::configKey::clientPrivKey));
+  json.insert("deviceIpv4Address", wgConfig.value(caelispect::configKey::clientIp));
+  m_deviceIpv4 = wgConfig.value(caelispect::configKey::clientIp).toString();
 
   // set up IPv6 unique-local-address, ULA, with "fd00::/8" prefix, not globally routable.
   // this will be default IPv6 gateway, OS recognizes that IPv6 link is local and switches to IPv4.
@@ -149,27 +149,27 @@ void LocalSocketController::activate(const QJsonObject &rawConfig) {
   // simply "dead::1" is globally-routable, don't use it
   json.insert("deviceIpv6Address", "fd58:baa6:dead::1");
 
-  json.insert("serverPublicKey", wgConfig.value(amnezia::configKey::serverPubKey));
-  json.insert("serverPskKey", wgConfig.value(amnezia::configKey::pskKey));
-  json.insert("serverIpv4AddrIn", wgConfig.value(amnezia::configKey::hostName));
+  json.insert("serverPublicKey", wgConfig.value(caelispect::configKey::serverPubKey));
+  json.insert("serverPskKey", wgConfig.value(caelispect::configKey::pskKey));
+  json.insert("serverIpv4AddrIn", wgConfig.value(caelispect::configKey::hostName));
   //  json.insert("serverIpv6AddrIn", QJsonValue(hop.m_server.ipv6AddrIn()));
-  json.insert("deviceMTU", wgConfig.value(amnezia::configKey::mtu));
+  json.insert("deviceMTU", wgConfig.value(caelispect::configKey::mtu));
 
-  json.insert("serverPort", wgConfig.value(amnezia::configKey::port).toInt());
-  json.insert("serverIpv4Gateway", wgConfig.value(amnezia::configKey::hostName));
+  json.insert("serverPort", wgConfig.value(caelispect::configKey::port).toInt());
+  json.insert("serverIpv4Gateway", wgConfig.value(caelispect::configKey::hostName));
   //  json.insert("serverIpv6Gateway", QJsonValue(hop.m_server.ipv6Gateway()));
 
-  json.insert("primaryDnsServer", rawConfig.value(amnezia::configKey::dns1));
+  json.insert("primaryDnsServer", rawConfig.value(caelispect::configKey::dns1));
 
-  // We don't use secondary DNS if primary DNS is AmneziaDNS
-  if (!rawConfig.value(amnezia::configKey::dns1).toString().
-    contains(amnezia::protocols::dns::amneziaDnsIp)) {
-    json.insert("secondaryDnsServer", rawConfig.value(amnezia::configKey::dns2));
+  // We don't use secondary DNS if primary DNS is CaelispectDNS
+  if (!rawConfig.value(caelispect::configKey::dns1).toString().
+    contains(caelispect::protocols::dns::caelispectDnsIp)) {
+    json.insert("secondaryDnsServer", rawConfig.value(caelispect::configKey::dns2));
   }
 
   QJsonArray jsAllowedIPAddesses;
 
-  QJsonArray plainAllowedIP = wgConfig.value(amnezia::configKey::allowedIps).toArray();
+  QJsonArray plainAllowedIP = wgConfig.value(caelispect::configKey::allowedIps).toArray();
   QJsonArray defaultAllowedIP = { "0.0.0.0/0", "::/0" };
 
   if (plainAllowedIP != defaultAllowedIP && !plainAllowedIP.isEmpty()) {
@@ -230,7 +230,7 @@ void LocalSocketController::activate(const QJsonObject &rawConfig) {
   json.insert("allowedIPAddressRanges", jsAllowedIPAddesses);
 
   QJsonArray jsExcludedAddresses;
-  jsExcludedAddresses.append(wgConfig.value(amnezia::configKey::hostName));
+  jsExcludedAddresses.append(wgConfig.value(caelispect::configKey::hostName));
   if (splitTunnelType == 2) {
     for (auto v : splitTunnelSites) {
           QString ipRange = v.toString();
@@ -244,7 +244,7 @@ void LocalSocketController::activate(const QJsonObject &rawConfig) {
 
   json.insert("allowedDnsServers", allowedDns);
 
-  json.insert(amnezia::configKey::killSwitchOption, rawConfig.value(amnezia::configKey::killSwitchOption));
+  json.insert(caelispect::configKey::killSwitchOption, rawConfig.value(caelispect::configKey::killSwitchOption));
 
   write(json);
 }

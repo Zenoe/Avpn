@@ -1,6 +1,6 @@
 * SPA 独立模块
 
-=AmneziaSpa= 是桌面端（Windows、macOS、Linux）的独立 Qt/C++ 静态库，依赖
+=CaelispectSpa= 是桌面端（Windows、macOS、Linux）的独立 Qt/C++ 静态库，依赖
 Qt Core、Qt Network 和 OpenSSL Crypto，不依赖现有 CoreController、Repository、
 VPN 或登录业务模块。
 

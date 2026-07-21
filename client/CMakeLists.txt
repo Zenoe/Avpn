@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 
-set(PROJECT AmneziaVPN)
+set(PROJECT Caelispect)
 project(${PROJECT})
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -56,7 +56,7 @@ if(WIN32 OR (APPLE AND NOT IOS) OR (LINUX AND NOT ANDROID))
 endif()
 
 if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
-    list(APPEND LIBS Amnezia::Spa)
+    list(APPEND LIBS Caelispect::Spa)
 endif()
 
 qt_standard_project_setup()
@@ -77,12 +77,12 @@ qt6_add_resources(QRC ${QRC}
 )
 
 # -- i18n begin
-set(AMNEZIAVPN_TS_FILES
-    ${CMAKE_CURRENT_LIST_DIR}/translations/amneziavpn_zh_CN.ts
+set(CAELISPECT_TS_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/translations/caelispect_zh_CN.ts
 )
 
 qt6_add_translations(${PROJECT}
-    TS_FILES ${AMNEZIAVPN_TS_FILES}
+    TS_FILES ${CAELISPECT_TS_FILES}
     RESOURCE_PREFIX "/translations"
 )
 # -- i18n end
@@ -128,8 +128,8 @@ endif()
 
 if(WIN32)
     configure_file(
-        ${CMAKE_CURRENT_LIST_DIR}/platforms/windows/amneziavpn.rc.in
-        ${CMAKE_CURRENT_BINARY_DIR}/amneziavpn.rc
+        ${CMAKE_CURRENT_LIST_DIR}/platforms/windows/caelispect.rc.in
+        ${CMAKE_CURRENT_BINARY_DIR}/caelispect.rc
     )
 
     set(LIBS ${LIBS}
@@ -149,16 +149,16 @@ if(APPLE)
     cmake_policy(SET CMP0114 NEW)
 
     if(NOT BUILD_OSX_APP_IDENTIFIER)
-        set(BUILD_OSX_APP_IDENTIFIER org.amnezia.AmneziaVPN CACHE STRING "OSX Application identifier")
+        set(BUILD_OSX_APP_IDENTIFIER org.caelispect.Caelispect CACHE STRING "OSX Application identifier")
     endif()
     if(NOT BUILD_IOS_APP_IDENTIFIER)
-        set(BUILD_IOS_APP_IDENTIFIER org.amnezia.AmneziaVPN CACHE STRING "iOS Application identifier")
+        set(BUILD_IOS_APP_IDENTIFIER org.caelispect.Caelispect CACHE STRING "iOS Application identifier")
     endif()
     if(NOT BUILD_IOS_GROUP_IDENTIFIER)
-        set(BUILD_IOS_GROUP_IDENTIFIER group.org.amnezia.AmneziaVPN CACHE STRING "iOS Group identifier")
+        set(BUILD_IOS_GROUP_IDENTIFIER group.org.caelispect.Caelispect CACHE STRING "iOS Group identifier")
     endif()
     if(NOT BUILD_VPN_DEVELOPMENT_TEAM)
-        set(BUILD_VPN_DEVELOPMENT_TEAM X7UJ388FXK CACHE STRING "Amnezia VPN Development Team")
+        set(BUILD_VPN_DEVELOPMENT_TEAM X7UJ388FXK CACHE STRING "Caelispect VPN Development Team")
     endif()
 
     set(CMAKE_XCODE_GENERATE_SCHEME FALSE)
@@ -176,7 +176,7 @@ if(LINUX AND NOT ANDROID)
 endif()
 
 if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
-    add_compile_definitions(AMNEZIA_DESKTOP)
+    add_compile_definitions(CAELISPECT_DESKTOP)
 endif()
 
 if(ANDROID)
@@ -213,11 +213,11 @@ endif()
 install(TARGETS ${PROJECT}
     DESTINATION ${CMAKE_INSTALL_BINDIR}
     RUNTIME_DEPENDENCY_SET client_deps
-    COMPONENT AmneziaVPN
+    COMPONENT Caelispect
 )
 
 if(APPLE)
-    set(RUNTIME_DEPS_DIR ${CMAKE_INSTALL_BINDIR}/AmneziaVPN.app/Contents/Frameworks)
+    set(RUNTIME_DEPS_DIR ${CMAKE_INSTALL_BINDIR}/Caelispect.app/Contents/Frameworks)
 else()
     set(RUNTIME_DEPS_DIR ${CMAKE_INSTALL_BINDIR})
 endif()
@@ -236,7 +236,7 @@ install(RUNTIME_DEPENDENCY_SET client_deps
         [[^/lib.*]]
         [[^/usr/lib.*]]
     DIRECTORIES ${CONAN_RUNTIME_LIB_DIRS}
-    COMPONENT AmneziaVPN
+    COMPONENT Caelispect
     DESTINATION "${RUNTIME_DEPS_DIR}"
 )
 
@@ -252,7 +252,7 @@ qt_generate_deploy_qml_app_script(
     DEPLOY_TOOL_OPTIONS ${deploy_tool_options}
 )
 install(SCRIPT ${QT_DEPLOY_SCRIPT}
-    COMPONENT AmneziaVPN
+    COMPONENT Caelispect
 )
 
 if (APPLE AND NOT IOS AND NOT MACOS_NE)

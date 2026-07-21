@@ -1,4 +1,4 @@
-set(CPACK_COMPONENTS_ALL AmneziaVPN)
+set(CPACK_COMPONENTS_ALL Caelispect)
 
 if (CPACK_GENERATOR STREQUAL productbuild)
     list(APPEND CPACK_COMPONENTS_ALL Uninstall)

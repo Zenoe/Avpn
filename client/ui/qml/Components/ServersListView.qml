@@ -67,7 +67,7 @@ ListViewType {
 
                     text: name
                     descriptionText: serverDescription
-                    descriptionColor: AmneziaStyle.color.mutedGray
+                    descriptionColor: CaelispectStyle.color.mutedGray
 
                     checked: index === root.selectedIndex
                     checkable: !ConnectionController.isConnected
@@ -94,7 +94,7 @@ ListViewType {
                     objectName: "serverInfoButton"
 
                     image: "qrc:/images/controls/settings.svg"
-                    imageColor: AmneziaStyle.color.paleGray
+                    imageColor: CaelispectStyle.color.paleGray
 
                     implicitWidth: 56
                     implicitHeight: 56

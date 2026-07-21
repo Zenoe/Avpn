@@ -11,16 +11,16 @@ namespace
 
 bool hasThirdPartyConfig(const QJsonObject &json)
 {
-    const QJsonArray containersArray = json.value(amnezia::configKey::containers).toArray();
+    const QJsonArray containersArray = json.value(caelispect::configKey::containers).toArray();
     for (const QJsonValue &val : containersArray) {
         const QJsonObject containerObj = val.toObject();
         for (auto it = containerObj.begin(); it != containerObj.end(); ++it) {
-            if (it.key() == amnezia::configKey::container) {
+            if (it.key() == caelispect::configKey::container) {
                 continue;
             }
             const QJsonObject protocolObj = it.value().toObject();
-            if (protocolObj.contains(amnezia::configKey::isThirdPartyConfig)
-                && protocolObj.value(amnezia::configKey::isThirdPartyConfig).toBool()) {
+            if (protocolObj.contains(caelispect::configKey::isThirdPartyConfig)
+                && protocolObj.value(caelispect::configKey::isThirdPartyConfig).toBool()) {
                 return true;
             }
         }
@@ -30,10 +30,10 @@ bool hasThirdPartyConfig(const QJsonObject &json)
 
 bool hasAwgContainer(const QJsonObject &json)
 {
-    const QJsonArray containersArray = json.value(amnezia::configKey::containers).toArray();
+    const QJsonArray containersArray = json.value(caelispect::configKey::containers).toArray();
     for (const QJsonValue &value : containersArray) {
-        const QString container = value.toObject().value(amnezia::configKey::container).toString();
-        if (container == QStringLiteral("amnezia-awg") || container == QStringLiteral("amnezia-awg2")) {
+        const QString container = value.toObject().value(caelispect::configKey::container).toString();
+        if (container == QStringLiteral("caelispect-awg") || container == QStringLiteral("caelispect-awg2")) {
             return true;
         }
     }
@@ -48,7 +48,7 @@ namespace serverConfigUtils
 ConfigType configTypeFromJson(const QJsonObject &serverConfigObject)
 {
     if (hasAwgContainer(serverConfigObject)
-        || serverConfigObject.value(amnezia::configKey::configVersion).toInt() != 0
+        || serverConfigObject.value(caelispect::configKey::configVersion).toInt() != 0
         || serverConfigObject.contains(QStringLiteral("api_key"))
         || serverConfigObject.contains(QStringLiteral("auth_data"))) {
         return ConfigType::Invalid;
@@ -58,8 +58,8 @@ ConfigType configTypeFromJson(const QJsonObject &serverConfigObject)
         return ConfigType::Native;
     }
 
-    const amnezia::SelfHostedAdminServerConfig adminProbe =
-            amnezia::SelfHostedAdminServerConfig::fromJson(serverConfigObject);
+    const caelispect::SelfHostedAdminServerConfig adminProbe =
+            caelispect::SelfHostedAdminServerConfig::fromJson(serverConfigObject);
     return adminProbe.hasCredentials() ? ConfigType::SelfHostedAdmin : ConfigType::SelfHostedUser;
 }
 

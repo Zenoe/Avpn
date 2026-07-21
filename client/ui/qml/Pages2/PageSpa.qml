@@ -14,7 +14,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: AmneziaStyle.color.midnightBlack
+        color: CaelispectStyle.color.midnightBlack
     }
 
     ColumnLayout {
@@ -73,12 +73,12 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             color: {
                 if (SpaController.statusType === "success") {
-                    return AmneziaStyle.color.goldenApricot
+                    return CaelispectStyle.color.goldenApricot
                 }
                 if (SpaController.statusType === "error") {
-                    return AmneziaStyle.color.vibrantRed
+                    return CaelispectStyle.color.vibrantRed
                 }
-                return AmneziaStyle.color.mutedGray
+                return CaelispectStyle.color.mutedGray
             }
         }
     }

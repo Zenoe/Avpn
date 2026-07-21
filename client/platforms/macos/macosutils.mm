@@ -21,7 +21,7 @@ NSString* MacOSUtils::appId() {
   if (!appId) {
     // Fallback. When an unsigned/un-notarized app is executed in
     // command-line mode, it could fail the fetching of its own bundle id.
-    appId = @"org.amnezia.AmneziaVPN";
+    appId = @"org.caelispect.Caelispect";
   }
 
   return appId;
@@ -52,13 +52,13 @@ void MacOSUtils::enableLoginItem(bool startAtBoot) {
 
     if (startAtBoot) {
       if (![[SMAppService mainAppService] registerAndReturnError: & error]) {
-        logger.error() << "Failed to register Amnezia VPN LoginItem: " << error.localizedDescription;
+        logger.error() << "Failed to register Caelispect VPN LoginItem: " << error.localizedDescription;
       } else {
-        logger.debug() << "Amnezia VPN LoginItem registered successfully.";
+        logger.debug() << "Caelispect VPN LoginItem registered successfully.";
       }
     } else {
       if (![[SMAppService mainAppService] unregisterAndReturnError: & error]) {
-        logger.error() << "Failed to unregister Amnezia VPN LoginItem: " << error.localizedDescription;
+        logger.error() << "Failed to unregister Caelispect VPN LoginItem: " << error.localizedDescription;
       } else {
         logger.debug() << "LoginItem unregistered successfully.";
       }
@@ -78,7 +78,7 @@ bool dockClickHandler(id self, SEL cmd, ...) {
 
   logger.debug() << "Dock icon clicked.";
   
-  //TODO IMPL FOR AMNEZIA
+  //TODO IMPL FOR CAELISPECT
   //QmlEngineHolder::instance()->showWindow();
   return FALSE;
 }

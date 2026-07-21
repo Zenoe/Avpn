@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(PROJECT AmneziaVPN)
-set(AMNEZIAVPN_VERSION 4.9.0.3)
+set(PROJECT Caelispect)
+set(CAELISPECT_VERSION 4.9.0.3)
 
 set(QT_CREATOR_SKIP_PACKAGE_MANAGER_SETUP ON CACHE BOOL "" FORCE)
 set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES
@@ -13,12 +13,12 @@ set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES
     ${CMAKE_SOURCE_DIR}/cmake/conan_provider.cmake
     CACHE STRING "" FORCE)
 
-project(${PROJECT} VERSION ${AMNEZIAVPN_VERSION}
-        DESCRIPTION "AmneziaVPN"
-        HOMEPAGE_URL "https://amnezia.org/"
+project(${PROJECT} VERSION ${CAELISPECT_VERSION}
+        DESCRIPTION "Caelispect"
+        HOMEPAGE_URL "https://caelispect.org/"
 )
 
-option(AMNEZIA_BUILD_TESTS "Build AmneziaVPN unit tests" OFF)
+option(CAELISPECT_BUILD_TESTS "Build Caelispect unit tests" OFF)
 
 # trigger conan to kick off `conan install` globally
 find_package(OpenSSL REQUIRED)
@@ -75,7 +75,7 @@ if(NOT IOS AND NOT ANDROID AND NOT MACOS_NE)
     add_subdirectory(service)
 endif()
 
-if(AMNEZIA_BUILD_TESTS)
+if(CAELISPECT_BUILD_TESTS)
     if(CMAKE_CROSSCOMPILING OR IOS OR ANDROID OR MACOS_NE)
         message(WARNING "Unit tests are only available for native desktop builds")
     else()

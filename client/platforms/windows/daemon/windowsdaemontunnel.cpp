@@ -34,7 +34,7 @@ int WindowsDaemonTunnel::run(QStringList& tokens) {
 
   QCoreApplication app();
 
-  QCoreApplication::setApplicationName("Amnezia VPN Tunnel");
+  QCoreApplication::setApplicationName("Caelispect VPN Tunnel");
   QCoreApplication::setApplicationVersion(Constants::versionString());
 
   if (tokens.length() != 2) {

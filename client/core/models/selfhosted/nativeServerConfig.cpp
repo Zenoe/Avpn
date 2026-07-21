@@ -11,7 +11,7 @@
 #include "core/utils/constants/protocolConstants.h"
 #include "core/utils/networkUtilities.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 using namespace ContainerEnumNS;
@@ -113,5 +113,5 @@ NativeServerConfig NativeServerConfig::fromJson(const QJsonObject& json)
     return config;
 }
 
-} // namespace amnezia
+} // namespace caelispect
 

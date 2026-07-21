@@ -25,7 +25,7 @@
 #include "core/utils/constants/protocolConstants.h"
 #include "core/utils/qrCodeUtils.h"
 
-using namespace amnezia;
+using namespace caelispect;
 using namespace ProtocolUtils;
 
 namespace
@@ -35,18 +35,18 @@ namespace
         const QString wireguardConfigPatternSectionInterface = "[Interface]";
         const QString wireguardConfigPatternSectionPeer = "[Peer]";
 
-        const QString amneziaConfigPattern = "containers";
-        const QString amneziaConfigPatternHostName = "hostName";
-        const QString amneziaConfigPatternUserName = "userName";
-        const QString amneziaConfigPatternPassword = "password";
+        const QString caelispectConfigPattern = "containers";
+        const QString caelispectConfigPatternHostName = "hostName";
+        const QString caelispectConfigPatternUserName = "userName";
+        const QString caelispectConfigPatternPassword = "password";
         const QString backupPattern = "Servers/serversList";
 
         if (config.contains(backupPattern)) {
             return ConfigTypes::Backup;
-        } else if (config.contains(amneziaConfigPattern)
-                   || (config.contains(amneziaConfigPatternHostName) && config.contains(amneziaConfigPatternUserName)
-                       && config.contains(amneziaConfigPatternPassword))) {
-            return ConfigTypes::Amnezia;
+        } else if (config.contains(caelispectConfigPattern)
+                   || (config.contains(caelispectConfigPatternHostName) && config.contains(caelispectConfigPatternUserName)
+                       && config.contains(caelispectConfigPatternPassword))) {
+            return ConfigTypes::Caelispect;
         } else if (config.contains(wireguardConfigPatternSectionInterface) && config.contains(wireguardConfigPatternSectionPeer)) {
             return ConfigTypes::WireGuard;
         }
@@ -100,7 +100,7 @@ ImportController::ImportResult ImportController::extractConfigFromData(const QSt
         result.errorCode = ErrorCode::ImportInvalidConfigError;
         return result;
     }
-    case ConfigTypes::Amnezia: {
+    case ConfigTypes::Caelispect: {
         result.config = QJsonDocument::fromJson(config.toUtf8()).object();
 
         if (result.config.contains(QStringLiteral("api_key"))
@@ -111,7 +111,7 @@ ImportController::ImportResult ImportController::extractConfigFromData(const QSt
             return result;
         }
 
-        processAmneziaConfig(result.config);
+        processCaelispectConfig(result.config);
         if (!result.config.empty()) {
             return result;
         }
@@ -146,7 +146,7 @@ ImportController::ImportResult ImportController::extractConfigFromQr(const QByte
     QJsonObject dataObj = QJsonDocument::fromJson(data).object();
     if (!dataObj.isEmpty()) {
         result.config = dataObj;
-        result.configType = ConfigTypes::Amnezia;
+        result.configType = ConfigTypes::Caelispect;
         return result;
     }
 
@@ -157,7 +157,7 @@ ImportController::ImportResult ImportController::extractConfigFromQr(const QByte
             result.errorCode = ErrorCode::ImportInvalidConfigError;
             return result;
         }
-        result.configType = ConfigTypes::Amnezia;
+        result.configType = ConfigTypes::Caelispect;
         return result;
     }
 
@@ -174,7 +174,7 @@ ImportController::ImportResult ImportController::extractConfigFromQr(const QByte
             result.errorCode = ErrorCode::ImportInvalidConfigError;
             return result;
         }
-        result.configType = ConfigTypes::Amnezia;
+        result.configType = ConfigTypes::Caelispect;
         return result;
     }
 
@@ -386,7 +386,7 @@ QJsonObject ImportController::extractWireGuardConfig(const QString &data, Config
     wireguardConfig[configKey::transportProto] = QStringLiteral("udp");
 
     QJsonObject containers;
-    QString containerName = configKey::amneziaWireguard;
+    QString containerName = configKey::caelispectWireguard;
     containers.insert(configKey::container, QJsonValue(containerName));
     containers.insert(protocolName, QJsonValue(wireguardConfig));
 
@@ -413,7 +413,7 @@ QJsonObject ImportController::extractWireGuardConfig(const QString &data, Config
     return config;
 }
 
-void ImportController::processAmneziaConfig(QJsonObject &config) const
+void ImportController::processCaelispectConfig(QJsonObject &config) const
 {
     auto containers = config.value(configKey::containers).toArray();
     QJsonArray supportedContainers;

@@ -1,55 +1,55 @@
-# Amnezia VPN
+# Caelispect VPN
 
 ### _The best client for self-hosted VPN_
 
 
-[![Build Status](https://github.com/amnezia-vpn/amnezia-client/actions/workflows/deploy.yml/badge.svg?branch=dev)](https://github.com/amnezia-vpn/amnezia-client/actions/workflows/deploy.yml?query=branch:dev)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/amnezia-vpn/amnezia-client)
+[![Build Status](https://github.com/caelispect-vpn/caelispect-client/actions/workflows/deploy.yml/badge.svg?branch=dev)](https://github.com/caelispect-vpn/caelispect-client/actions/workflows/deploy.yml?query=branch:dev)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/caelispect-vpn/caelispect-client)
 
-### [English]([https://github.com/amnezia-vpn/amnezia-client/blob/dev/README_RU.md](https://github.com/amnezia-vpn/amnezia-client/tree/dev?tab=readme-ov-file#)) | [Русский](https://github.com/amnezia-vpn/amnezia-client/blob/dev/README_RU.md)
+### [English]([https://github.com/caelispect-vpn/caelispect-client/blob/dev/README_RU.md](https://github.com/caelispect-vpn/caelispect-client/tree/dev?tab=readme-ov-file#)) | [Русский](https://github.com/caelispect-vpn/caelispect-client/blob/dev/README_RU.md)
 
 
-[Amnezia](https://amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-en) is an open-source VPN client, with a key feature that enables you to deploy your own VPN server on your server.
+[Caelispect](https://caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-en) is an open-source VPN client, with a key feature that enables you to deploy your own VPN server on your server.
 
-[![Image](https://github.com/amnezia-vpn/amnezia-client/blob/dev/metadata/img-readme/uipic4.png)](https://amnezia.org)
+[![Image](https://github.com/caelispect-vpn/caelispect-client/blob/dev/metadata/img-readme/uipic4.png)](https://caelispect.org)
 
-### [Website](https://amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-en) | [Alt website link](https://storage.googleapis.com/amnezia/amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-en-mirror) | [Documentation](https://docs.amnezia.org) | [Troubleshooting](https://docs.amnezia.org/troubleshooting)
+### [Website](https://caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-en) | [Alt website link](https://storage.googleapis.com/caelispect/caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-en-mirror) | [Documentation](https://docs.caelispect.org) | [Troubleshooting](https://docs.caelispect.org/troubleshooting)
 
 > [!TIP]
-> If the [Amnezia website](https://amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-en) is blocked in your region, you can use an [Alternative website link](https://storage.googleapis.com/amnezia/amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-en-mirror).
+> If the [Caelispect website](https://caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-en) is blocked in your region, you can use an [Alternative website link](https://storage.googleapis.com/caelispect/caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-en-mirror).
 
-<a href="https://amnezia.org/en/downloads?utm_source=github&utm_campaign=amnezia_button-readme-en"><img src="https://github.com/amnezia-vpn/amnezia-client/blob/dev/metadata/img-readme/download-website.svg" width="150" style="max-width: 100%; margin-right: 10px"></a>
-<a href="https://storage.googleapis.com/amnezia/amnezia.org?m-path=/en/downloads&utm_source=github&utm_campaign=amnezia_button-readme-en-mirrow"><img src="https://github.com/amnezia-vpn/amnezia-client/blob/dev/metadata/img-readme/download-alt.svg" width="150" style="max-width: 100%;"></a>
+<a href="https://caelispect.org/en/downloads?utm_source=github&utm_campaign=caelispect_button-readme-en"><img src="https://github.com/caelispect-vpn/caelispect-client/blob/dev/metadata/img-readme/download-website.svg" width="150" style="max-width: 100%; margin-right: 10px"></a>
+<a href="https://storage.googleapis.com/caelispect/caelispect.org?m-path=/en/downloads&utm_source=github&utm_campaign=caelispect_button-readme-en-mirrow"><img src="https://github.com/caelispect-vpn/caelispect-client/blob/dev/metadata/img-readme/download-alt.svg" width="150" style="max-width: 100%;"></a>
 
-[All releases](https://github.com/amnezia-vpn/amnezia-client/releases)
+[All releases](https://github.com/caelispect-vpn/caelispect-client/releases)
 
 <br/>
 
-<a href="https://www.testiny.io"><img src="https://github.com/amnezia-vpn/amnezia-client/blob/dev/metadata/img-readme/testiny.png" height="28px"></a>
+<a href="https://www.testiny.io"><img src="https://github.com/caelispect-vpn/caelispect-client/blob/dev/metadata/img-readme/testiny.png" height="28px"></a>
 
 ## Features
 
-- Very easy to use - enter your IP address, SSH login, password and Amnezia will automatically install VPN docker containers to your server and connect to the VPN.
+- Very easy to use - enter your IP address, SSH login, password and Caelispect will automatically install VPN docker containers to your server and connect to the VPN.
 - Classic VPN-protocols: OpenVPN, WireGuard and IKEv2 protocols.
-- Protocols with traffic Masking (Obfuscation): OpenVPN over [Cloak](https://github.com/cbeuw/Cloak) plugin, Shadowsocks (OpenVPN over Shadowsocks), [AmneziaWG](https://docs.amnezia.org/documentation/amnezia-wg/) and XRay.
+- Protocols with traffic Masking (Obfuscation): OpenVPN over [Cloak](https://github.com/cbeuw/Cloak) plugin, Shadowsocks (OpenVPN over Shadowsocks), [CaelispectWG](https://docs.caelispect.org/documentation/caelispect-wg/) and XRay.
 - Split tunneling support - add any sites to the client to enable VPN only for them or add Apps (only for Android and Desktop).
 - Windows, MacOS, Linux, Android, iOS releases.
-- Support for AmneziaWG protocol configuration on [Keenetic beta firmware](https://docs.keenetic.com/ua/air/kn-1611/en/6319-latest-development-release.html#UUID-186c4108-5afd-c10b-f38a-cdff6c17fab3_section-idm33192196168192-improved).
+- Support for CaelispectWG protocol configuration on [Keenetic beta firmware](https://docs.keenetic.com/ua/air/kn-1611/en/6319-latest-development-release.html#UUID-186c4108-5afd-c10b-f38a-cdff6c17fab3_section-idm33192196168192-improved).
 
 ## Links
 
-- [https://amnezia.org](https://amnezia.org) - Project website | [Alternative link (mirror)](https://storage.googleapis.com/kldscp/amnezia.org)
-- [https://docs.amnezia.org](https://docs.amnezia.org) - Documentation
-- [https://www.reddit.com/r/AmneziaVPN](https://www.reddit.com/r/AmneziaVPN) - Reddit  
-- [https://t.me/amnezia_vpn_en](https://t.me/amnezia_vpn_en) - Telegram support channel (English) 
-- [https://t.me/amnezia_vpn_ir](https://t.me/amnezia_vpn_ir) - Telegram support channel (Farsi) 
-- [https://t.me/amnezia_vpn_mm](https://t.me/amnezia_vpn_mm) - Telegram support channel (Myanmar)  
-- [https://t.me/amnezia_vpn](https://t.me/amnezia_vpn) - Telegram support channel (Russian)
-- [https://vpnpay.io/en/amnezia-premium/](https://vpnpay.io/en/amnezia-premium/) - Amnezia Premium
+- [https://caelispect.org](https://caelispect.org) - Project website | [Alternative link (mirror)](https://storage.googleapis.com/kldscp/caelispect.org)
+- [https://docs.caelispect.org](https://docs.caelispect.org) - Documentation
+- [https://www.reddit.com/r/Caelispect](https://www.reddit.com/r/Caelispect) - Reddit  
+- [https://t.me/caelispect_vpn_en](https://t.me/caelispect_vpn_en) - Telegram support channel (English) 
+- [https://t.me/caelispect_vpn_ir](https://t.me/caelispect_vpn_ir) - Telegram support channel (Farsi) 
+- [https://t.me/caelispect_vpn_mm](https://t.me/caelispect_vpn_mm) - Telegram support channel (Myanmar)  
+- [https://t.me/caelispect_vpn](https://t.me/caelispect_vpn) - Telegram support channel (Russian)
+- [https://vpnpay.io/en/caelispect-premium/](https://vpnpay.io/en/caelispect-premium/) - Caelispect Premium
 
 ## Tech
 
-AmneziaVPN uses several open-source projects to work:
+Caelispect uses several open-source projects to work:
 
 - [OpenSSL](https://www.openssl.org/)
 - [OpenVPN](https://openvpn.net/)
@@ -63,8 +63,8 @@ AmneziaVPN uses several open-source projects to work:
 
 Download the most actual translation files.
 
-Go to ["Actions" tab](https://github.com/amnezia-vpn/amnezia-client/actions?query=is%3Asuccess+branch%3Adev), click on the first line.
-Then scroll down to the "Artifacts" section and download "AmneziaVPN_translations".
+Go to ["Actions" tab](https://github.com/caelispect-vpn/caelispect-client/actions?query=is%3Asuccess+branch%3Adev), click on the first line.
+Then scroll down to the "Artifacts" section and download "Caelispect_translations".
 
 Unzip this file.
 Each *.ts file contains strings for one corresponding language.
@@ -154,7 +154,7 @@ deploy/build.bat --installer all
   - `Visual Studio Code` with `Qt Extension Pack`
   - and so on
 
-* To use `Xcode`, you have to configure project first by using `cmake`. The easiest way to do it is to use `Qt Creator` for configuration. Then open `AmneziaVPN.xcodeproj` file from the build folder by using `Xcode`. Note that none of the files changed are saved - the files actually getting changed in build directory. Copy them manually if necessary
+* To use `Xcode`, you have to configure project first by using `cmake`. The easiest way to do it is to use `Qt Creator` for configuration. Then open `Caelispect.xcodeproj` file from the build folder by using `Xcode`. Note that none of the files changed are saved - the files actually getting changed in build directory. Copy them manually if necessary
 
 * `Android studio` could be used in the same way - just configure the project by using `cmake` manually or by using `Qt Creator`. Open `<build-dir>/client/android-build` in `Android studio` then. Do not forget to copy the changes - everything you do is saved under the build directory actually.
 
@@ -171,7 +171,7 @@ This project is licensed under the GNU General Public License v3.0 (see LICENSE)
 
 ## Donate
 
-Patreon: [https://www.patreon.com/amneziavpn](https://www.patreon.com/amneziavpn)
+Patreon: [https://www.patreon.com/caelispect](https://www.patreon.com/caelispect)
 
 Bitcoin: bc1qmhtgcf9637rl3kqyy22r2a8wa8laka4t9rx2mf <br>
 USDT BEP20: 0x6abD576765a826f87D1D95183438f9408C901bE4 <br>

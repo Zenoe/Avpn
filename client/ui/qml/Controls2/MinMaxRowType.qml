@@ -141,7 +141,7 @@ Item {
         SmallTextType {
             visible: root.hintText !== ""
             text: root.hintText
-            color: AmneziaStyle.color.mutedGray
+            color: CaelispectStyle.color.mutedGray
             Layout.fillWidth: true
         }
     }

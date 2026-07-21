@@ -1,7 +1,7 @@
 import Foundation
 import os.log
 
-private let subsystemIdentifier = Bundle.main.bundleIdentifier ?? "org.amnezia.AmneziaVPN"
+private let subsystemIdentifier = Bundle.main.bundleIdentifier ?? "org.caelispect.Caelispect"
 private let wireGuardSystemLogger = Logger(subsystem: subsystemIdentifier, category: "WireGuard")
 private let networkExtensionLogger = Logger(subsystem: subsystemIdentifier, category: "NetworkExtension")
 

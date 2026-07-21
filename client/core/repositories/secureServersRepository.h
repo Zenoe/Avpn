@@ -15,7 +15,7 @@
 #include "core/utils/serverConfigUtils.h"
 #include "secureQSettings.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 class SecureServersRepository : public QObject
 {

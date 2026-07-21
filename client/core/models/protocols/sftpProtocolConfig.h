@@ -4,7 +4,7 @@
 #include <QJsonObject>
 #include <QString>
 
-namespace amnezia
+namespace caelispect
 {
 
 struct SftpProtocolConfig {
@@ -16,7 +16,7 @@ struct SftpProtocolConfig {
     static SftpProtocolConfig fromJson(const QJsonObject& json);
 };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // SFTPPROTOCOLCONFIG_H
 

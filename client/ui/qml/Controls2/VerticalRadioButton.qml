@@ -14,19 +14,19 @@ RadioButton {
     property int textElide: Qt.ElideRight
     property string descriptionText
 
-    property string hoveredColor: AmneziaStyle.color.barelyTranslucentWhite
-    property string defaultColor: AmneziaStyle.color.transparent
-    property string disabledColor: AmneziaStyle.color.transparent
-    property string selectedColor: AmneziaStyle.color.transparent
+    property string hoveredColor: CaelispectStyle.color.barelyTranslucentWhite
+    property string defaultColor: CaelispectStyle.color.transparent
+    property string disabledColor: CaelispectStyle.color.transparent
+    property string selectedColor: CaelispectStyle.color.transparent
 
-    property string textColor: AmneziaStyle.color.paleGray
-    property string textDisabledColor: AmneziaStyle.color.mutedGray
-    property string selectedTextColor: AmneziaStyle.color.goldenApricot
-    property string selectedTextDisabledColor: AmneziaStyle.color.burntOrange
-    property string descriptionColor: AmneziaStyle.color.mutedGray
-    property string descriptionDisabledColor: AmneziaStyle.color.charcoalGray
+    property string textColor: CaelispectStyle.color.paleGray
+    property string textDisabledColor: CaelispectStyle.color.mutedGray
+    property string selectedTextColor: CaelispectStyle.color.goldenApricot
+    property string selectedTextDisabledColor: CaelispectStyle.color.burntOrange
+    property string descriptionColor: CaelispectStyle.color.mutedGray
+    property string descriptionDisabledColor: CaelispectStyle.color.charcoalGray
 
-    property string borderFocusedColor: AmneziaStyle.color.paleGray
+    property string borderFocusedColor: CaelispectStyle.color.paleGray
     property int borderFocusedWidth: 1
 
     property string imageSource
@@ -71,7 +71,7 @@ RadioButton {
 
         anchors.verticalCenter: parent.verticalCenter
 
-        border.color: root.focus ? root.borderFocusedColor : AmneziaStyle.color.transparent
+        border.color: root.focus ? root.borderFocusedColor : CaelispectStyle.color.transparent
         border.width: root.focus ? root.borderFocusedWidth : 0
 
         implicitWidth: 56

@@ -13,7 +13,7 @@
 #include <QRegularExpression>
 #include <QtGlobal>
 
-using namespace amnezia;
+using namespace caelispect;
 
 MtProxyConfigModel::MtProxyConfigModel(QObject *parent) : QAbstractListModel(parent) {}
 
@@ -173,8 +173,8 @@ QVariant MtProxyConfigModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-void MtProxyConfigModel::updateModel(amnezia::DockerContainer container,
-                                     const amnezia::MtProxyProtocolConfig &protocolConfig) {
+void MtProxyConfigModel::updateModel(caelispect::DockerContainer container,
+                                     const caelispect::MtProxyProtocolConfig &protocolConfig) {
     beginResetModel();
     m_container = container;
     m_protocolConfig = protocolConfig;
@@ -686,6 +686,6 @@ QHash<int, QByteArray> MtProxyConfigModel::roleNames() const {
     return roles;
 }
 
-amnezia::MtProxyProtocolConfig MtProxyConfigModel::getProtocolConfig() {
+caelispect::MtProxyProtocolConfig MtProxyConfigModel::getProtocolConfig() {
     return m_protocolConfig;
 }

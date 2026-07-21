@@ -1,0 +1,13 @@
+[Unit]
+Description=Caelispect Service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/opt/Caelispect/bin/Caelispect-service
+
+[Install]
+WantedBy=multi-user.target

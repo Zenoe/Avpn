@@ -7,11 +7,11 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
-using namespace amnezia;
+using namespace caelispect;
 
 namespace
 {
-    const QByteArray AMNEZIA_CONFIG_SIGNATURE = QByteArray::fromHex("000000ff");
+    const QByteArray CAELISPECT_CONFIG_SIGNATURE = QByteArray::fromHex("000000ff");
 
     constexpr QLatin1String unprocessableSubscriptionMessage("Failed to retrieve subscription information. Is it activated?");
     constexpr QLatin1String trialAlreadyUsedMessage("trial subscription already used");
@@ -76,7 +76,7 @@ bool apiUtils::isSubscriptionExpiringSoon(const QString &subscriptionEndDate, in
     return endDate <= nowUtc.addDays(withinDays);
 }
 
-amnezia::ErrorCode apiUtils::checkNetworkReplyErrors(const QList<QSslError> &sslErrors, const QString &replyErrorString,
+caelispect::ErrorCode apiUtils::checkNetworkReplyErrors(const QList<QSslError> &sslErrors, const QString &replyErrorString,
                                                      const QNetworkReply::NetworkError &replyError, const int httpStatusCode,
                                                      const QByteArray &responseBody)
 {
@@ -90,16 +90,16 @@ amnezia::ErrorCode apiUtils::checkNetworkReplyErrors(const QList<QSslError> &ssl
 
     if (!sslErrors.empty()) {
         qDebug().noquote() << sslErrors;
-        return amnezia::ErrorCode::ApiConfigSslError;
+        return caelispect::ErrorCode::ApiConfigSslError;
     }
     if (replyError == QNetworkReply::NetworkError::OperationCanceledError
         || replyError == QNetworkReply::NetworkError::TimeoutError) {
         qDebug() << replyError;
-        return amnezia::ErrorCode::ApiConfigTimeoutError;
+        return caelispect::ErrorCode::ApiConfigTimeoutError;
     }
     if (replyError == QNetworkReply::NetworkError::OperationNotImplementedError) {
         qDebug() << replyError;
-        return amnezia::ErrorCode::ApiUpdateRequestError;
+        return caelispect::ErrorCode::ApiUpdateRequestError;
     }
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(responseBody);
@@ -108,54 +108,54 @@ amnezia::ErrorCode apiUtils::checkNetworkReplyErrors(const QList<QSslError> &ssl
         const int httpStatusFromBody = jsonObj.value(QStringLiteral("http_status")).toInt(-1);
 
         if (httpStatusFromBody == httpStatusCodeTooManyRequests) {
-            return amnezia::ErrorCode::ApiRateLimitError;
+            return caelispect::ErrorCode::ApiRateLimitError;
         }
         if (httpStatusFromBody == httpStatusCodeConflict) {
             if (apiErrorMessageFromJson(jsonObj).contains(trialAlreadyUsedMessage, Qt::CaseInsensitive)) {
-                return amnezia::ErrorCode::ApiTrialAlreadyUsedError;
+                return caelispect::ErrorCode::ApiTrialAlreadyUsedError;
             }
-            return amnezia::ErrorCode::ApiConfigLimitError;
+            return caelispect::ErrorCode::ApiConfigLimitError;
         }
         if (httpStatusFromBody == httpStatusCodeNotFound) {
-            return amnezia::ErrorCode::ApiNotFoundError;
+            return caelispect::ErrorCode::ApiNotFoundError;
         }
         if (httpStatusFromBody == httpStatusCodeRequestTimeout) {
-            return amnezia::ErrorCode::ApiConfigTimeoutError;
+            return caelispect::ErrorCode::ApiConfigTimeoutError;
         }
         if (httpStatusFromBody == httpStatusCodeNotImplemented) {
-            return amnezia::ErrorCode::ApiUpdateRequestError;
+            return caelispect::ErrorCode::ApiUpdateRequestError;
         }
         if (httpStatusFromBody == httpStatusCodeUnprocessableEntity) {
             if (apiErrorMessageFromJson(jsonObj) == unprocessableSubscriptionMessage) {
-                return amnezia::ErrorCode::ApiSubscriptionExpiredError;
+                return caelispect::ErrorCode::ApiSubscriptionExpiredError;
             }
-            return amnezia::ErrorCode::ApiConfigDownloadError;
+            return caelispect::ErrorCode::ApiConfigDownloadError;
         }
         if (httpStatusFromBody == httpStatusCodePaymentRequired) {
             const QString message = apiErrorMessageFromJson(jsonObj);
             if (message.contains(QLatin1String("refresh_captcha"), Qt::CaseInsensitive)) {
-                return amnezia::ErrorCode::ApiCaptchaRefreshError;
+                return caelispect::ErrorCode::ApiCaptchaRefreshError;
             }
             if (message.contains(QLatin1String("invalid_captcha"), Qt::CaseInsensitive)) {
-                return amnezia::ErrorCode::ApiCaptchaInvalidError;
+                return caelispect::ErrorCode::ApiCaptchaInvalidError;
             }
             if (jsonObj.contains(QStringLiteral("captcha_id")) || jsonObj.contains(QStringLiteral("captcha_image"))
                 || message.compare(QLatin1String("rate_limit_exceeded"), Qt::CaseInsensitive) == 0
                 || message.contains(QLatin1String("rate_limit_exceeded"), Qt::CaseInsensitive)) {
-                return amnezia::ErrorCode::ApiCaptchaRequiredError;
+                return caelispect::ErrorCode::ApiCaptchaRequiredError;
             }
-            return amnezia::ErrorCode::ApiSubscriptionNotActiveError;
+            return caelispect::ErrorCode::ApiSubscriptionNotActiveError;
         }
 
         if (httpStatusFromBody >= 300) {
-            return amnezia::ErrorCode::ApiConfigDownloadError;
+            return caelispect::ErrorCode::ApiConfigDownloadError;
         }
     }
 
     if (replyError == QNetworkReply::NoError) {
-        return amnezia::ErrorCode::NoError;
+        return caelispect::ErrorCode::NoError;
     }
 
     qDebug() << "something went wrong";
-    return amnezia::ErrorCode::ApiConfigDownloadError;
+    return caelispect::ErrorCode::ApiConfigDownloadError;
 }

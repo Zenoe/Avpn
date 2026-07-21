@@ -1,6 +1,6 @@
 #include "dnsProtocolConfig.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 QJsonObject DnsProtocolConfig::toJson() const
@@ -14,5 +14,5 @@ DnsProtocolConfig DnsProtocolConfig::fromJson(const QJsonObject& json)
     return DnsProtocolConfig();
 }
 
-} // namespace amnezia
+} // namespace caelispect
 

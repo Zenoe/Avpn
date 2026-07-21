@@ -7,9 +7,9 @@
 #include <QDebug>
 #include <QQmlEngine>
 
-namespace amnezia {
+namespace caelispect {
 
-using namespace amnezia::ProtocolEnumNS;
+using namespace caelispect::ProtocolEnumNS;
 
 void declareQmlProtocolEnum() {
     qmlRegisterUncreatableMetaObject(
@@ -37,6 +37,6 @@ void declareQmlProtocolEnum() {
         );
 }
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // QML_REGISTER_PROTOCOLS_H

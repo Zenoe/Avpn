@@ -19,15 +19,15 @@ class ConfiguratorBase : public QObject
 public:
     explicit ConfiguratorBase(QObject *parent = nullptr);
 
-    static QScopedPointer<ConfiguratorBase> create(amnezia::Proto protocol);
+    static QScopedPointer<ConfiguratorBase> create(caelispect::Proto protocol);
 
-    virtual amnezia::ProtocolConfig processConfigWithLocalSettings(const amnezia::ConnectionSettings &settings,
-                                                                   amnezia::ProtocolConfig protocolConfig);
-    virtual amnezia::ProtocolConfig processConfigWithExportSettings(const amnezia::ExportSettings &settings,
-                                                                     amnezia::ProtocolConfig protocolConfig);
+    virtual caelispect::ProtocolConfig processConfigWithLocalSettings(const caelispect::ConnectionSettings &settings,
+                                                                   caelispect::ProtocolConfig protocolConfig);
+    virtual caelispect::ProtocolConfig processConfigWithExportSettings(const caelispect::ExportSettings &settings,
+                                                                     caelispect::ProtocolConfig protocolConfig);
 
 protected:
-    void applyDnsToNativeConfig(const amnezia::DnsSettings &dns, amnezia::ProtocolConfig &protocolConfig);
+    void applyDnsToNativeConfig(const caelispect::DnsSettings &dns, caelispect::ProtocolConfig &protocolConfig);
 
 };
 

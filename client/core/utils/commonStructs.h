@@ -4,7 +4,7 @@
 #include <QString>
 #include "core/utils/routeModes.h"
 
-namespace amnezia
+namespace caelispect
 {
     struct ServerCredentials
     {

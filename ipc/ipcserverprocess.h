@@ -38,7 +38,7 @@ public:
 signals:
 
 private:
-    amnezia::PermittedProcess m_program = amnezia::PermittedProcess::Invalid;
+    caelispect::PermittedProcess m_program = caelispect::PermittedProcess::Invalid;
     QSharedPointer<QProcess> m_process;
 };
 

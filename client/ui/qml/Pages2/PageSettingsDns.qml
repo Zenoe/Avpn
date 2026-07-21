@@ -54,7 +54,7 @@ PageType {
                 Layout.leftMargin: 16
                 Layout.rightMargin: 16
                 
-                text: qsTr("If AmneziaDNS is not used or installed")
+                text: qsTr("If CaelispectDNS is not used or installed")
             }
         }
 
@@ -102,11 +102,11 @@ PageType {
                 Layout.leftMargin: 16
                 Layout.rightMargin: 16
 
-                defaultColor: AmneziaStyle.color.transparent
-                hoveredColor: AmneziaStyle.color.translucentWhite
-                pressedColor: AmneziaStyle.color.sheerWhite
-                disabledColor: AmneziaStyle.color.mutedGray
-                textColor: AmneziaStyle.color.paleGray
+                defaultColor: CaelispectStyle.color.transparent
+                hoveredColor: CaelispectStyle.color.translucentWhite
+                pressedColor: CaelispectStyle.color.sheerWhite
+                disabledColor: CaelispectStyle.color.mutedGray
+                textColor: CaelispectStyle.color.paleGray
                 borderWidth: 1
 
                 text: qsTr("Restore default")

@@ -15,14 +15,14 @@
 namespace
 {
     enum class ConfigTypes {
-        Amnezia,
+        Caelispect,
         WireGuard,
         Backup,
         Invalid
     };
 }
 
-using namespace amnezia;
+using namespace caelispect;
 
 class ImportController : public QObject
 {
@@ -69,7 +69,7 @@ signals:
 private:
     ConfigTypes checkConfigFormat(const QString &config) const;
     QJsonObject extractWireGuardConfig(const QString &data, ConfigTypes &configType) const;
-    void processAmneziaConfig(QJsonObject &config) const;
+    void processCaelispectConfig(QJsonObject &config) const;
 
     SecureServersRepository* m_serversRepository;
     SecureAppSettingsRepository* m_appSettingsRepository;

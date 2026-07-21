@@ -4,7 +4,7 @@
 #include <QMetaEnum>
 #include <QObject>
 
-namespace amnezia
+namespace caelispect
 {
     namespace ProtocolEnumNS
     {

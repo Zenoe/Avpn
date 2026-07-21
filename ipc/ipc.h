@@ -6,9 +6,9 @@
 
 #include "../client/core/utils/utilities.h"
 
-#define IPC_SERVICE_URL "local:AmneziaVpnIpcInterface"
+#define IPC_SERVICE_URL "local:CaelispectVpnIpcInterface"
 
-namespace amnezia {
+namespace caelispect {
 
 enum PermittedProcess {
     Invalid,
@@ -47,6 +47,6 @@ inline QStringList sanitizeArguments(PermittedProcess proc, const QStringList &a
     return args;
 }
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // IPC_H

@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QTimer>
 
-#include "amneziaApplication.h"
+#include "caelispectApplication.h"
 #include "core/utils/osSignalHandler.h"
 //#include "core/utils/migrations.h"
 #include "version.h"
@@ -18,9 +18,9 @@
 bool isAnotherInstanceRunning()
 {
     QLocalSocket socket;
-    socket.connectToServer("AmneziaVPNInstance");
+    socket.connectToServer("CaelispectInstance");
     if (socket.waitForConnected(500)) {
-        qWarning() << "AmneziaVPN is already running";
+        qWarning() << "Caelispect is already running";
         return true;
     }
     return false;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     qputenv("ANDROID_OPENSSL_SUFFIX", "_3");
 #endif
 
-    AmneziaApplication app(argc, argv);
+    CaelispectApplication app(argc, argv);
     OsSignalHandler::setup();
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(MACOS_NE)

@@ -6,7 +6,7 @@
 #include "core/models/protocolConfig.h"
 #include "core/models/containerConfig.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 namespace {
 int rowForServerId(const QVector<ServerDescription> &list, const QString &serverId)
@@ -145,9 +145,9 @@ void ServersUiController::setDefaultContainer(const QString &serverId, int conta
     updateModel();
 }
 
-void ServersUiController::toggleAmneziaDns(bool enabled)
+void ServersUiController::toggleCaelispectDns(bool enabled)
 {
-    m_settingsController->toggleAmneziaDns(enabled);
+    m_settingsController->toggleCaelispectDns(enabled);
     updateModel();
 }
 
@@ -162,7 +162,7 @@ void ServersUiController::onDefaultServerChanged(const QString &defaultServerId)
 void ServersUiController::updateModel()
 {
     QVector<ServerDescription> descriptions =
-        m_serversController->buildServerDescriptions(m_settingsController->isAmneziaDnsEnabled());
+        m_serversController->buildServerDescriptions(m_settingsController->isCaelispectDnsEnabled());
 
     const QString defaultServerId = m_serversController->getDefaultServerId();
     m_orderedServerDescriptions = descriptions;

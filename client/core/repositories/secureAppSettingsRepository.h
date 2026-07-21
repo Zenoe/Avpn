@@ -15,7 +15,7 @@
 #include "core/utils/commonStructs.h"
 #include "secureQSettings.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 class SecureAppSettingsRepository : public QObject
 {
@@ -27,8 +27,8 @@ public:
     QLocale getAppLanguage() const;
     void setAppLanguage(QLocale locale);
 
-    bool useAmneziaDns() const;
-    void setUseAmneziaDns(bool enabled);
+    bool useCaelispectDns() const;
+    void setUseCaelispectDns(bool enabled);
     QStringList getAllowedDnsServers() const;
     void setAllowedDnsServers(const QStringList &servers);
     QString primaryDns() const;
@@ -98,7 +98,7 @@ signals:
     void appsRouteModeChanged(AppsRouteMode mode);
     void sitesSplitTunnelingEnabledChanged(bool enabled);
     void appsSplitTunnelingEnabledChanged(bool enabled);
-    void useAmneziaDnsChanged(bool enabled);
+    void useCaelispectDnsChanged(bool enabled);
     void saveLogsChanged(bool enabled);
     void screenshotsEnabledChanged(bool enabled);
     void settingsCleared();

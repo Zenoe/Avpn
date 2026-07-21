@@ -61,7 +61,7 @@ Window  {
     maximumWidth: 600
     maximumHeight: 800
 
-    color: AmneziaStyle.color.midnightBlack
+    color: CaelispectStyle.color.midnightBlack
 
     onClosing: function(close) {
         close.accepted = false
@@ -73,7 +73,7 @@ Window  {
         console.warn("Scene graph error:", error, message)
     }
 
-    title: "AmneziaVPN"
+    title: "Caelispect"
 
     Item { // This item is needed for focus handling
         id: defaultFocusItem
@@ -277,11 +277,11 @@ Window  {
 
                     Layout.fillWidth: true
 
-                    defaultColor: AmneziaStyle.color.transparent
-                    hoveredColor: AmneziaStyle.color.translucentWhite
-                    pressedColor: AmneziaStyle.color.sheerWhite
-                    disabledColor: AmneziaStyle.color.mutedGray
-                    textColor: AmneziaStyle.color.paleGray
+                    defaultColor: CaelispectStyle.color.transparent
+                    hoveredColor: CaelispectStyle.color.translucentWhite
+                    pressedColor: CaelispectStyle.color.sheerWhite
+                    disabledColor: CaelispectStyle.color.mutedGray
+                    textColor: CaelispectStyle.color.paleGray
                     borderWidth: 1
 
                     text: qsTr("Save")

@@ -5,7 +5,7 @@
 #include <QString>
 #include <QStringList>
 
-namespace amnezia {
+namespace caelispect {
 
 struct TelemtProtocolConfig {
     QString port;
@@ -33,6 +33,6 @@ struct TelemtProtocolConfig {
     bool equalsDockerDeploymentSettings(const TelemtProtocolConfig &other) const;
 };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // TELEMTPROTOCOLCONFIG_H

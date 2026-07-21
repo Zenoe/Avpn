@@ -42,13 +42,13 @@ public:
 
 public slots:
 
-    void updateModel(amnezia::DockerContainer container, const amnezia::MtProxyProtocolConfig &protocolConfig);
+    void updateModel(caelispect::DockerContainer container, const caelispect::MtProxyProtocolConfig &protocolConfig);
 
     void updateModel(const QJsonObject &config);
 
     QJsonObject getConfig();
 
-    amnezia::MtProxyProtocolConfig getProtocolConfig();
+    caelispect::MtProxyProtocolConfig getProtocolConfig();
 
     Q_INVOKABLE void generateSecret();
 
@@ -144,9 +144,9 @@ protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    amnezia::DockerContainer m_container;
+    caelispect::DockerContainer m_container;
     QJsonObject m_fullConfig;
-    amnezia::MtProxyProtocolConfig m_protocolConfig;
+    caelispect::MtProxyProtocolConfig m_protocolConfig;
 };
 
 #endif // MTPROXYCONFIGMODEL_H

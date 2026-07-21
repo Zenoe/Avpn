@@ -20,7 +20,7 @@
 #include "core/models/containerConfig.h"
 #include "core/models/serverDescription.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 class ServersController : public QObject
 {
@@ -41,7 +41,7 @@ public:
     void setDefaultContainer(const QString &serverId, DockerContainer container);
 
     // Getters
-    QVector<ServerDescription> buildServerDescriptions(bool isAmneziaDnsEnabled) const;
+    QVector<ServerDescription> buildServerDescriptions(bool isCaelispectDnsEnabled) const;
     int getDefaultServerIndex() const;
     QString getDefaultServerId() const;
     int getServersCount() const;

@@ -10,15 +10,15 @@ import "TextTypes"
 Button {
     id: root
 
-    property string hoveredColor: AmneziaStyle.color.lightGray
-    property string defaultColor: AmneziaStyle.color.paleGray
-    property string disabledColor: AmneziaStyle.color.charcoalGray
-    property string pressedColor: AmneziaStyle.color.mutedGray
+    property string hoveredColor: CaelispectStyle.color.lightGray
+    property string defaultColor: CaelispectStyle.color.paleGray
+    property string disabledColor: CaelispectStyle.color.charcoalGray
+    property string pressedColor: CaelispectStyle.color.mutedGray
 
-    property string textColor: AmneziaStyle.color.midnightBlack
+    property string textColor: CaelispectStyle.color.midnightBlack
 
-    property string borderColor: AmneziaStyle.color.paleGray
-    property string borderFocusedColor: AmneziaStyle.color.paleGray
+    property string borderColor: CaelispectStyle.color.paleGray
+    property string borderFocusedColor: CaelispectStyle.color.paleGray
     property int borderWidth: 0
     property int borderFocusedWidth: 1
 
@@ -66,8 +66,8 @@ Button {
     background: Rectangle {
         id: focusBorder
 
-        color: AmneziaStyle.color.transparent
-        border.color: root.activeFocus ? root.borderFocusedColor : AmneziaStyle.color.transparent
+        color: CaelispectStyle.color.transparent
+        border.color: root.activeFocus ? root.borderFocusedColor : CaelispectStyle.color.transparent
         border.width: root.activeFocus ? root.borderFocusedWidth : 0
 
         anchors.fill: parent

@@ -56,7 +56,7 @@ public slots:
     void openClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex);
     void saveClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex);
 
-    void toggleAmneziaDns(bool enabled);
+    void toggleCaelispectDns(bool enabled);
     void onDefaultServerChanged(const QString &defaultServerId);
     
     // Getters for properties
@@ -116,7 +116,7 @@ private:
     ProtocolsModel* m_protocolsModel;
     WireGuardConfigModel* m_wireGuardConfigModel;
 
-    QVector<amnezia::ServerDescription> m_orderedServerDescriptions;
+    QVector<caelispect::ServerDescription> m_orderedServerDescriptions;
     
     QString m_processedServerId;
     int m_processedContainerIndex = -1;

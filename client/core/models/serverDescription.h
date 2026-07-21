@@ -9,7 +9,7 @@
 #include "core/models/selfhosted/selfHostedUserServerConfig.h"
 #include "core/models/selfhosted/nativeServerConfig.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 struct ServerDescription
@@ -23,7 +23,7 @@ struct ServerDescription
     ServerCredentials selfHostedSshCredentials;
     bool hasWriteAccess = false;
 
-    bool primaryDnsIsAmnezia = false;
+    bool primaryDnsIsCaelispect = false;
     DockerContainer defaultContainer = DockerContainer::None;
     bool hasInstalledVpnContainers = false;
 
@@ -31,10 +31,10 @@ struct ServerDescription
     QString expandedServerDescription;
 };
 
-ServerDescription buildServerDescription(const SelfHostedAdminServerConfig &server, bool isAmneziaDnsEnabled);
-ServerDescription buildServerDescription(const SelfHostedUserServerConfig &server, bool isAmneziaDnsEnabled);
-ServerDescription buildServerDescription(const NativeServerConfig &server, bool isAmneziaDnsEnabled);
+ServerDescription buildServerDescription(const SelfHostedAdminServerConfig &server, bool isCaelispectDnsEnabled);
+ServerDescription buildServerDescription(const SelfHostedUserServerConfig &server, bool isCaelispectDnsEnabled);
+ServerDescription buildServerDescription(const NativeServerConfig &server, bool isCaelispectDnsEnabled);
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif

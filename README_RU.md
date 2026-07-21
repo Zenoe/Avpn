@@ -1,52 +1,52 @@
-# Amnezia VPN
+# Caelispect VPN
 
 ### _Лучший клиент для создания VPN на собственном сервере_
 
-[![Build Status](https://github.com/amnezia-vpn/amnezia-client/actions/workflows/deploy.yml/badge.svg?branch=dev)](https://github.com/amnezia-vpn/amnezia-client/actions/workflows/deploy.yml?query=branch:dev)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/amnezia-vpn/amnezia-client)
+[![Build Status](https://github.com/caelispect-vpn/caelispect-client/actions/workflows/deploy.yml/badge.svg?branch=dev)](https://github.com/caelispect-vpn/caelispect-client/actions/workflows/deploy.yml?query=branch:dev)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/caelispect-vpn/caelispect-client)
 
-### [English](https://github.com/amnezia-vpn/amnezia-client/blob/dev/README.md) | Русский
-[AmneziaVPN](https://amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-ru) — это open source VPN-клиент, ключевая особенность которого заключается в возможности развернуть собственный VPN на вашем сервере.
+### [English](https://github.com/caelispect-vpn/caelispect-client/blob/dev/README.md) | Русский
+[Caelispect](https://caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-ru) — это open source VPN-клиент, ключевая особенность которого заключается в возможности развернуть собственный VPN на вашем сервере.
 
-[![Image](https://github.com/amnezia-vpn/amnezia-client/blob/dev/metadata/img-readme/uipic4.png)](https://amnezia.org)
+[![Image](https://github.com/caelispect-vpn/caelispect-client/blob/dev/metadata/img-readme/uipic4.png)](https://caelispect.org)
 
-### [Сайт](https://amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-ru) | [Зеркало сайта](https://storage.googleapis.com/amnezia/amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-ru-mirror) | [Документация](https://docs.amnezia.org) | [Решение проблем](https://docs.amnezia.org/troubleshooting)
+### [Сайт](https://caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-ru) | [Зеркало сайта](https://storage.googleapis.com/caelispect/caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-ru-mirror) | [Документация](https://docs.caelispect.org) | [Решение проблем](https://docs.caelispect.org/troubleshooting)
 
 > [!TIP]
-> Если [сайт Amnezia](https://amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-ru) заблокирован в вашем регионе, вы можете воспользоваться [ссылкой на зеркало](https://storage.googleapis.com/amnezia/amnezia.org?utm_source=github&utm_campaign=amnezia_website-readme-ru-mirror).
+> Если [сайт Caelispect](https://caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-ru) заблокирован в вашем регионе, вы можете воспользоваться [ссылкой на зеркало](https://storage.googleapis.com/caelispect/caelispect.org?utm_source=github&utm_campaign=caelispect_website-readme-ru-mirror).
 
-<a href="https://storage.googleapis.com/amnezia/amnezia.org?m-path=/ru/downloads&utm_source=github&utm_campaign=amnezia_button-readme-ru-mirror"><img src="https://github.com/amnezia-vpn/amnezia-client/blob/dev/metadata/img-readme/download-website-ru.svg" width="150" style="max-width: 100%; margin-right: 10px"></a>
+<a href="https://storage.googleapis.com/caelispect/caelispect.org?m-path=/ru/downloads&utm_source=github&utm_campaign=caelispect_button-readme-ru-mirror"><img src="https://github.com/caelispect-vpn/caelispect-client/blob/dev/metadata/img-readme/download-website-ru.svg" width="150" style="max-width: 100%; margin-right: 10px"></a>
 
 
-[Все релизы](https://github.com/amnezia-vpn/amnezia-client/releases)
+[Все релизы](https://github.com/caelispect-vpn/caelispect-client/releases)
 
 <br/>
 
-<a href="https://www.testiny.io"><img src="https://github.com/amnezia-vpn/amnezia-client/blob/dev/metadata/img-readme/testiny.png" height="28px"></a>
+<a href="https://www.testiny.io"><img src="https://github.com/caelispect-vpn/caelispect-client/blob/dev/metadata/img-readme/testiny.png" height="28px"></a>
 
 ## Особенности
 
-- Простой в использовании — введите IP-адрес, SSH-логин и пароль, и Amnezia автоматически установит VPN-контейнеры Docker на ваш сервер и подключится к VPN.
+- Простой в использовании — введите IP-адрес, SSH-логин и пароль, и Caelispect автоматически установит VPN-контейнеры Docker на ваш сервер и подключится к VPN.
 - Классические VPN-протоколы: OpenVPN, WireGuard и IKEv2.
-- Протоколы с маскировкой трафика (обфускацией): OpenVPN с плагином [Cloak](https://github.com/cbeuw/Cloak), Shadowsocks (OpenVPN over Shadowsocks), [AmneziaWG](https://docs.amnezia.org/documentation/amnezia-wg/) и XRay.
+- Протоколы с маскировкой трафика (обфускацией): OpenVPN с плагином [Cloak](https://github.com/cbeuw/Cloak), Shadowsocks (OpenVPN over Shadowsocks), [CaelispectWG](https://docs.caelispect.org/documentation/caelispect-wg/) и XRay.
 - Поддержка Split Tunneling — добавляйте любые сайты или приложения в список, чтобы включить VPN только для них.
 - Поддерживает платформы: Windows, macOS, Linux, Android, iOS.
-- Поддержка конфигурации протокола AmneziaWG на [бета-прошивке Keenetic](https://docs.keenetic.com/ua/air/kn-1611/en/6319-latest-development-release.html#UUID-186c4108-5afd-c10b-f38a-cdff6c17fab3_section-idm33192196168192-improved).
+- Поддержка конфигурации протокола CaelispectWG на [бета-прошивке Keenetic](https://docs.keenetic.com/ua/air/kn-1611/en/6319-latest-development-release.html#UUID-186c4108-5afd-c10b-f38a-cdff6c17fab3_section-idm33192196168192-improved).
 
 ## Ссылки
 
-- [https://amnezia.org](https://amnezia.org) - Веб-сайт проекта | [Альтернативная ссылка (зеркало)](https://storage.googleapis.com/kldscp/amnezia.org)
-- [https://docs.amnezia.org](https://docs.amnezia.org) - Документация
-- [https://www.reddit.com/r/AmneziaVPN](https://www.reddit.com/r/AmneziaVPN) - Reddit  
-- [https://t.me/amnezia_vpn_en](https://t.me/amnezia_vpn_en) - Канал поддержки в Telegram (Английский)
-- [https://t.me/amnezia_vpn_ir](https://t.me/amnezia_vpn_ir) - Канал поддержки в Telegram (Фарси)
-- [https://t.me/amnezia_vpn_mm](https://t.me/amnezia_vpn_mm) - Канал поддержки в Telegram (Мьянма) 
-- [https://t.me/amnezia_vpn](https://t.me/amnezia_vpn) - Канал поддержки в Telegram  (Русский)
-- [https://vpnpay.io/en/amnezia-premium/](https://vpnpay.io/en/amnezia-premium/) - Amnezia Premium | [Зеркало](https://storage.googleapis.com/kldscp/vpnpay.io/ru/amnezia-premium\)
+- [https://caelispect.org](https://caelispect.org) - Веб-сайт проекта | [Альтернативная ссылка (зеркало)](https://storage.googleapis.com/kldscp/caelispect.org)
+- [https://docs.caelispect.org](https://docs.caelispect.org) - Документация
+- [https://www.reddit.com/r/Caelispect](https://www.reddit.com/r/Caelispect) - Reddit  
+- [https://t.me/caelispect_vpn_en](https://t.me/caelispect_vpn_en) - Канал поддержки в Telegram (Английский)
+- [https://t.me/caelispect_vpn_ir](https://t.me/caelispect_vpn_ir) - Канал поддержки в Telegram (Фарси)
+- [https://t.me/caelispect_vpn_mm](https://t.me/caelispect_vpn_mm) - Канал поддержки в Telegram (Мьянма) 
+- [https://t.me/caelispect_vpn](https://t.me/caelispect_vpn) - Канал поддержки в Telegram  (Русский)
+- [https://vpnpay.io/en/caelispect-premium/](https://vpnpay.io/en/caelispect-premium/) - Caelispect Premium | [Зеркало](https://storage.googleapis.com/kldscp/vpnpay.io/ru/caelispect-premium\)
 
 ## Технологии
 
-AmneziaVPN использует несколько проектов с открытым исходным кодом:
+Caelispect использует несколько проектов с открытым исходным кодом:
 
 - [OpenSSL](https://www.openssl.org/)
 - [OpenVPN](https://openvpn.net/)
@@ -60,7 +60,7 @@ AmneziaVPN использует несколько проектов с откр�
 
 Загрузите самые актуальные файлы перевода.
 
-Перейдите на [вкладку "Actions"](https://github.com/amnezia-vpn/amnezia-client/actions?query=is%3Asuccess+branch%3Adev), нажмите на первую строку. Затем прокрутите вниз до раздела "Artifacts" и скачайте "AmneziaVPN_translations".
+Перейдите на [вкладку "Actions"](https://github.com/caelispect-vpn/caelispect-client/actions?query=is%3Asuccess+branch%3Adev), нажмите на первую строку. Затем прокрутите вниз до раздела "Artifacts" и скачайте "Caelispect_translations".
 
 Распакуйте этот файл. Каждый файл с расширением *.ts содержит строки для соответствующего языка.
 
@@ -148,7 +148,7 @@ deploy/build.bat --installer all
   - `Visual Studio Code` with `Qt Extension Pack`
   - и так далее
 
-* Для использования `Xcode` нужно сконфигурировать проект с помощью `cmake`. Самый простой способ это сделать - использовать `Qt Creator` для конфигурации. Затем, нужно открыть файл `AmneziaVPN.xcodeproj` из папки сборки с помощью `Xcode`. Учтите, что никакие файлы фактически не сохраняются - они сохраняются в директории сборки. Если требуется, скопируйте файлы вручную
+* Для использования `Xcode` нужно сконфигурировать проект с помощью `cmake`. Самый простой способ это сделать - использовать `Qt Creator` для конфигурации. Затем, нужно открыть файл `Caelispect.xcodeproj` из папки сборки с помощью `Xcode`. Учтите, что никакие файлы фактически не сохраняются - они сохраняются в директории сборки. Если требуется, скопируйте файлы вручную
 
 * `Android studio` может быть использована подобным вышеуказанному способу - нужно использовать `cmake` вручную или через `Qt Creator` для конфигурации. Далее, откройте `<build-dir>/client/android-build` в `Android studio`. Не забудьте скопировать изменённые файлы в папку с исходным кодом - все файлы, изменённые в IDE, сохраняются фактически в папке сборки.
 
@@ -165,7 +165,7 @@ GPL v3.0
 
 ## Донаты
 
-Patreon: [https://www.patreon.com/amneziavpn](https://www.patreon.com/amneziavpn)
+Patreon: [https://www.patreon.com/caelispect](https://www.patreon.com/caelispect)
 
 Bitcoin: bc1qmhtgcf9637rl3kqyy22r2a8wa8laka4t9rx2mf <br>
 USDT BEP20: 0x6abD576765a826f87D1D95183438f9408C901bE4 <br>

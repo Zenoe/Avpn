@@ -3,7 +3,7 @@
 
 #include <QLatin1String>
 
-namespace amnezia
+namespace caelispect
 {
     namespace configKey
     {
@@ -87,7 +87,7 @@ namespace amnezia
 
         constexpr QLatin1String nameOverriddenByUser("nameOverriddenByUser");
 
-        constexpr QLatin1String amneziaWireguard("amnezia-wireguard");
+        constexpr QLatin1String caelispectWireguard("caelispect-wireguard");
 
         constexpr QLatin1String clientName("clientName");
         constexpr QLatin1String userData("userData");

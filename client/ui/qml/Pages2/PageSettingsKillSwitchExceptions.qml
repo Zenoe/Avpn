@@ -99,7 +99,7 @@ PageType {
 
                 text: ip
                 rightImageSource: "qrc:/images/controls/trash.svg"
-                rightImageColor: AmneziaStyle.color.paleGray
+                rightImageColor: CaelispectStyle.color.paleGray
 
                 clickedFunction: function() {
                     var headerText = qsTr("Delete ") + ip + "?"
@@ -189,11 +189,11 @@ PageType {
                 clickedFunction: function() {
                     var fileName = ""
                     if (GC.isMobile()) {
-                        fileName = "amnezia_killswitch_exceptions.json"
+                        fileName = "caelispect_killswitch_exceptions.json"
                     } else {
                         fileName = SystemController.getFileName(qsTr("Save addresses"),
                                                                 qsTr("Address files (*.json)"),
-                                                                StandardPaths.standardLocations(StandardPaths.DocumentsLocation) + "/amnezia_killswitch_exceptions",
+                                                                StandardPaths.standardLocations(StandardPaths.DocumentsLocation) + "/caelispect_killswitch_exceptions",
                                                                 true,
                                                                 ".json")
                     }

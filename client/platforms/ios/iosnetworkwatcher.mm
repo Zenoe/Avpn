@@ -37,7 +37,7 @@ void IOSNetworkWatcher::initialize() {
   // Call start() to initialize sleep/wake monitoring (will call MacOSNetworkWatcher::start() if this is macOS)
   this->start();
   
-  //TODO IMPL FOR AMNEZIA
+  //TODO IMPL FOR CAELISPECT
 }
 
 NetworkWatcherImpl::TransportType IOSNetworkWatcher::toTransportType(nw_path_t path) {
@@ -68,5 +68,5 @@ NetworkWatcherImpl::TransportType IOSNetworkWatcher::toTransportType(nw_path_t p
 }
 
 void IOSNetworkWatcher::controllerStateChanged() {
-  //TODO IMPL FOR AMNEZIA
+  //TODO IMPL FOR CAELISPECT
 }

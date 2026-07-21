@@ -11,26 +11,26 @@ CheckBox {
     id: root
 
     property string descriptionText
-    property string descriptionTextColor: AmneziaStyle.color.mutedGray
-    property string descriptionTextDisabledColor: AmneziaStyle.color.charcoalGray
+    property string descriptionTextColor: CaelispectStyle.color.mutedGray
+    property string descriptionTextDisabledColor: CaelispectStyle.color.charcoalGray
 
-    property string textColor: AmneziaStyle.color.paleGray
-    property string textDisabledColor: AmneziaStyle.color.mutedGray
+    property string textColor: CaelispectStyle.color.paleGray
+    property string textDisabledColor: CaelispectStyle.color.mutedGray
 
-    property string hoveredColor: AmneziaStyle.color.barelyTranslucentWhite
-    property string defaultColor: AmneziaStyle.color.transparent
-    property string pressedColor: AmneziaStyle.color.barelyTranslucentWhite
+    property string hoveredColor: CaelispectStyle.color.barelyTranslucentWhite
+    property string defaultColor: CaelispectStyle.color.transparent
+    property string pressedColor: CaelispectStyle.color.barelyTranslucentWhite
 
-    property string defaultBorderColor: AmneziaStyle.color.paleGray
-    property string checkedBorderColor: AmneziaStyle.color.goldenApricot
-    property string checkedBorderDisabledColor: AmneziaStyle.color.deepBrown
+    property string defaultBorderColor: CaelispectStyle.color.paleGray
+    property string checkedBorderColor: CaelispectStyle.color.goldenApricot
+    property string checkedBorderDisabledColor: CaelispectStyle.color.deepBrown
 
-    property string borderFocusedColor: AmneziaStyle.color.paleGray
+    property string borderFocusedColor: CaelispectStyle.color.paleGray
 
-    property string checkedImageColor: AmneziaStyle.color.goldenApricot
-    property string pressedImageColor: AmneziaStyle.color.burntOrange
-    property string defaultImageColor: AmneziaStyle.color.transparent
-    property string checkedDisabledImageColor: AmneziaStyle.color.mutedBrown
+    property string checkedImageColor: CaelispectStyle.color.goldenApricot
+    property string pressedImageColor: CaelispectStyle.color.burntOrange
+    property string defaultImageColor: CaelispectStyle.color.transparent
+    property string checkedDisabledImageColor: CaelispectStyle.color.mutedBrown
 
     property string imageSource: "qrc:/images/controls/check.svg"
 
@@ -64,8 +64,8 @@ CheckBox {
     focusPolicy: Qt.NoFocus
 
     background: Rectangle {
-        color: AmneziaStyle.color.transparent
-        border.color: root.focus ? borderFocusedColor : AmneziaStyle.color.transparent
+        color: CaelispectStyle.color.transparent
+        border.color: root.focus ? borderFocusedColor : CaelispectStyle.color.transparent
         border.width: 1
         radius: 16
     }
@@ -96,7 +96,7 @@ CheckBox {
             anchors.centerIn: parent
             width: 24
             height: 24
-            color: AmneziaStyle.color.transparent
+            color: CaelispectStyle.color.transparent
             border.color: root.checked ?
                               (root.enabled ?
                                    checkedBorderColor :

@@ -203,7 +203,7 @@ PageType {
                 text: url
                 descriptionText: ip
                 rightImageSource: "qrc:/images/controls/trash.svg"
-                rightImageColor: AmneziaStyle.color.paleGray
+                rightImageColor: CaelispectStyle.color.paleGray
 
                 clickedFunction: function() {
                     var headerText = qsTr("Remove ") + url + "?"
@@ -237,7 +237,7 @@ PageType {
         
         height: addSiteButton.implicitHeight + 48
         
-        color: AmneziaStyle.color.midnightBlack
+        color: CaelispectStyle.color.midnightBlack
         
         RowLayout {
             id: addSiteButton
@@ -275,7 +275,7 @@ PageType {
                 implicitHeight: 56
 
                 image: "qrc:/images/controls/more-vertical.svg"
-                imageColor: AmneziaStyle.color.paleGray
+                imageColor: CaelispectStyle.color.paleGray
 
                 onClicked: function () {
                     moreActionsDrawer.openTriggered()
@@ -329,11 +329,11 @@ PageType {
                 clickedFunction: function() {
                     var fileName = ""
                     if (GC.isMobile()) {
-                        fileName = "amnezia_sites.json"
+                        fileName = "caelispect_sites.json"
                     } else {
                         fileName = SystemController.getFileName(qsTr("Save sites"),
                                                                 qsTr("Sites files (*.json)"),
-                                                                StandardPaths.standardLocations(StandardPaths.DocumentsLocation) + "/amnezia_sites",
+                                                                StandardPaths.standardLocations(StandardPaths.DocumentsLocation) + "/caelispect_sites",
                                                                 true,
                                                                 ".json")
                     }

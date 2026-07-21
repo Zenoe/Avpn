@@ -4,7 +4,7 @@
 #include <QMetaEnum>
 #include <QObject>
 
-namespace amnezia
+namespace caelispect
 {
     namespace error_code_ns
     {
@@ -16,7 +16,7 @@ namespace amnezia
         UnknownError = 100,
         InternalError = 101,
         NotImplementedError = 102,
-        AmneziaServiceNotRunning = 103,
+        CaelispectServiceNotRunning = 103,
         NotSupportedOnThisPlatform = 104,
 
         // Server errors
@@ -50,7 +50,7 @@ namespace amnezia
         SshScpFailureError = 400,
 
         // Distro errors
-        AmneziaServiceConnectionFailed = 603,
+        CaelispectServiceConnectionFailed = 603,
         ExecutableMissing = 604,
 
         // VPN errors
@@ -107,6 +107,6 @@ namespace amnezia
     using ErrorCode = error_code_ns::ErrorCode;
 }
 
-Q_DECLARE_METATYPE(amnezia::ErrorCode)
+Q_DECLARE_METATYPE(caelispect::ErrorCode)
 
 #endif // ERRORCODES_H

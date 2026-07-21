@@ -2,7 +2,7 @@
 
 #include "core/configurators/wireguardConfigurator.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 ConfiguratorBase::ConfiguratorBase(QObject *parent)
     : QObject { parent }

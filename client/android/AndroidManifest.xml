@@ -29,7 +29,7 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
 
     <application
-        android:name=".AmneziaApplication"
+        android:name=".CaelispectApplication"
         android:label="-- %%INSERT_APP_NAME%% --"
         android:icon="@mipmap/icon"
         android:roundIcon="@mipmap/icon_round"
@@ -41,7 +41,7 @@
         tools:targetApi="s">
 
         <activity
-            android:name=".AmneziaActivity"
+            android:name=".CaelispectActivity"
             android:configChanges="uiMode|screenSize|smallestScreenSize|screenLayout|orientation|density
                 |fontScale|layoutDirection|locale|keyboard|keyboardHidden|navigation|mcc|mnc"
             android:launchMode="singleInstance"
@@ -56,7 +56,7 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="org.amnezia.vpn.IMPORT_CONFIG" />
+                <action android:name="org.caelispect.vpn.IMPORT_CONFIG" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -166,9 +166,9 @@
         </service>
 
         <service
-            android:name=".AmneziaTileService"
-            android:process=":amneziaTileService"
-            android:icon="@drawable/ic_amnezia_round"
+            android:name=".CaelispectTileService"
+            android:process=":caelispectTileService"
+            android:icon="@drawable/ic_caelispect_round"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
 
@@ -183,7 +183,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="org.amnezia.vpn.qtprovider"
+            android:authorities="org.caelispect.vpn.qtprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/qtprovider_paths" />

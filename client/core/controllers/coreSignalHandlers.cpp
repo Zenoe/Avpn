@@ -39,7 +39,7 @@
 
 #ifdef Q_OS_IOS
     #include "platforms/ios/ios_controller.h"
-    #include <AmneziaVPN-Swift.h>
+    #include <Caelispect-Swift.h>
 #endif
 
 CoreSignalHandlers::CoreSignalHandlers(CoreController* coreController, QObject* parent)
@@ -56,7 +56,7 @@ void CoreSignalHandlers::initAllHandlers()
     initTranslationsUpdatedHandler();
     initLanguageHandler();
     initAutoConnectHandler();
-    initAmneziaDnsToggledHandler();
+    initCaelispectDnsToggledHandler();
     initServersModelUpdateHandler();
     initSitesModelUpdateHandler();
     initAllowedDnsModelUpdateHandler();
@@ -144,9 +144,9 @@ void CoreSignalHandlers::initAutoConnectHandler()
     }
 }
 
-void CoreSignalHandlers::initAmneziaDnsToggledHandler()
+void CoreSignalHandlers::initCaelispectDnsToggledHandler()
 {
-    connect(m_coreController->m_appSettingsRepository, &SecureAppSettingsRepository::useAmneziaDnsChanged, m_coreController->m_serversUiController, &ServersUiController::updateModel);
+    connect(m_coreController->m_appSettingsRepository, &SecureAppSettingsRepository::useCaelispectDnsChanged, m_coreController->m_serversUiController, &ServersUiController::updateModel);
 }
 
 void CoreSignalHandlers::initServersModelUpdateHandler()
@@ -253,7 +253,7 @@ void CoreSignalHandlers::initIosImportHandler()
 void CoreSignalHandlers::initIosSettingsHandler()
 {
 #ifdef Q_OS_IOS
-    connect(m_coreController->m_appSettingsRepository, &SecureAppSettingsRepository::screenshotsEnabledChanged, [](bool enabled) { AmneziaVPN::toggleScreenshots(enabled); });
+    connect(m_coreController->m_appSettingsRepository, &SecureAppSettingsRepository::screenshotsEnabledChanged, [](bool enabled) { Caelispect::toggleScreenshots(enabled); });
 #endif
 }
 

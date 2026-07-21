@@ -14,10 +14,10 @@
 #include "core/utils/constants/configKeys.h"
 #include "core/utils/networkUtilities.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 namespace {
-    constexpr char gatewayEndpoint[] = "http://gw.amnezia.org:80/";
+    constexpr char gatewayEndpoint[] = "http://gw.caelispect.org:80/";
 }
 
 SecureAppSettingsRepository::SecureAppSettingsRepository(SecureQSettings* settings, QObject *parent)
@@ -50,15 +50,15 @@ void SecureAppSettingsRepository::setAppLanguage(QLocale locale)
     emit appLanguageChanged(locale);
 }
 
-bool SecureAppSettingsRepository::useAmneziaDns() const
+bool SecureAppSettingsRepository::useCaelispectDns() const
 {
-    return value("Conf/useAmneziaDns", true).toBool();
+    return value("Conf/useCaelispectDns", true).toBool();
 }
 
-void SecureAppSettingsRepository::setUseAmneziaDns(bool enabled)
+void SecureAppSettingsRepository::setUseCaelispectDns(bool enabled)
 {
-    setValue("Conf/useAmneziaDns", enabled);
-    emit useAmneziaDnsChanged(enabled);
+    setValue("Conf/useCaelispectDns", enabled);
+    emit useCaelispectDnsChanged(enabled);
 }
 
 QStringList SecureAppSettingsRepository::getAllowedDnsServers() const

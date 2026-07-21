@@ -10,7 +10,7 @@
 #include "core/utils/constants/configKeys.h"
 #include "core/utils/constants/protocolConstants.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 using namespace ContainerEnumNS;
@@ -113,5 +113,5 @@ const DnsProtocolConfig* ContainerConfig::getDnsProtocolConfig() const
     return protocolConfig.as<DnsProtocolConfig>();
 }
 
-} // namespace amnezia
+} // namespace caelispect
 

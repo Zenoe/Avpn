@@ -73,11 +73,11 @@ PageType {
 
                 implicitHeight: 36
 
-                defaultColor: AmneziaStyle.color.transparent
-                hoveredColor: AmneziaStyle.color.translucentWhite
-                pressedColor: AmneziaStyle.color.sheerWhite
-                disabledColor: AmneziaStyle.color.mutedGray
-                textColor: AmneziaStyle.color.mutedGray
+                defaultColor: CaelispectStyle.color.transparent
+                hoveredColor: CaelispectStyle.color.translucentWhite
+                pressedColor: CaelispectStyle.color.sheerWhite
+                disabledColor: CaelispectStyle.color.mutedGray
+                textColor: CaelispectStyle.color.mutedGray
                 borderWidth: 0
 
                 visible: isLoggingEnabled ? true : false
@@ -101,11 +101,11 @@ PageType {
 
                 implicitHeight: 36
 
-                defaultColor: AmneziaStyle.color.transparent
-                hoveredColor: AmneziaStyle.color.translucentWhite
-                pressedColor: AmneziaStyle.color.sheerWhite
-                disabledColor: AmneziaStyle.color.mutedGray
-                textColor: AmneziaStyle.color.mutedGray
+                defaultColor: CaelispectStyle.color.transparent
+                hoveredColor: CaelispectStyle.color.translucentWhite
+                pressedColor: CaelispectStyle.color.sheerWhite
+                disabledColor: CaelispectStyle.color.mutedGray
+                textColor: CaelispectStyle.color.mutedGray
                 borderWidth: 0
 
                 visible: SettingsController.isDevModeEnabled && isDevGatewayEnabled
@@ -137,11 +137,11 @@ PageType {
 
                 implicitHeight: 36
 
-                defaultColor: AmneziaStyle.color.transparent
-                hoveredColor: AmneziaStyle.color.translucentWhite
-                pressedColor: AmneziaStyle.color.sheerWhite
-                disabledColor: AmneziaStyle.color.mutedGray
-                textColor: AmneziaStyle.color.mutedGray
+                defaultColor: CaelispectStyle.color.transparent
+                hoveredColor: CaelispectStyle.color.translucentWhite
+                pressedColor: CaelispectStyle.color.sheerWhite
+                disabledColor: CaelispectStyle.color.mutedGray
+                textColor: CaelispectStyle.color.mutedGray
                 borderWidth: 0
 
                 buttonTextLabel.lineHeight: 20
@@ -282,7 +282,7 @@ PageType {
 
                         hoverEnabled: false
                         image: "qrc:/images/controls/chevron-down.svg"
-                        imageColor: AmneziaStyle.color.paleGray
+                        imageColor: CaelispectStyle.color.paleGray
 
                         icon.width: 18
                         icon.height: 18
@@ -318,11 +318,11 @@ PageType {
                         leftPadding: 16
                         rightPadding: 16
 
-                        defaultColor: AmneziaStyle.color.transparent
-                        hoveredColor: AmneziaStyle.color.translucentWhite
-                        pressedColor: AmneziaStyle.color.sheerWhite
-                        disabledColor: AmneziaStyle.color.transparent
-                        textColor: AmneziaStyle.color.mutedGray
+                        defaultColor: CaelispectStyle.color.transparent
+                        hoveredColor: CaelispectStyle.color.translucentWhite
+                        pressedColor: CaelispectStyle.color.sheerWhite
+                        disabledColor: CaelispectStyle.color.transparent
+                        textColor: CaelispectStyle.color.mutedGray
 
                         buttonTextLabel.lineHeight: 16
                         buttonTextLabel.font.pixelSize: 13
@@ -367,19 +367,19 @@ PageType {
 
                         Component.onCompleted: root.containersDropDownRef = containersDropDown
 
-                        rootButtonImageColor: AmneziaStyle.color.midnightBlack
-                        rootButtonBackgroundColor: AmneziaStyle.color.paleGray
-                        rootButtonBackgroundHoveredColor: AmneziaStyle.color.mistyGray
-                        rootButtonBackgroundPressedColor: AmneziaStyle.color.cloudyGray
-                        rootButtonHoveredBorderColor: AmneziaStyle.color.transparent
-                        rootButtonDefaultBorderColor: AmneziaStyle.color.transparent
+                        rootButtonImageColor: CaelispectStyle.color.midnightBlack
+                        rootButtonBackgroundColor: CaelispectStyle.color.paleGray
+                        rootButtonBackgroundHoveredColor: CaelispectStyle.color.mistyGray
+                        rootButtonBackgroundPressedColor: CaelispectStyle.color.cloudyGray
+                        rootButtonHoveredBorderColor: CaelispectStyle.color.transparent
+                        rootButtonDefaultBorderColor: CaelispectStyle.color.transparent
                         rootButtonTextTopMargin: 8
                         rootButtonTextBottomMargin: 8
 
                         enabled: drawer.isOpened
 
                         text: ServersUiController.defaultServerDefaultContainerName
-                        textColor: AmneziaStyle.color.midnightBlack
+                        textColor: CaelispectStyle.color.midnightBlack
                         headerText: qsTr("VPN protocol")
                         headerBackButtonImage: "qrc:/images/controls/arrow-left.svg"
 

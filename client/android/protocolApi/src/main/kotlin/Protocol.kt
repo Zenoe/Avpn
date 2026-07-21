@@ -1,4 +1,4 @@
-package org.amnezia.vpn.protocol
+package org.caelispect.vpn.protocol
 
 import android.content.Context
 import android.net.IpPrefix
@@ -8,13 +8,13 @@ import android.os.Build
 import android.system.OsConstants
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.amnezia.vpn.util.Log
-import org.amnezia.vpn.util.net.InetNetwork
+import org.caelispect.vpn.util.Log
+import org.caelispect.vpn.util.net.InetNetwork
 import org.json.JSONObject
 
 private const val TAG = "Protocol"
 
-const val VPN_SESSION_NAME = "AmneziaVPN"
+const val VPN_SESSION_NAME = "Caelispect"
 
 private const val SPLIT_TUNNEL_DISABLE = 0
 private const val SPLIT_TUNNEL_INCLUDE = 1

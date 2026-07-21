@@ -98,8 +98,8 @@ Vpn::ConnectionState iosStatusToState(NEVPNStatus status) {
 namespace {
 constexpr int kHandshakeTimeoutMs = 12000;
 constexpr uint64_t kHandshakeRxThreshold = 4096;
-bool isWireGuardBasedProto(amnezia::Proto proto) {
-    return proto == amnezia::Proto::WireGuard;
+bool isWireGuardBasedProto(caelispect::Proto proto) {
+    return proto == caelispect::Proto::WireGuard;
 }
 
 uint64_t uint64FromResponse(NSDictionary *response, NSString *key, uint64_t fallback = 0) {
@@ -214,7 +214,7 @@ bool IosController::initialize()
     return ok;
 }
 
-bool IosController::connectVpn(amnezia::Proto proto, const QJsonObject& configuration)
+bool IosController::connectVpn(caelispect::Proto proto, const QJsonObject& configuration)
 {
     m_proto = proto;
     m_rawConfig = configuration;
@@ -295,7 +295,7 @@ bool IosController::connectVpn(amnezia::Proto proto, const QJsonObject& configur
             object:m_currentTunnel.connection];
 
 
-    if (proto == amnezia::Proto::WireGuard) {
+    if (proto == caelispect::Proto::WireGuard) {
         return setupWireGuard();
     }
     return false;
@@ -511,7 +511,7 @@ void IosController::vpnConfigurationDidChange(void *pNotification)
 
 bool IosController::setupWireGuard()
 {
-    QJsonObject config = m_rawConfig[ProtocolUtils::key_proto_config_data(amnezia::Proto::WireGuard)].toObject();
+    QJsonObject config = m_rawConfig[ProtocolUtils::key_proto_config_data(caelispect::Proto::WireGuard)].toObject();
 
     QJsonObject wgConfig {};
     wgConfig.insert(configKey::dns1, m_rawConfig[configKey::dns1]);

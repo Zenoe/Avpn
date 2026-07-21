@@ -9,7 +9,7 @@
 #include "core/utils/constants/configKeys.h"
 #include "core/utils/constants/protocolConstants.h"
 
-namespace amnezia
+namespace caelispect
 {
     namespace ProtocolUtils
     {

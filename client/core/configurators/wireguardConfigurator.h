@@ -27,10 +27,10 @@ public:
         QString port;
     };
 
-    amnezia::ProtocolConfig processConfigWithLocalSettings(const amnezia::ConnectionSettings &settings,
-                                                           amnezia::ProtocolConfig protocolConfig) override;
-    amnezia::ProtocolConfig processConfigWithExportSettings(const amnezia::ExportSettings &settings,
-                                                            amnezia::ProtocolConfig protocolConfig) override;
+    caelispect::ProtocolConfig processConfigWithLocalSettings(const caelispect::ConnectionSettings &settings,
+                                                           caelispect::ProtocolConfig protocolConfig) override;
+    caelispect::ProtocolConfig processConfigWithExportSettings(const caelispect::ExportSettings &settings,
+                                                            caelispect::ProtocolConfig protocolConfig) override;
 
     static ConnectionData genClientKeys();
 

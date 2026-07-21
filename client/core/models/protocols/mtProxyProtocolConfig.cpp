@@ -8,9 +8,9 @@
 
 #include <algorithm>
 
-using namespace amnezia;
+using namespace caelispect;
 
-namespace amnezia {
+namespace caelispect {
 
     QJsonObject MtProxyProtocolConfig::toJson() const {
         QJsonObject obj;
@@ -144,4 +144,4 @@ namespace amnezia {
         return aa == bb;
     }
 
-} // namespace amnezia
+} // namespace caelispect

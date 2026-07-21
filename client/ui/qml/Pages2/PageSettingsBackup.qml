@@ -86,7 +86,7 @@ PageType {
                 Layout.rightMargin: 16
 
                 textString: qsTr("The backup will contain your passwords and private keys for all servers added " +
-                                 "to AmneziaVPN. Keep this information in a secure place.")
+                                 "to Caelispect. Keep this information in a secure place.")
 
                 iconPath: "qrc:/images/controls/alert-circle.svg"
             }
@@ -104,11 +104,11 @@ PageType {
                 clickedFunc: function() {
                     var fileName = ""
                     if (GC.isMobile()) {
-                        fileName = "AmneziaVPN.backup"
+                        fileName = "Caelispect.backup"
                     } else {
                         fileName = SystemController.getFileName(qsTr("Save backup file"),
                                                                 qsTr("Backup files (*.backup)"),
-                                                                StandardPaths.standardLocations(StandardPaths.DocumentsLocation) + "/AmneziaVPN",
+                                                                StandardPaths.standardLocations(StandardPaths.DocumentsLocation) + "/Caelispect",
                                                                 true,
                                                                 ".backup")
                     }
@@ -129,11 +129,11 @@ PageType {
                 Layout.leftMargin: 16
                 Layout.rightMargin: 16
 
-                defaultColor: AmneziaStyle.color.transparent
-                hoveredColor: AmneziaStyle.color.translucentWhite
-                pressedColor: AmneziaStyle.color.sheerWhite
-                disabledColor: AmneziaStyle.color.mutedGray
-                textColor: AmneziaStyle.color.paleGray
+                defaultColor: CaelispectStyle.color.transparent
+                hoveredColor: CaelispectStyle.color.translucentWhite
+                pressedColor: CaelispectStyle.color.sheerWhite
+                disabledColor: CaelispectStyle.color.mutedGray
+                textColor: CaelispectStyle.color.paleGray
                 borderWidth: 1
 
                 enabled: !root.isRestoringBackup

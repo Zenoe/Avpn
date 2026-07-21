@@ -6,7 +6,7 @@
 #include <QJsonArray>
 #include <algorithm>
 
-using namespace amnezia;
+using namespace caelispect;
 
 QJsonObject TelemtProtocolConfig::toJson() const
 {

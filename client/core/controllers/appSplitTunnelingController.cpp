@@ -13,7 +13,7 @@ AppSplitTunnelingController::AppSplitTunnelingController(SecureAppSettingsReposi
     }
 }
 
-bool AppSplitTunnelingController::addApp(const amnezia::InstalledAppInfo &appInfo)
+bool AppSplitTunnelingController::addApp(const caelispect::InstalledAppInfo &appInfo)
 {
     if (m_apps.contains(appInfo)) {
         return false;
@@ -63,7 +63,7 @@ bool AppSplitTunnelingController::isSplitTunnelingEnabled() const
     return m_appSettingsRepository->isAppsSplitTunnelingEnabled();
 }
 
-QVector<amnezia::InstalledAppInfo> AppSplitTunnelingController::getApps() const
+QVector<caelispect::InstalledAppInfo> AppSplitTunnelingController::getApps() const
 {
     return m_apps;
 }

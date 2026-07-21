@@ -45,12 +45,12 @@ LanguageSettings::AvailableLanguageEnum LanguageUiController::getSystemLanguageE
 
 QString LanguageUiController::getCurrentSiteUrl(const QString &path) const
 {
-    return QString("https://amnezia.org") + (path.isEmpty() ? "" : QString("/%1").arg(path));
+    return QString("https://caelispect.org") + (path.isEmpty() ? "" : QString("/%1").arg(path));
 }
 
 QString LanguageUiController::getCurrentDocsUrl(const QString &path) const
 {
-    return QString("https://docs.amnezia.org") + (path.isEmpty() ? "" : QString("/%1").arg(path));
+    return QString("https://docs.caelispect.org") + (path.isEmpty() ? "" : QString("/%1").arg(path));
 }
 
 QString LanguageUiController::getLocalLanguageName(const LanguageSettings::AvailableLanguageEnum language) const

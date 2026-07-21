@@ -17,7 +17,7 @@ namespace apiUtils
 
     bool isSubscriptionExpiringSoon(const QString &subscriptionEndDate, int withinDays = 30);
 
-    amnezia::ErrorCode checkNetworkReplyErrors(const QList<QSslError> &sslErrors, const QString &replyErrorString,
+    caelispect::ErrorCode checkNetworkReplyErrors(const QList<QSslError> &sslErrors, const QString &replyErrorString,
                                                const QNetworkReply::NetworkError &replyError, const int httpStatusCode,
                                                const QByteArray &responseBody);
 

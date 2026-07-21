@@ -9,19 +9,19 @@ import "TextTypes"
 RadioButton {
     id: root
 
-    property string hoveredColor: AmneziaStyle.color.barelyTranslucentWhite
-    property string defaultColor: AmneziaStyle.color.transparent
-    property string checkedColor: AmneziaStyle.color.transparent
-    property string disabledColor: AmneziaStyle.color.transparent
+    property string hoveredColor: CaelispectStyle.color.barelyTranslucentWhite
+    property string defaultColor: CaelispectStyle.color.transparent
+    property string checkedColor: CaelispectStyle.color.transparent
+    property string disabledColor: CaelispectStyle.color.transparent
 
-    property string textColor: AmneziaStyle.color.paleGray
-    property string textDisabledColor: AmneziaStyle.color.mutedGray
+    property string textColor: CaelispectStyle.color.paleGray
+    property string textDisabledColor: CaelispectStyle.color.mutedGray
 
-    property string pressedBorderColor: AmneziaStyle.color.charcoalGray
-    property string checkedBorderColor: AmneziaStyle.color.goldenApricot
-    property string defaultBodredColor: AmneziaStyle.color.transparent
-    property string checkedDisabledBorderColor: AmneziaStyle.color.mutedBrown
-    property string borderFocusedColor: AmneziaStyle.color.paleGray
+    property string pressedBorderColor: CaelispectStyle.color.charcoalGray
+    property string checkedBorderColor: CaelispectStyle.color.goldenApricot
+    property string defaultBodredColor: CaelispectStyle.color.transparent
+    property string checkedDisabledBorderColor: CaelispectStyle.color.mutedBrown
+    property string borderFocusedColor: CaelispectStyle.color.paleGray
     property int borderWidth: 0
 
     implicitWidth: content.implicitWidth

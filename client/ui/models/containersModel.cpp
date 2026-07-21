@@ -4,7 +4,7 @@
 
 #include "core/models/protocolConfig.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 ContainersModel::ContainersModel(QObject *parent) : QAbstractListModel(parent)
 {

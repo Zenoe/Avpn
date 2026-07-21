@@ -30,17 +30,17 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 public slots:
-    void updateModel(const amnezia::ContainerConfig &containerConfig);
+    void updateModel(const caelispect::ContainerConfig &containerConfig);
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    amnezia::Proto getProtocolType() const;
+    caelispect::Proto getProtocolType() const;
     QString getRawConfig() const;
     bool isClientProtocolExists() const;
 
-    amnezia::ContainerConfig m_containerConfig;
+    caelispect::ContainerConfig m_containerConfig;
 };
 
 #endif // PROTOCOLS_MODEL_H

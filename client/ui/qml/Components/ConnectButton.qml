@@ -11,9 +11,9 @@ import Style 1.0
 Button {
     id: root
 
-    property string defaultButtonColor: AmneziaStyle.color.paleGray
-    property string progressButtonColor: AmneziaStyle.color.paleGray
-    property string connectedButtonColor: AmneziaStyle.color.goldenApricot
+    property string defaultButtonColor: CaelispectStyle.color.paleGray
+    property string progressButtonColor: CaelispectStyle.color.paleGray
+    property string connectedButtonColor: CaelispectStyle.color.goldenApricot
     property bool buttonActiveFocus: activeFocus && (Qt.platform.os !== "android" || SettingsController.isOnTv())
 
     property bool isFocusable: true
@@ -77,13 +77,13 @@ Button {
                 verticalOffset: 0
                 radius: 10
                 samples: 25
-                color: root.buttonActiveFocus ? AmneziaStyle.color.paleGray : AmneziaStyle.color.goldenApricot
+                color: root.buttonActiveFocus ? CaelispectStyle.color.paleGray : CaelispectStyle.color.goldenApricot
                 source: backgroundCircle
             }
 
             ShapePath {
-                fillColor: AmneziaStyle.color.transparent
-                strokeColor: AmneziaStyle.color.paleGray
+                fillColor: CaelispectStyle.color.transparent
+                strokeColor: CaelispectStyle.color.paleGray
                 strokeWidth: root.buttonActiveFocus ? 1 : 0
                 capStyle: ShapePath.RoundCap
 
@@ -98,10 +98,10 @@ Button {
             }
 
             ShapePath {
-                fillColor: AmneziaStyle.color.transparent
+                fillColor: CaelispectStyle.color.transparent
                 strokeColor: {
                     if (ConnectionController.isConnectionInProgress) {
-                        return AmneziaStyle.color.darkCharcoal
+                        return CaelispectStyle.color.darkCharcoal
                     } else if (ConnectionController.isConnected) {
                         return connectedButtonColor
                     } else {
@@ -141,8 +141,8 @@ Button {
             visible: ConnectionController.isConnectionInProgress
 
             ShapePath {
-                fillColor: AmneziaStyle.color.transparent
-                strokeColor: AmneziaStyle.color.paleGray
+                fillColor: CaelispectStyle.color.transparent
+                strokeColor: CaelispectStyle.color.paleGray
                 strokeWidth: 3
                 capStyle: ShapePath.RoundCap
 

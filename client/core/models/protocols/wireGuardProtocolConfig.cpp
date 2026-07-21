@@ -8,9 +8,9 @@
 #include "../../../core/utils/constants/configKeys.h"
 #include "../../../core/utils/constants/protocolConstants.h"
 
-using namespace amnezia;
+using namespace caelispect;
 using namespace ProtocolUtils;
-namespace amnezia
+namespace caelispect
 {
 
 QJsonObject WireGuardServerConfig::toJson() const
@@ -177,5 +177,5 @@ void WireGuardProtocolConfig::clearClientConfig()
     clientConfig.reset();
 }
 
-} // namespace amnezia
+} // namespace caelispect
 

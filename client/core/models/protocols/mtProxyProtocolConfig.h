@@ -5,7 +5,7 @@
 #include <QString>
 #include <QStringList>
 
-namespace amnezia {
+namespace caelispect {
 
     struct MtProxyProtocolConfig {
         QString port;
@@ -33,6 +33,6 @@ namespace amnezia {
         bool equalsDockerDeploymentSettings(const MtProxyProtocolConfig &other) const;
     };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // MTPROXYPROTOCOLCONFIG_H

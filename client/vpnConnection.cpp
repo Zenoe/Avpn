@@ -13,7 +13,7 @@
 
 #include <core/configurators/wireguardConfigurator.h>
 
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     #include "core/utils/ipcClient.h"
     #include <core/protocols/wireGuardProtocol.h>
 #endif
@@ -55,7 +55,7 @@ void VpnConnection::onBytesChanged(quint64 receivedBytes, quint64 sentBytes)
 
 void VpnConnection::onKillSwitchModeChanged(bool enabled)
 {
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     IpcClient::withInterface([enabled](QSharedPointer<IpcInterfaceReplica> iface){
         QRemoteObjectPendingReply<bool> reply = iface->refreshKillSwitch(enabled);
         if (reply.waitForFinished() && reply.returnValue())
@@ -68,7 +68,7 @@ void VpnConnection::onKillSwitchModeChanged(bool enabled)
 
 void VpnConnection::onConnectionStateChanged(Vpn::ConnectionState state)
 {
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     if (!m_serversRepository || !m_appSettingsRepository) {
         qCritical() << "VpnConnection::onConnectionStateChanged: repositories not initialized";
         return;
@@ -119,7 +119,7 @@ void VpnConnection::onConnectionStateChanged(Vpn::ConnectionState state)
                     QString dns2 = m_vpnConfiguration.value(configKey::dns2).toString();
 
 #ifdef Q_OS_MACOS
-                    if (!m_appSettingsRepository->isSitesSplitTunnelingEnabled() || m_appSettingsRepository->routeMode() != amnezia::RouteMode::VpnAllExceptSites) {
+                    if (!m_appSettingsRepository->isSitesSplitTunnelingEnabled() || m_appSettingsRepository->routeMode() != caelispect::RouteMode::VpnAllExceptSites) {
                         iface->routeAddList(m_vpnProtocol->vpnGateway(), QStringList() << dns1 << dns2);
                     }
 #else
@@ -129,10 +129,10 @@ void VpnConnection::onConnectionStateChanged(Vpn::ConnectionState state)
                     if (m_appSettingsRepository->isSitesSplitTunnelingEnabled()) {
                         iface->routeDeleteList(m_vpnProtocol->vpnGateway(), QStringList() << "0.0.0.0");
                         RouteMode routeMode = m_appSettingsRepository->routeMode();
-                        if (routeMode == amnezia::RouteMode::VpnOnlyForwardSites) {
+                        if (routeMode == caelispect::RouteMode::VpnOnlyForwardSites) {
                             QTimer::singleShot(1000, m_vpnProtocol.data(),
                                                [this, routeMode]() { addSitesRoutes(m_vpnProtocol->vpnGateway(), routeMode); });
-                        } else if (routeMode == amnezia::RouteMode::VpnAllExceptSites) {
+                        } else if (routeMode == caelispect::RouteMode::VpnAllExceptSites) {
                             iface->routeAddList(m_vpnProtocol->vpnGateway(), QStringList() << "0.0.0.0/1");
                             iface->routeAddList(m_vpnProtocol->vpnGateway(), QStringList() << "128.0.0.0/1");
 
@@ -187,9 +187,9 @@ void VpnConnection::setRepositories(SecureServersRepository* serversRepository, 
     m_appSettingsRepository = appSettingsRepository;
 }
 
-void VpnConnection::addSitesRoutes(const QString &gw, amnezia::RouteMode mode)
+void VpnConnection::addSitesRoutes(const QString &gw, caelispect::RouteMode mode)
 {
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     if (!m_appSettingsRepository) {
         qCritical() << "VpnConnection::addSitesRoutes: repositories not initialized";
         return;
@@ -291,7 +291,7 @@ void VpnConnection::connectToVpn(const QString &serverId, DockerContainer contai
 
     m_vpnConfiguration = vpnConfiguration;
 
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     if (m_vpnProtocol) {
         disconnect(m_vpnProtocol.data(), &VpnProtocol::protocolError, this, &VpnConnection::vpnProtocolError);
         m_vpnProtocol->stop();
@@ -335,7 +335,7 @@ void VpnConnection::createProtocolConnections()
     connect(m_vpnProtocol.data(), &VpnProtocol::connectionStateChanged, this, &VpnConnection::setConnectionState);
     connect(m_vpnProtocol.data(), SIGNAL(bytesChanged(quint64, quint64)), this, SLOT(onBytesChanged(quint64, quint64)));
 
-#ifdef AMNEZIA_DESKTOP
+#ifdef CAELISPECT_DESKTOP
     IpcClient::withInterface([this](QSharedPointer<IpcInterfaceReplica> rep) {
         connect(rep.data(), &IpcInterfaceReplica::networkChanged, this, &VpnConnection::reconnectToVpn, Qt::QueuedConnection);
         connect(rep.data(), &IpcInterfaceReplica::wakeup, this, &VpnConnection::reconnectToVpn, Qt::QueuedConnection);
@@ -411,7 +411,7 @@ void VpnConnection::appendSplitTunnelingConfig()
         }
     }
 
-    amnezia::RouteMode routeMode = amnezia::RouteMode::VpnAllSites;
+    caelispect::RouteMode routeMode = caelispect::RouteMode::VpnAllSites;
     QJsonArray sitesJsonArray;
     if (m_appSettingsRepository->isSitesSplitTunnelingEnabled()) {
         routeMode = m_appSettingsRepository->routeMode();
@@ -432,9 +432,9 @@ void VpnConnection::appendSplitTunnelingConfig()
             }
 
             if (sitesJsonArray.isEmpty()) {
-                routeMode = amnezia::RouteMode::VpnAllSites;
-            } else if (routeMode == amnezia::RouteMode::VpnOnlyForwardSites) {
-                // Allow traffic to Amnezia DNS
+                routeMode = caelispect::RouteMode::VpnAllSites;
+            } else if (routeMode == caelispect::RouteMode::VpnOnlyForwardSites) {
+                // Allow traffic to Caelispect DNS
                 sitesJsonArray.append(m_vpnConfiguration.value(configKey::dns1).toString());
                 sitesJsonArray.append(m_vpnConfiguration.value(configKey::dns2).toString());
             }
@@ -444,7 +444,7 @@ void VpnConnection::appendSplitTunnelingConfig()
     m_vpnConfiguration.insert(configKey::splitTunnelType, routeMode);
     m_vpnConfiguration.insert(configKey::splitTunnelSites, sitesJsonArray);
 
-    amnezia::AppsRouteMode appsRouteMode = amnezia::AppsRouteMode::VpnAllApps;
+    caelispect::AppsRouteMode appsRouteMode = caelispect::AppsRouteMode::VpnAllApps;
     QJsonArray appsJsonArray;
     if (m_appSettingsRepository->isAppsSplitTunnelingEnabled()) {
         appsRouteMode = m_appSettingsRepository->appsRouteMode();
@@ -455,7 +455,7 @@ void VpnConnection::appendSplitTunnelingConfig()
         }
 
         if (appsJsonArray.isEmpty()) {
-            appsRouteMode = amnezia::AppsRouteMode::VpnAllApps;
+            appsRouteMode = caelispect::AppsRouteMode::VpnAllApps;
         }
     }
 
@@ -551,7 +551,7 @@ void VpnConnection::disconnectFromVpn()
 
     m_vpnProtocol->stop();
 
-#if !defined(Q_OS_ANDROID) && !defined(AMNEZIA_DESKTOP)
+#if !defined(Q_OS_ANDROID) && !defined(CAELISPECT_DESKTOP)
     m_vpnProtocol->deleteLater();
 #endif
 

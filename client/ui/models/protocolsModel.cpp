@@ -8,7 +8,7 @@
 #include "core/utils/containers/containerUtils.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 ProtocolsModel::ProtocolsModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -49,10 +49,10 @@ QVariant ProtocolsModel::data(const QModelIndex &index, int role) const
     
     switch (role) {
     case ProtocolNameRole: {
-        return amnezia::ProtocolUtils::protocolHumanNames().value(proto);
+        return caelispect::ProtocolUtils::protocolHumanNames().value(proto);
     }
     case ProtocolIndexRole: return static_cast<int>(proto);
-    case ProtocolStringRole: return amnezia::ProtocolUtils::protoToString(proto);
+    case ProtocolStringRole: return caelispect::ProtocolUtils::protoToString(proto);
     case IsWireGuardRole: return proto == Proto::WireGuard;
     case IsSftpRole: return proto == Proto::Sftp;
     case IsSocks5ProxyRole: return proto == Proto::Socks5Proxy;
@@ -67,14 +67,14 @@ QVariant ProtocolsModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ProtocolsModel::updateModel(const amnezia::ContainerConfig &containerConfig)
+void ProtocolsModel::updateModel(const caelispect::ContainerConfig &containerConfig)
 {
     beginResetModel();
     m_containerConfig = containerConfig;
     endResetModel();
 }
 
-amnezia::Proto ProtocolsModel::getProtocolType() const
+caelispect::Proto ProtocolsModel::getProtocolType() const
 {
     return m_containerConfig.getProtocolType();
 }

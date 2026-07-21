@@ -69,7 +69,7 @@ PageType {
         TabBar {
             id: tabBar
             Layout.fillWidth: true
-            background: Rectangle { color: AmneziaStyle.color.transparent }
+            background: Rectangle { color: CaelispectStyle.color.transparent }
 
             TabButtonType {
                 text: qsTr("Protocols")

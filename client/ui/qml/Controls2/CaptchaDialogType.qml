@@ -31,7 +31,7 @@ Popup {
     closePolicy: Popup.NoAutoClose
 
     Overlay.modal: Rectangle {
-        color: AmneziaStyle.color.translucentMidnightBlack
+        color: CaelispectStyle.color.translucentMidnightBlack
     }
 
     onOpened: {
@@ -58,7 +58,7 @@ Popup {
 
     background: Rectangle {
         anchors.fill: parent
-        color: AmneziaStyle.color.slateGray
+        color: CaelispectStyle.color.slateGray
         radius: 22
     }
 
@@ -98,7 +98,7 @@ Popup {
 
                 text: root.hint
                 wrapMode: Text.WordWrap
-                color: AmneziaStyle.color.paleGray
+                color: CaelispectStyle.color.paleGray
                 font.pixelSize: 18
                 font.weight: Font.Bold
                 font.family: "PT Root UI VF"
@@ -116,7 +116,7 @@ Popup {
                     id: imagePanel
 
                     anchors.fill: parent
-                    color: AmneziaStyle.color.pearlGray
+                    color: CaelispectStyle.color.pearlGray
                     radius: 16
 
                     Image {
@@ -154,7 +154,7 @@ Popup {
                         width: 44
                         height: 44
                         radius: width / 2
-                        color: AmneziaStyle.color.charcoalGray
+                        color: CaelispectStyle.color.charcoalGray
 
                         Image {
                             id: refreshIcon
@@ -177,7 +177,7 @@ Popup {
                             layer.smooth: true
                             layer.textureSize: Qt.size(_raster, _raster)
                             layer.effect: ColorOverlay {
-                                color: AmneziaStyle.color.goldenApricot
+                                color: CaelispectStyle.color.goldenApricot
                             }
                         }
 
@@ -197,10 +197,10 @@ Popup {
                 Layout.alignment: Qt.AlignLeft
 
                 headerText: qsTr("Digits from the image")
-                headerTextColor: AmneziaStyle.color.mutedGray
+                headerTextColor: CaelispectStyle.color.mutedGray
 
                 textField.placeholderText: qsTr("_ _ _ _ _ _")
-                textField.placeholderTextColor: AmneziaStyle.color.mutedGray
+                textField.placeholderTextColor: CaelispectStyle.color.mutedGray
                 textField.inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
                 textField.maximumLength: 6
                 textField.font.letterSpacing: 2
@@ -222,10 +222,10 @@ Popup {
                 implicitHeight: 52
 
                 text: qsTr("Continue")
-                defaultColor: AmneziaStyle.color.paleGray
-                hoveredColor: AmneziaStyle.color.lightGray
-                pressedColor: AmneziaStyle.color.mutedGray
-                textColor: AmneziaStyle.color.midnightBlack
+                defaultColor: CaelispectStyle.color.paleGray
+                hoveredColor: CaelispectStyle.color.lightGray
+                pressedColor: CaelispectStyle.color.mutedGray
+                textColor: CaelispectStyle.color.midnightBlack
 
                 clickedFunc: function() {
                     submitIfNonEmpty()
@@ -239,13 +239,13 @@ Popup {
                 implicitHeight: 52
 
                 text: qsTr("Close")
-                defaultColor: AmneziaStyle.color.transparent
-                hoveredColor: AmneziaStyle.color.translucentWhite
-                pressedColor: AmneziaStyle.color.sheerWhite
-                textColor: AmneziaStyle.color.paleGray
+                defaultColor: CaelispectStyle.color.transparent
+                hoveredColor: CaelispectStyle.color.translucentWhite
+                pressedColor: CaelispectStyle.color.sheerWhite
+                textColor: CaelispectStyle.color.paleGray
                 borderWidth: 1
-                borderColor: AmneziaStyle.color.mutedGray
-                borderFocusedColor: AmneziaStyle.color.paleGray
+                borderColor: CaelispectStyle.color.mutedGray
+                borderFocusedColor: CaelispectStyle.color.paleGray
 
                 clickedFunc: function() {
                     root.close()

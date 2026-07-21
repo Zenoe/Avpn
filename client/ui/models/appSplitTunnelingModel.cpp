@@ -28,7 +28,7 @@ QVariant AppSplitTunnelingModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void AppSplitTunnelingModel::updateModel(const QVector<amnezia::InstalledAppInfo> &apps)
+void AppSplitTunnelingModel::updateModel(const QVector<caelispect::InstalledAppInfo> &apps)
 {
     beginResetModel();
     m_apps = apps;

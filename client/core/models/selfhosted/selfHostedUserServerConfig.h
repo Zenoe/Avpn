@@ -12,7 +12,7 @@
 #include "core/models/containerConfig.h"
 #include "core/utils/commonStructs.h"
 
-namespace amnezia
+namespace caelispect
 {
 
 using namespace ContainerEnumNS;
@@ -40,6 +40,6 @@ struct SelfHostedUserServerConfig {
     static SelfHostedUserServerConfig fromJson(const QJsonObject &json);
 };
 
-} // namespace amnezia
+} // namespace caelispect
 
 #endif // SELFHOSTEDUSERSERVERCONFIG_H

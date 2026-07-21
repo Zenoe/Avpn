@@ -5,7 +5,7 @@
 
 #include "core/utils/utilities.h"
 
-using namespace amnezia;
+using namespace caelispect;
 
 WireguardConfigurator::WireguardConfigurator(bool isAwg, QObject *parent)
     : ConfiguratorBase(parent), m_isAwg(isAwg)
