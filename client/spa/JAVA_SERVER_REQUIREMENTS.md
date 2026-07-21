@@ -1,445 +1,202 @@
-# Java UDP SPA 服务端需求规格 v1
+# Java UDP SPA 服务端对接规格 v1
 
-## 1. 目标
+本文档以当前 C++ 客户端实现为准。Java 服务端必须使用国密算法，并与以下字节级约定完全一致。
 
-实现一个独立的 Java UDP SPA（Single Packet Authorization）服务。客户端在用户登录前发送一个加密 UDP 报文；服务端校验成功后，选择一个当前可用的动态登录端点，并返回：
-
-- HTTPS 登录域名或地址；
-- 动态登录端口（可能为 443，也可能为其他端口）；
-- 短期、单次使用的 `spaTicket`；
-- 端点和 ticket 的过期时间。
-
-客户端随后使用返回的 `host + port` 发起 HTTPS 登录，并在请求头中携带 `spaTicket`。登录网关必须校验 ticket 后才允许请求进入真正的登录服务。
-
-本服务只负责 SPA、动态端点发现和临时访问授权，不负责校验用户名密码，也不签发用户登录 token。
-
-## 2. 技术约束
-
-- Java 17 或更高版本；
-- UDP 服务建议使用 Netty，也可以使用 Java NIO；
-- 不能为每个 UDP 报文创建一个线程；
-- 单个请求和响应均不得超过 1200 字节，避免 UDP IP 分片；
-- 所有多字节整数使用网络字节序（big-endian）；
-- 所有服务端时间使用 UTC Unix epoch milliseconds；
-- 服务应支持 Windows/Linux 开发测试，生产环境目标为 Linux；
-- 多实例部署时，防重放、ticket 和幂等数据必须存储在共享 Redis 中；
-- 日志中禁止记录完整报文、密钥、ticket、用户凭据或完整 installationId。
-
-## 3. 安全边界
-
-SPA 发生在用户登录之前，因此服务端此时没有用户身份。仅使用服务端公钥加密，可以证明响应来自服务端并隐藏报文内容，但不能证明请求方是某个合法用户，因为服务端公钥本来就是公开的。
-
-服务端必须支持以下两种客户端授权模式：
-
-1. `DISCOVERY_ONLY`：只校验加密完整性、时间戳、nonce、防重放和限流。该模式提供隐藏登录入口和抗扫描能力，但不提供强客户端身份认证。
-2. `DEVICE_CREDENTIAL`：请求携带已预置或已注册设备凭据生成的 `authProof`。服务端校验成功后才签发 ticket。该模式用于后续具备设备注册条件的生产环境。
-
-禁止把所有安装包共享的固定 HMAC 密钥当作强身份凭据；桌面安装包中的共享密钥可以被提取。若暂时使用共享密钥，只能把它视为额外的滥用门槛，并且必须支持密钥轮换。
-
-`DEVICE_CREDENTIAL` 模式下，服务端通过 `credentialId` 查找已经登记的设备 Ed25519 公钥。`authProof` 是设备私钥对以下确定性字节串的 Ed25519 签名：
+## 1. 固定配置
 
 ```text
-UTF8("ASPA-AUTH-v1")
-|| requestId(raw 32 bytes)
-|| clientTime(int64 big-endian)
-|| nonce(raw bytes)
-|| UTF8(requestedService)
-|| UTF8(installationId)
+UDP 监听端口: 16888
+magic: ASCII "ASPA"
+version: 1
+套件: GM-SPA-SM2-ECDH-SM4GCM-SM3-V1
+SM2 ID: 1be19cff-fd14-48fd-9a67-5d54b0442d58（UTF-8）
+加密密钥 encryptionKeyId: 1
+签名密钥 signingKeyId: 1
+SM4-GCM nonce: 12 bytes
+SM4-GCM tag: 16 bytes
+时间允许偏差: 60000 ms
+ticket 建议有效期: 60000 ms，单次使用
+所有整数: unsigned、big-endian
+所有字符串: UTF-8
 ```
 
-设备私钥必须在 SPA 之前通过独立的设备注册或预置流程得到。如果当前系统还没有该流程，首版使用 `DISCOVERY_ONLY`，不能伪造一个“安全的固定客户端密钥”。
-
-## 4. 密码算法
-
-优先使用 JDK 17 原生支持的标准算法：
-
-- 密钥交换：X25519；
-- 密钥派生：HKDF-SHA-256；
-- 对称加密：AES-256-GCM；
-- 响应签名：Ed25519；
-- 请求 ID：32 字节随机数；
-- AES-GCM nonce：12 字节安全随机数；
-- ticket：至少 32 字节安全随机数，使用 Base64 URL-safe、无 padding 编码；
-- ticket 存储：Redis 中只保存 `SHA-256(ticket)`，不保存 ticket 明文。
-
-服务端配置两类长期密钥：
-
-- X25519 私钥：用于解密客户端请求和派生响应密钥；
-- Ed25519 私钥：用于签名响应。
-
-客户端内置相应的 X25519 和 Ed25519 公钥。协议必须支持 `keyId`，以便灰度轮换密钥。
-
-请求密钥派生：
+客户端内置公钥：
 
 ```text
-sharedSecret = X25519(serverStaticPrivateKey, clientEphemeralPublicKey)
-requestKey   = HKDF-SHA256(
-    ikm  = sharedSecret,
-    salt = requestId,
-    info = "amnezia-spa-request-v1",
-    len  = 32)
+SM2 加密/ECDH 公钥:
+04e3960abf643ac6c8f0fcb07544d724cf1159b04fcfb09c0c5aa4e7ec72bdfface3d1d85c0821cb9b806933fa85377e135d94c08c828abeb688f865000f9d465d
+
+SM2 响应签名公钥:
+04ad3c2e69f985138e5d7270f52a8164b10452fa70a226651603987f22323ba3ff9bf51be930fb0cf9a0f695112edd57d666f30b1b8025991fe4483656b37c4cd4
 ```
 
-响应使用独立密钥，禁止复用请求密钥：
+两者均为 65 字节、未压缩 SM2 公钥，格式为 `04 || X(32) || Y(32)`。服务端必须持有与其对应的私钥，私钥不得进入仓库、日志或响应。
+
+## 2. 密钥协商与派生
+
+客户端每次请求生成临时 SM2 密钥对。服务端使用静态加密私钥与客户端临时公钥执行 SM2 椭圆曲线点乘：
 
 ```text
-responseKey = HKDF-SHA256(
-    ikm  = sharedSecret,
-    salt = requestId,
-    info = "amnezia-spa-response-v1",
-    len  = 32)
+sharedPoint  = SM2-ECDH(serverStaticPrivateKey, clientEphemeralPublicKey)
+sharedSecret = sharedPoint.x(32-byte big-endian) || sharedPoint.y(32-byte big-endian)
+
+requestKey  = first16(SM3(
+    UTF8("ASPA-REQUEST-KEY-v1") || sharedSecret || requestId))
+
+responseKey = first16(SM3(
+    UTF8("ASPA-RESPONSE-KEY-v1") || sharedSecret || requestId))
 ```
 
-AES-GCM 的 AAD 为完整明文报文头（不包含密文本身和签名）。
+`requestKey` 和 `responseKey` 均为 16 字节 SM4 密钥，禁止互换或复用。
 
-## 5. UDP 二进制报文格式
-
-### 5.1 公共请求头
+## 3. 请求报文
 
 ```text
-magic                    4 bytes   ASCII "ASPA"
-version                  1 byte    0x01
-messageType              1 byte    0x01 = REQUEST
-keyId                    2 bytes   unsigned
-requestId               32 bytes
-clientEphemeralPublicKey 32 bytes  X25519 raw public key
-gcmNonce                 12 bytes
-ciphertextLength          2 bytes   unsigned
-ciphertext                N bytes   AES-256-GCM ciphertext including 16-byte tag
+magic                     4 bytes   ASCII "ASPA"
+version                   1 byte    0x01
+messageType               1 byte    0x01
+encryptionKeyId           2 bytes   0x0001
+requestId                32 bytes   安全随机数
+clientEphemeralPublicKey 65 bytes   04 || X || Y
+gcmNonce                 12 bytes   安全随机数
+ciphertextLength           2 bytes   含 16-byte GCM tag
+ciphertext                 N bytes   JSON 密文 || tag
 ```
 
-服务端必须先校验固定头、版本和长度，再进行任何昂贵的密码运算。错误 magic、未知版本、未知 keyId、非法长度或超过 1200 字节的报文直接静默丢弃，不返回错误，避免形成 UDP 放大器和协议探测 oracle。
+SM4-GCM 的 AAD 是从 `magic` 到 `ciphertextLength` 的完整请求前缀头。
 
-### 5.2 请求密文 JSON
+请求密文 JSON：
 
 ```json
 {
-  "requestId": "base64url-32-bytes",
+  "requestId": "base64url-32-bytes-no-padding",
   "clientTime": 1784236800000,
-  "nonce": "base64url-32-random-bytes",
+  "nonce": "base64url-32-random-bytes-no-padding",
   "requestedService": "login",
-  "installationId": "sha256-or-random-installation-id",
+  "installationId": "stable-sm3-hex",
   "platform": "windows|macos|linux",
   "appVersion": "4.9.0.3",
-  "authMode": "DISCOVERY_ONLY|DEVICE_CREDENTIAL",
-  "credentialId": "optional-key-id",
-  "authProof": "optional-base64url-proof"
+  "authMode": "DISCOVERY_ONLY",
+  "deviceId": "stable-sm3-hex"
 }
 ```
 
-要求：
+校验要求：
 
-- JSON 中的 `requestId` 必须与头部 requestId 一致；
-- `requestedService` v1 只接受 `login`；
-- `clientTime` 与服务端时间差默认不得超过 60 秒，允许通过配置调整；
-- `nonce` 必须至少 16 字节，推荐 32 字节；
-- Redis 中按 `requestId` 和 `nonce` 做防重放；
-- `installationId` 只用于限流和审计，不等同于可信设备身份；
-- `DEVICE_CREDENTIAL` 模式下必须校验 `credentialId + authProof`；
-- 用户名和密码绝不能出现在 SPA 请求中。
+- JSON `requestId` 解码后必须与头部 32 字节一致；
+- `requestedService` 只接受 `login`；
+- `clientTime` 与服务端当前时间差不得超过 60000 ms；
+- 对 `requestId` 和 JSON `nonce` 做防重放；
+- 同一 `requestId` 的 UDP 重试必须幂等，返回首次生成的相同响应；
+- 未知 encryptionKeyId、非法长度、解密失败或 GCM tag 错误应静默丢弃。
 
-### 5.3 公共响应头
+## 4. 设备标识
+
+客户端从 Qt `QSysInfo::machineUniqueId()` 获取平台稳定机器标识，规范化为去除首尾空白的小写字节，再计算：
 
 ```text
-magic             4 bytes   ASCII "ASPA"
-version           1 byte    0x01
-messageType       1 byte    0x02 = RESPONSE
-keyId             2 bytes   unsigned
-requestId        32 bytes
-gcmNonce         12 bytes
-ciphertextLength   2 bytes   unsigned
-ciphertext         N bytes   AES-256-GCM ciphertext including 16-byte tag
-signatureLength    2 bytes   v1 固定为 64
-signature         64 bytes   Ed25519 signature
+deviceId = lowerHex(SM3(
+    UTF8("ASPA-DEVICE-v1") || 0x00 || UTF8(platform) || 0x00 || normalizedMachineId))
+
+installationId = lowerHex(SM3(
+    UTF8("ASPA-INSTALLATION-v1") || 0x00 || UTF8(platform) || 0x00 || normalizedMachineId))
 ```
 
-响应前缀头指从 `magic` 到 `ciphertextLength` 的所有字节。AES-GCM AAD 使用该前缀头，签名输入为：
+机器标识不可用时客户端拒绝发包，不使用随机值降级。服务端可将 `deviceId` 用于设备绑定、准入、限流和审计，但不得记录原始机器标识。
+
+## 5. 响应报文
+
+```text
+magic              4 bytes   ASCII "ASPA"
+version            1 byte    0x01
+messageType        1 byte    0x02
+encryptionKeyId     2 bytes   加密/ECDH keyId，当前 0x0001
+signingKeyId        2 bytes   响应签名 keyId，当前 0x0001
+requestId          32 bytes
+gcmNonce           12 bytes
+ciphertextLength     2 bytes   含 16-byte GCM tag
+ciphertext           N bytes   JSON 密文 || tag
+signatureLength      2 bytes   DER 签名实际长度
+signature            M bytes   SM2-with-SM3 DER 签名
+```
+
+SM4-GCM 的 AAD 是从 `magic` 到 `ciphertextLength` 的完整响应前缀头。
+
+签名算法为 SM2-with-SM3，SM2 ID 使用本文固定值，签名输入严格为：
 
 ```text
 responsePrefixHeader || ciphertext
 ```
 
-响应使用与请求相同的 `requestId`。客户端只有在 AES-GCM 校验、Ed25519 签名、requestId、有效期和端点策略全部通过后，才接受动态登录端点。
+签名格式必须是 ASN.1 DER，不是固定 64 字节的 `r || s`；`signatureLength` 必须写入实际 DER 长度。
 
-### 5.4 响应密文 JSON
+客户端处理顺序：校验报文结构和 requestId，验证 SM2 签名，验证 SM4-GCM tag 并解密，最后验证 JSON、时间和端点策略。
+
+## 6. 响应 JSON
 
 成功响应：
 
 ```json
 {
   "status": "OK",
-  "requestId": "base64url-32-bytes",
+  "requestId": "base64url-32-bytes-no-padding",
   "loginScheme": "https",
   "loginHost": "login-17.example.com",
   "loginPort": 18443,
-  "spaTicket": "base64url-random-ticket",
+  "spaTicket": "base64url-random-ticket-no-padding",
   "issuedAt": 1784236800000,
   "expiresAt": 1784236860000
 }
 ```
 
-已成功解密但业务拒绝的响应：
+业务拒绝响应：
 
 ```json
 {
   "status": "REJECTED",
-  "requestId": "base64url-32-bytes",
+  "requestId": "base64url-32-bytes-no-padding",
   "errorCode": "RATE_LIMITED",
   "retryAfterMs": 10000,
   "issuedAt": 1784236800000
 }
 ```
 
-支持的错误码至少包括：
+成功响应要求：
 
-- `CLOCK_SKEW`；
-- `REPLAY_DETECTED`；
-- `UNAUTHORIZED_DEVICE`；
-- `RATE_LIMITED`；
-- `NO_LOGIN_ENDPOINT`；
-- `UNSUPPORTED_CLIENT_VERSION`；
-- `INTERNAL_ERROR`。
+- `loginScheme` 必须为 `https`；
+- `loginHost` 为服务端选择的域名或地址；
+- `loginPort` 可为 1–65535 中的任意动态端口，包括 443；
+- `expiresAt > issuedAt`；
+- 客户端收到时剩余有效期至少 1000 ms；
+- `issuedAt` 与客户端当前时间差不得超过 60000 ms。
 
-只有已经通过 GCM 解密和基本格式校验的请求才允许收到加密错误响应。无法认证的报文静默丢弃。
+## 7. Ticket 与动态端点
 
-## 6. 动态登录端点选择
+- ticket 至少使用 32 字节安全随机数并采用 Base64url 无 padding 编码；
+- ticket 必须绑定返回的 `scheme + host + port`；
+- ticket 默认 60 秒有效且只能原子消费一次；
+- 登录请求通过 HTTP Header `X-SPA-Ticket` 携带 ticket；
+- 443 和其他动态端口无特殊分支，均按返回值连接；
+- 服务端不得接受客户端指定登录端口；
+- 多实例部署时，防重放、幂等响应和 ticket 状态应放入共享存储。
 
-定义接口：
+## 8. Java 实现注意事项
 
-```java
-public interface LoginEndpointSelector {
-    Optional<LoginEndpoint> select(SpaRequestContext context);
-}
-```
+- JCA/JCE 提供方必须明确支持 SM2、SM3、SM4-GCM；建议统一使用同一版本的 Bouncy Castle 国密实现并锁定版本；
+- 不得使用 SM2 加密 `C1C3C2` 代替本文的 SM2-ECDH 点乘；当前协议不传输 SM2 `C1C3C2` 密文；
+- Java `ByteBuffer` 默认 big-endian，与协议一致；
+- EC 坐标必须补齐为固定 32 字节 big-endian，不能保留 `BigInteger.toByteArray()` 的符号前导字节；
+- UDP 发送与接收按原始字节处理，不得把二进制报文转为字符串；
+- 日志禁止输出私钥、sharedSecret、SM4 key、ticket、完整 deviceId 或完整报文。
 
-`LoginEndpoint` 至少包含：
+## 9. 联调必测项
 
-```java
-record LoginEndpoint(String scheme, String host, int port, String endpointId) {}
-```
-
-要求：
-
-- `scheme` v1 固定为 `https`；
-- `host` 优先使用有有效 TLS 证书的域名，不推荐返回裸 IP；
-- `port` 支持 1–65535，但生产环境应配置允许范围；
-- 443 与其他动态端口走完全相同的协议；
-- 只选择健康检查通过且有剩余容量的登录节点；
-- ticket 必须绑定 `endpointId + host + port`，不能用于其他端点；
-- 如果没有可用节点，返回 `NO_LOGIN_ENDPOINT`；
-- 服务端不得接受客户端指定登录地址或登录端口。
-
-## 7. SPA ticket
-
-成功 SPA 后创建一次性 ticket，推荐有效期 60 秒，可配置为 30–120 秒。
-
-Redis 数据示例：
-
-```text
-key: spa:ticket:{sha256(ticket)}
-value:
-  requestId
-  installationIdHash
-  sourceIp
-  endpointId
-  loginHost
-  loginPort
-  issuedAt
-  expiresAt
-  state = UNUSED
-TTL: expiresAt - now
-```
-
-登录网关收到请求：
-
-```http
-POST /v1/auth/login
-X-SPA-Ticket: <ticket>
-Content-Type: application/json
-```
-
-登录网关必须原子执行：
-
-1. 计算 ticket 的 SHA-256；
-2. 查询 Redis；
-3. 校验未过期、状态为 `UNUSED`、host/port/endpoint 匹配；
-4. 根据配置校验源 IP；
-5. 原子标记为 `USED` 或直接删除；
-6. 通过后才转发用户名密码登录请求。
-
-必须使用 Redis Lua 脚本、事务或等价原子操作，防止同一个 ticket 并发使用两次。
-
-源 IP 绑定应可配置：
-
-- 桌面稳定网络可启用严格 IP 绑定；
-- NAT、代理或网络切换场景可关闭严格绑定；
-- 即使绑定 IP，ticket 仍必须单次、短期有效。
-
-## 8. UDP 重试与幂等
-
-客户端会在超时后重发完全相同的 UDP 报文，默认最多发送 3 次。因此服务端必须对同一 `requestId` 幂等。
-
-Redis 幂等数据：
-
-```text
-key: spa:request:{requestId}
-value: 已生成的完整加密响应字节
-TTL: 120 seconds
-```
-
-重复请求处理：
-
-- requestId、请求摘要和来源符合预期：直接返回第一次生成的相同响应；
-- requestId 相同但请求摘要不同：视为冲突或攻击，静默丢弃；
-- 不得为每次 UDP 重试生成新的 ticket；
-- 对同一请求重复返回相同响应不会延长 ticket 有效期。
-
-## 9. 限流和抗 UDP 放大
-
-至少实现以下限制：
-
-- 单 IP 每秒请求数；
-- 单 IP 每分钟请求数；
-- 单 installationId 每分钟请求数；
-- 全局并发密码运算上限；
-- 单个 UDP 报文最大 1200 字节；
-- 响应不得明显大于请求；
-- 无法解密、未知 keyId、错误 authProof 或错误格式的请求不返回任何数据；
-- Redis 或端点选择器不可用时快速失败，不允许请求无限堆积。
-
-服务应记录不含敏感内容的指标：接收数、格式拒绝数、解密失败数、重放数、限流数、成功数、无端点数、处理时延和 Redis 错误数。
-
-## 10. 推荐模块结构
-
-```text
-spa-server/
-  src/main/java/.../spa/
-    SpaServerApplication.java
-    config/
-      SpaServerProperties.java
-      CryptoKeyProperties.java
-    transport/
-      UdpSpaServer.java
-      SpaPacketDecoder.java
-      SpaPacketEncoder.java
-    crypto/
-      SpaCryptoService.java
-      HkdfSha256.java
-      KeyRegistry.java
-    protocol/
-      SpaRequest.java
-      SpaResponse.java
-      PacketHeader.java
-      ErrorCode.java
-    security/
-      ReplayGuard.java
-      ClientAuthorizer.java
-      RateLimiter.java
-    endpoint/
-      LoginEndpoint.java
-      LoginEndpointSelector.java
-      HealthAwareEndpointSelector.java
-    ticket/
-      SpaTicketService.java
-      RedisSpaTicketService.java
-    login/
-      SpaTicketValidationFilter.java
-    observability/
-      SpaMetrics.java
-```
-
-协议解析、密码处理、端点选择、ticket 存储和 UDP 传输必须通过接口解耦，便于单元测试和替换实现。
-
-## 11. 配置项
-
-至少提供：
-
-```yaml
-spa:
-  udp-host: 0.0.0.0
-  udp-port: 32000
-  max-packet-bytes: 1200
-  allowed-clock-skew-ms: 60000
-  ticket-ttl-ms: 60000
-  request-cache-ttl-ms: 120000
-  auth-mode: DISCOVERY_ONLY
-  bind-ticket-to-source-ip: true
-  minimum-client-version: "4.9.0"
-  allowed-login-port-min: 10000
-  allowed-login-port-max: 65535
-  keys:
-    active-key-id: 1
-    x25519-private-key: "${SPA_X25519_PRIVATE_KEY}"
-    ed25519-private-key: "${SPA_ED25519_PRIVATE_KEY}"
-  redis:
-    uri: "${SPA_REDIS_URI}"
-```
-
-私钥、Redis 密码和设备凭据只能从密钥管理系统或环境注入，不能提交到源码仓库或配置样例。
-
-## 12. 与 C++ 客户端的对应关系
-
-服务端成功响应最终映射为：
-
-```cpp
-spa::LoginEndpoint endpoint;
-endpoint.scheme = loginScheme;
-endpoint.host = loginHost;
-endpoint.port = loginPort;
-endpoint.ticket = decodedTicketBytes;
-endpoint.expiresAtUtc = decodedExpiresAt;
-```
-
-C++ 侧 `spa::Codec` 的 Java 协议实现负责：
-
-- 生成 X25519 临时密钥；
-- 构造请求报文；
-- 派生 request/response key；
-- AES-GCM 加解密；
-- 验证 Ed25519 响应签名；
-- 验证 requestId；
-- 将成功 JSON 转成 `spa::LoginEndpoint`；
-- 对不属于当前请求的 UDP 数据返回 `Ignore`；
-- 对已认证但业务失败的响应返回 `Rejected`。
-
-## 13. 必须提供的测试
-
-单元测试至少覆盖：
-
-- 正常请求得到动态端点和 ticket；
-- 返回 443 和返回非 443 端口；
-- 错误 magic、版本、keyId 和长度；
-- GCM tag 错误；
-- 请求时间过期和未来时间；
-- requestId/nonce 重放；
-- 同一请求重试返回完全相同响应；
-- 同 requestId 不同请求内容被拒绝；
-- 无健康登录节点；
-- ticket 过期；
-- ticket 被使用两次；
-- ticket 用于错误 host/port；
-- Redis 超时或不可用；
-- 单 IP 和单 installationId 限流；
-- 报文大小边界和随机畸形报文 fuzz 测试。
-
-集成测试至少包含：
-
-1. C++ 客户端生成 UDP 请求；
-2. Java 服务端成功解密并返回动态端点；
-3. C++ 客户端验证和解密响应；
-4. 客户端使用 `host + dynamicPort + spaTicket` 访问 HTTPS 登录接口；
-5. 首次访问通过，重复使用 ticket 被拒绝；
-6. SPA 过期后登录被拒绝。
-
-## 14. 完成标准
-
-- Java 服务能在配置端口接收 UDP SPA 请求；
-- 所有无效或无法认证的 UDP 报文静默丢弃；
-- 有效请求在正常负载下快速返回签名加密响应；
-- 返回端口不写死，443 和动态端口均可工作；
-- UDP 重试不会产生多个 ticket；
-- ticket 短期、单次使用并绑定返回端点；
-- 未携带有效 ticket 的登录请求不能进入登录服务；
-- Java 和 C++ 使用固定协议测试向量验证完全兼容；
-- 私钥和 ticket 不出现在日志、异常栈或持久化明文中；
-- 核心协议、密码学、Redis 原子消费和端点选择均有自动化测试。
+- 固定私钥与客户端内置公钥匹配；
+- SM2-ECDH 得到相同的 64 字节 `x || y`；
+- requestKey/responseKey 派生结果一致；
+- 请求和响应的 SM4-GCM AAD、密文及 tag 互通；
+- SM2 ID 和 DER 签名互通；
+- 返回 443 与非 443 动态端口均可解析；
+- GCM tag、签名、requestId、时间、长度任一被篡改时客户端拒绝；
+- 重复 UDP 请求不产生多个 ticket；
+- ticket 首次使用成功，重复或过期使用失败。

@@ -1,0 +1,67 @@
+* SPA 独立模块
+
+=AmneziaSpa= 是桌面端（Windows、macOS、Linux）的独立 Qt/C++ 静态库，依赖
+Qt Core、Qt Network 和 OpenSSL Crypto，不依赖现有 CoreController、Repository、
+VPN 或登录业务模块。
+
+* 当前启动流程
+
+1. 桌面客户端启动并创建 =spa::UiController=。
+2. QML 首屏加载 =Pages2/PageSpa.qml=。
+3. 用户输入零信任网关 host，客户端固定向 =host:16888/UDP= 发送 SPA。
+4. 超时后重发同一数据报，默认最多 3 次。
+5. 成功后界面显示服务端返回的动态 HTTPS 登录地址；拒绝或超时则显示错误。
+6. 当前版本只展示结果，尚未跳转原有用户认证界面。
+
+* 模块组成
+
+- =spaClient=: UDP 状态机、超时重试、响应大小和端点策略检查；
+- =gmSpaCodec=: SM2-ECDH、SM3 密钥派生、SM4-GCM、SM2/SM3 响应验签及报文编解码；
+- =spaConfig=: 加载内嵌的 =resources/spa-config.json=；
+- =spaDeviceIdentity=: 生成绑定当前机器的稳定 deviceId/installationId；
+- =spaUiController=: SPA 与 QML 之间的薄适配层；
+- =PageSpa.qml=: 启动输入和结果提示界面。
+
+* 安全协议
+
+套件为 =GM-SPA-SM2-ECDH-SM4GCM-SM3-V1=：
+
+- 客户端每个请求生成临时 SM2 密钥对；
+- SM2-ECDH 与服务端静态加密公钥协商共享点；
+- SM3 分别派生请求和响应的 16 字节 SM4 密钥；
+- 请求和响应使用 SM4-GCM，nonce 12 字节、tag 16 字节；
+- 响应使用 SM2-with-SM3 签名，签名格式为 ASN.1 DER；
+- SM2 ID 固定为 =1be19cff-fd14-48fd-9a67-5d54b0442d58=；
+- 所有整数使用 big-endian。
+
+完整字节协议和 Java 服务端要求见 =JAVA_SERVER_REQUIREMENTS.md=。
+
+* 设备标识
+
+设备标识来自 Qt =QSysInfo::machineUniqueId()=，经过平台名、用途域和 SM3
+派生为固定的小写十六进制值。原始机器标识不会发送给服务端；无法取得稳定机器
+标识时客户端拒绝 SPA，不使用随机值降级。
+
+* SPA 成功结果
+
+成功后 =spa::LoginEndpoint= 保存：
+
+#+begin_src cpp
+scheme       // 当前只接受 https
+host
+port         // 动态端口，443 和其他端口处理相同
+ticket       // 后续放入 HTTP Header X-SPA-Ticket
+expiresAtUtc
+#+end_src
+
+ticket 不暴露给 QML，只保存在 C++ 控制器内。后续认证适配层应读取
+=loginEndpoint()=，使用 =https://host:port= 请求登录接口，并把 ticket 放入
+=X-SPA-Ticket=。SPA 模块不处理用户名、密码和登录 token。
+
+* Debug 日志
+
+Debug 构建会输出每次 UDP 发送、接收的网关、重试次数、完整 UDP 十六进制包、
+请求加密前的 JSON/十六进制明文、请求密文及 GCM tag、响应密文及 GCM tag、SM2
+DER 签名和响应解密后的 JSON/十六进制明文。私钥、共享密钥和 SM4 密钥不会输出；
+便于联调的完整明文十六进制会包含 ticket 等报文字段，不能导出到生产日志系统。
+Release 构建不包含这些 SPA 报文日志。

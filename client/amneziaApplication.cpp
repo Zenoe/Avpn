@@ -121,6 +121,8 @@ void AmneziaApplication::init()
 #endif
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
                 win->show();
+#elif defined(AMNEZIA_DESKTOP)
+                win->show();
 #else
                 if (!m_coreController || !m_coreController->pageController()->shouldStartMinimized()) {
                     win->show();
@@ -144,6 +146,11 @@ void AmneziaApplication::init()
 
     m_coreController.reset(new CoreController(m_vpnConnection, m_settings, m_engine));
 
+#ifdef AMNEZIA_DESKTOP
+    m_spaUiController.reset(new spa::UiController(QStringLiteral(APP_VERSION), this));
+    m_engine->rootContext()->setContextProperty("SpaController", m_spaUiController.get());
+#endif
+
     m_engine->addImportPath("qrc:/ui/qml/Modules/");
 
     if (m_parser.isSet(m_optImport)) {
@@ -159,11 +166,8 @@ void AmneziaApplication::init()
 
     m_coreController->setQmlRoot();
 
-#ifdef Q_OS_WIN //TODO
-    if (m_parser.isSet(m_optAutostart))
-        m_coreController->pageController()->showOnStartup();
-    else
-        emit m_coreController->pageController()->raiseMainWindow();
+#ifdef AMNEZIA_DESKTOP
+    emit m_coreController->pageController()->raiseMainWindow();
 #else
     m_coreController->pageController()->showOnStartup();
 #endif

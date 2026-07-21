@@ -19,6 +19,10 @@
 #include "ui/models/containerProps.h"
 #include "ui/models/protocolProps.h"
 
+#ifdef AMNEZIA_DESKTOP
+  #include "spa/spaUiController.h"
+#endif
+
 #define amnApp (static_cast<AmneziaApplication *>(QCoreApplication::instance()))
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
@@ -56,6 +60,10 @@ private:
     SecureQSettings* m_settings;
 
     QScopedPointer<CoreController> m_coreController;
+
+#ifdef AMNEZIA_DESKTOP
+    QScopedPointer<spa::UiController> m_spaUiController;
+#endif
 
     QSharedPointer<ContainerProps> m_containerProps;
     QSharedPointer<ProtocolProps> m_protocolProps;

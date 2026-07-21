@@ -160,10 +160,18 @@ Window  {
         }
     }
 
-    PageStart {
-        objectName: "pageStart"
-        width: root.width
-        height: root.height
+    Loader {
+        anchors.fill: parent
+        active: !GC.isDesktop()
+        sourceComponent: PageStart {
+            objectName: "pageStart"
+        }
+    }
+
+    Loader {
+        anchors.fill: parent
+        active: GC.isDesktop()
+        source: active ? "Pages2/PageSpa.qml" : ""
     }
 
     Item {

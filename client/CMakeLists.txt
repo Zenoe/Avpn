@@ -55,6 +55,10 @@ if(WIN32 OR (APPLE AND NOT IOS) OR (LINUX AND NOT ANDROID))
     set(LIBS ${LIBS} Qt6::Widgets)
 endif()
 
+if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
+    list(APPEND LIBS Amnezia::Spa)
+endif()
+
 qt_standard_project_setup()
 qt_add_executable(${PROJECT} MANUAL_FINALIZATION)
 target_include_directories(${PROJECT} PUBLIC

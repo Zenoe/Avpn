@@ -87,6 +87,7 @@
         <file>Pages2/PageSetupWizardQrReader.qml</file>
         <file>Pages2/PageSetupWizardViewConfig.qml</file>
         <file>Pages2/PageStart.qml</file>
+        <file>Pages2/PageSpa.qml</file>
         <file>Components/RenameServerDrawer.qml</file>
         <file>Controls2/ListViewType.qml</file>
         <file>Components/SmartScroll.qml</file>

@@ -1,0 +1,34 @@
+{
+  "gateway": {
+    "udpPort": 16888
+  },
+  "protocol": {
+    "version": 1,
+    "cipherSuite": "GM-SPA-SM2-ECDH-SM4GCM-SM3-V1",
+    "sm2Id": "1be19cff-fd14-48fd-9a67-5d54b0442d58",
+    "maximumClockSkewMsecs": 60000
+  },
+  "keys": {
+    "encryption": {
+      "keyId": 1,
+      "name": "spa-enc-1",
+      "publicKey": "04e3960abf643ac6c8f0fcb07544d724cf1159b04fcfb09c0c5aa4e7ec72bdfface3d1d85c0821cb9b806933fa85377e135d94c08c828abeb688f865000f9d465d"
+    },
+    "signing": {
+      "keyId": 1,
+      "name": "spa-sign-1",
+      "publicKey": "04ad3c2e69f985138e5d7270f52a8164b10452fa70a226651603987f22323ba3ff9bf51be930fb0cf9a0f695112edd57d666f30b1b8025991fe4483656b37c4cd4"
+    }
+  },
+  "endpointPolicy": {
+    "allowedSchemes": ["https"],
+    "minimumPort": 1,
+    "maximumPort": 65535,
+    "minimumRemainingLifetimeMsecs": 1000
+  },
+  "network": {
+    "responseTimeoutMsecs": 3000,
+    "maximumAttempts": 3,
+    "maximumResponseBytes": 16384
+  }
+}

@@ -1,7 +1,12 @@
 #include "spa/spaClient.h"
 
-#include <QUuid>
+#include <QRandomGenerator>
 
+#ifdef SPA_DEBUG_LOGGING
+  #include <QDebug>
+#endif
+
+#include <array>
 #include <utility>
 
 namespace {
@@ -27,6 +32,19 @@ bool hostMatchesSuffix(const QString &host, const QString &configuredSuffix)
     const QString normalizedHost = host.trimmed().toLower();
     return normalizedHost == suffix || normalizedHost.endsWith(QLatin1Char('.') + suffix);
 }
+
+#ifdef SPA_DEBUG_LOGGING
+void logSelectedLoginEndpoint(const spa::LoginEndpoint &endpoint)
+{
+    qDebug().noquote()
+            << QStringLiteral("[SPA][SERVICE] selectedLoginEndpoint=%1 host=%2 port=%3 expiresAtUtc=%4 ticket=<redacted:%5-bytes>")
+                       .arg(endpoint.scheme)
+                       .arg(endpoint.host)
+                       .arg(endpoint.port)
+                       .arg(endpoint.expiresAtUtc.toString(Qt::ISODateWithMs))
+                       .arg(endpoint.ticket.size());
+}
+#endif
 
 } // namespace
 
@@ -219,6 +237,14 @@ void Client::handleReadyRead()
         }
         datagram.resize(bytesRead);
 
+#ifdef SPA_DEBUG_LOGGING
+        qDebug().noquote() << QStringLiteral("[SPA][UDP][RX] gateway=%1:%2 bytes=%3 rawUdpDatagramHex=%4")
+                                     .arg(m_config.gatewayHost)
+                                     .arg(m_config.gatewayPort)
+                                     .arg(bytesRead)
+                                     .arg(QString::fromLatin1(datagram.toHex()));
+#endif
+
         const DecodeResult decoded = m_codec->decodeResponse(datagram, m_request);
         if (decoded.disposition == DecodeDisposition::Ignore) {
             continue;
@@ -237,6 +263,9 @@ void Client::handleReadyRead()
         }
 
         const LoginEndpoint endpoint = decoded.endpoint;
+#ifdef SPA_DEBUG_LOGGING
+        logSelectedLoginEndpoint(endpoint);
+#endif
         m_active = false;
         m_responseTimer.stop();
         resetTransport();
@@ -277,6 +306,16 @@ void Client::sendAttempt()
 
     ++m_attempt;
     emit attemptStarted(m_attempt, m_config.maximumAttempts);
+
+#ifdef SPA_DEBUG_LOGGING
+    qDebug().noquote() << QStringLiteral("[SPA][UDP][TX] gateway=%1:%2 attempt=%3/%4 bytes=%5 rawUdpDatagramHex=%6")
+                                 .arg(m_config.gatewayHost)
+                                 .arg(m_config.gatewayPort)
+                                 .arg(m_attempt)
+                                 .arg(m_config.maximumAttempts)
+                                 .arg(m_requestDatagram.size())
+                                 .arg(QString::fromLatin1(m_requestDatagram.toHex()));
+#endif
 
     const qint64 bytesWritten = m_socket.write(m_requestDatagram);
     if (bytesWritten != m_requestDatagram.size()) {
@@ -323,7 +362,9 @@ void Client::clearOperationData()
 
 QByteArray Client::createRequestId()
 {
-    return QUuid::createUuid().toRfc4122() + QUuid::createUuid().toRfc4122();
+    std::array<quint32, 8> words {};
+    QRandomGenerator::system()->fillRange(words.data(), words.size());
+    return QByteArray(reinterpret_cast<const char *>(words.data()), sizeof(words));
 }
 
 } // namespace spa
