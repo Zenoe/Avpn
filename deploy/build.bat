@@ -1,6 +1,15 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: Some terminals inherit both Path and PATH. MSBuild passes both entries to
+:: CL.exe, which rejects the duplicated case-insensitive environment key.
+:: Re-launch once from a normalized environment before initializing MSVC.
+if not defined CAELISPECT_PATH_NORMALIZED (
+    powershell -NoProfile -Command "$env:CAELISPECT_PATH_NORMALIZED='1'; $pathValue=[Environment]::GetEnvironmentVariable('PATH','Process'); Remove-Item Env:Path -ErrorAction SilentlyContinue; [Environment]::SetEnvironmentVariable('Path',$pathValue,'Process'); $process=Start-Process -FilePath $env:ComSpec -ArgumentList @('/d','/c','call \"\"%~f0\"\" %*') -PassThru -Wait -NoNewWindow; exit $process.ExitCode"
+    if errorlevel 1 exit /b 1
+    exit /b 0
+)
+
 set "PROJECT_DIR=%cd%"
 set "BUILD_DIR=%PROJECT_DIR%\deploy\build"
 
