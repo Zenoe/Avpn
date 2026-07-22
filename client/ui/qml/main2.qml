@@ -162,7 +162,8 @@ Window  {
 
     Loader {
         anchors.fill: parent
-        active: !GC.isDesktop()
+        // Temporary startup page: return desktop to the original server connection flow.
+        active: true
         sourceComponent: PageStart {
             objectName: "pageStart"
         }
@@ -170,8 +171,9 @@ Window  {
 
     Loader {
         anchors.fill: parent
-        active: GC.isDesktop()
-        source: active ? "Pages2/PageSpa.qml" : ""
+        // Re-enable this Loader when SPA becomes the default desktop startup page.
+        active: false
+        source: "Pages2/PageSpa.qml"
     }
 
     Item {
