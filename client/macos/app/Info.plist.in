@@ -34,7 +34,7 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>com.wireguard.ios.app_group_id</key>
-	<string>group.org.caelispect.Caelispect</string>
+	<string>${BUILD_IOS_GROUP_IDENTIFIER}</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Caelispect VPN needs access to the camera for reading QR-codes.</string>
 	<key>NSAppTransportSecurity</key>
@@ -94,7 +94,6 @@
                                         <string>text/plain</string>
                                 </array>
                         </dict>
-                </dict>
                 </dict>
                 <dict>
                         <key>UTTypeConformsTo</key>

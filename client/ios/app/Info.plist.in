@@ -70,7 +70,7 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>com.wireguard.ios.app_group_id</key>
-	<string>group.org.caelispect.Caelispect</string>
+	<string>${BUILD_IOS_GROUP_IDENTIFIER}</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
@@ -156,7 +156,6 @@
                                         <string>text/plain</string>
                                 </array>
                         </dict>
-                </dict>
                 </dict>
                 <dict>
                         <key>UTTypeConformsTo</key>

@@ -15,7 +15,9 @@ struct Log {
     }
   }
 
-  private static let appGroupID = "group.org.caelispect.Caelispect"
+  private static let appGroupID = Bundle.main.object(
+    forInfoDictionaryKey: "com.wireguard.ios.app_group_id"
+  ) as! String
 
   static let appLogURL = {
     let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID)!
