@@ -15,9 +15,12 @@
 #include "platforms/windows/windowsutils.h"
 #include "windowsdaemon.h"
 
+// The namespace is compiled into the bundled AmneziaWG tunnel.dll. It is an
+// implementation detail, not a product-facing name, so it must remain
+// AmneziaWG until tunnel.dll is rebuilt with a renamed namespace.
 #define TUNNEL_NAMED_PIPE \
   "\\\\."                 \
-  "\\pipe\\ProtectedPrefix\\Administrators\\CaelispectWG\\Caelispect"
+  "\\pipe\\ProtectedPrefix\\Administrators\\AmneziaWG\\Caelispect"
 
 constexpr uint32_t WINDOWS_TUNNEL_MONITOR_TIMEOUT_MSEC = 2000;
 

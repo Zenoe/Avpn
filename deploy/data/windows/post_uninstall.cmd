@@ -14,6 +14,8 @@ sc stop Caelispect-service
 sc delete Caelispect-service
 sc stop CaelispectWGTunnel$Caelispect
 sc delete CaelispectWGTunnel$Caelispect
+sc stop CaelispectSplitTunnel
+sc delete CaelispectSplitTunnel
 taskkill /IM "Caelispect-service.exe" /F
 taskkill /IM "Caelispect.exe" /F
 

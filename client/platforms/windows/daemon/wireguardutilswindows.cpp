@@ -193,6 +193,10 @@ bool WireguardUtilsWindows::updatePeer(const InterfaceConfig& config) {
 
   QString reply = m_tunnel.uapiCommand(message);
   logger.debug() << "DATA:" << reply;
+  if (!reply.contains("errno=0")) {
+    logger.error() << "Failed to configure WireGuard peer:" << reply;
+    return false;
+  }
   return true;
 }
 
@@ -217,6 +221,10 @@ bool WireguardUtilsWindows::deletePeer(const InterfaceConfig& config) {
 
   QString reply = m_tunnel.uapiCommand(message);
   logger.debug() << "DATA:" << reply;
+  if (!reply.contains("errno=0")) {
+    logger.error() << "Failed to remove WireGuard peer:" << reply;
+    return false;
+  }
   return true;
 }
 
