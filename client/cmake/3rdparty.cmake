@@ -13,29 +13,6 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 set(BUILD_WITH_QT6 ON)
 add_subdirectory(${CLIENT_ROOT_DIR}/3rd/qtkeychain ${CMAKE_BINARY_DIR}/3rd/qtkeychain EXCLUDE_FROM_ALL)
 
-if(ANDROID)
-    # Use qtgamepad from caelispect-vpn/qtgamepad repository
-    # Only if Qt6CorePrivate is available (required by qtgamepad)
-    find_package(Qt6CorePrivate CONFIG QUIET)
-    if(Qt6CorePrivate_FOUND)
-        add_subdirectory(${CLIENT_ROOT_DIR}/3rd/qtgamepad ${CMAKE_BINARY_DIR}/3rd/qtgamepad)
-        # Link both the C++ module and QML plugin
-        if(TARGET ${PROJECT})
-            target_link_libraries(${PROJECT} PRIVATE GamepadLegacy)
-        else()
-            list(APPEND LIBS GamepadLegacy)
-        endif()
-        if(TARGET ${PROJECT})
-            target_link_libraries(${PROJECT} PRIVATE GamepadLegacyQuickPrivate)
-        else()
-            list(APPEND LIBS GamepadLegacyQuickPrivate)
-        endif()
-        message(STATUS "Gamepad support enabled for Android")
-    else()
-        message(STATUS "Qt6CorePrivate not found. Gamepad support disabled for Android.")
-    endif()
-endif()
-
 set(LIBS ${LIBS} qt6keychain)
 
 include_directories(

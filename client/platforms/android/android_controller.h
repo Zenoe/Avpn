@@ -38,7 +38,6 @@ public:
     void closeFd();
     QString getFileName(const QString &uri);
     bool isCameraPresent();
-    bool isOnTv();
     bool isEdgeToEdgeEnabled();
     int getStatusBarHeight();
     int getNavigationBarHeight();

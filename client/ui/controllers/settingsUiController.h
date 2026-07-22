@@ -95,8 +95,6 @@ public slots:
     bool isDevGatewayEnv();
     void toggleDevGatewayEnv(bool enabled);
 
-    bool isOnTv();
-
 signals:
     void primaryDnsChanged();
     void secondaryDnsChanged();

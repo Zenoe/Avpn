@@ -14,7 +14,7 @@ Button {
     property string defaultButtonColor: CaelispectStyle.color.paleGray
     property string progressButtonColor: CaelispectStyle.color.paleGray
     property string connectedButtonColor: CaelispectStyle.color.goldenApricot
-    property bool buttonActiveFocus: activeFocus && (Qt.platform.os !== "android" || SettingsController.isOnTv())
+    property bool buttonActiveFocus: activeFocus
 
     property bool isFocusable: true
     

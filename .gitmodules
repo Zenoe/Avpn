@@ -7,7 +7,3 @@
 [submodule "client/3rd/amneziawg-apple"]
 	path = client/3rd/amneziawg-apple
 	url = https://github.com/amnezia-vpn/amneziawg-apple
-[submodule "client/3rd/qtgamepad"]
-	path = client/3rd/qtgamepad
-	url = https://github.com/amnezia-vpn/qtgamepad.git
-	branch = 6.6

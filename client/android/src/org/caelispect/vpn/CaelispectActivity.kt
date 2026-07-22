@@ -26,8 +26,6 @@ import android.os.ParcelFileDescriptor
 import android.os.SystemClock
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.view.InputDevice
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -315,40 +313,6 @@ class CaelispectActivity : QtActivity() {
             }
         }
     }
-
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        val keyCode = event.keyCode
-        val pressed = event.action == KeyEvent.ACTION_DOWN
-
-        when (keyCode) {
-            KeyEvent.KEYCODE_BUTTON_A,
-            KeyEvent.KEYCODE_BUTTON_B,
-            KeyEvent.KEYCODE_BUTTON_X,
-            KeyEvent.KEYCODE_BUTTON_Y,
-            KeyEvent.KEYCODE_BUTTON_START,
-            KeyEvent.KEYCODE_BUTTON_SELECT -> {
-                    nativeGamepadKeyEvent(0, keyCode, pressed)
-                    return true
-            }
-            KeyEvent.KEYCODE_DPAD_CENTER,
-            KeyEvent.KEYCODE_DPAD_UP,
-            KeyEvent.KEYCODE_DPAD_DOWN,
-            KeyEvent.KEYCODE_DPAD_LEFT,
-            KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    val syntheticKeyCode = if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) KeyEvent.KEYCODE_ENTER else keyCode
-                    val synthetic = KeyEvent(
-                        event.downTime, event.eventTime, event.action, syntheticKeyCode,
-                        event.repeatCount, event.metaState, -1, event.scanCode,
-                        event.flags, InputDevice.SOURCE_KEYBOARD
-                    )
-                    return super.dispatchKeyEvent(synthetic)
-            }
-        }
-
-        return super.dispatchKeyEvent(event)
-    }
-
-    private external fun nativeGamepadKeyEvent(deviceId: Int, keyCode: Int, pressed: Boolean)
 
     override fun onPause() {
         // Notify Qt to stop rendering BEFORE super.onPause() destroys the EGL surface.
@@ -764,50 +728,36 @@ class CaelispectActivity : QtActivity() {
     fun openFile(filter: String?) {
         Log.v(TAG, "Open file with filter: $filter")
         mainScope.launch {
-            val systemPickerPackage = listOf("com.google.android.documentsui", "com.android.documentsui")
-                .firstOrNull { pkg ->
-                    try { packageManager.getPackageInfo(pkg, 0); true }
-                    catch (_: PackageManager.NameNotFoundException) { false }
-                }
-
-            val intent = if (!isOnTv() && systemPickerPackage != null) {
-                val mimeTypes = if (!filter.isNullOrEmpty()) {
+            val mimeTypes = if (!filter.isNullOrEmpty()) {
                     val extensionRegex = "\\*\\.([a-z0-9]+)".toRegex(IGNORE_CASE)
                     val mime = MimeTypeMap.getSingleton()
                     extensionRegex.findAll(filter).map {
                         it.groups[1]?.value?.let { mime.getMimeTypeFromExtension(it) } ?: "*/*"
                     }.toSet()
-                } else emptySet()
+            } else emptySet()
 
-                Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    Log.v(TAG, "File mimyType filter: $mimeTypes")
-                    if ("*/*" in mimeTypes) {
-                        type = "*/*"
-                    } else {
-                        when (mimeTypes.size) {
-                            1 -> type = mimeTypes.first()
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                Log.v(TAG, "File mimeType filter: $mimeTypes")
+                if ("*/*" in mimeTypes) {
+                    type = "*/*"
+                } else {
+                    when (mimeTypes.size) {
+                        1 -> type = mimeTypes.first()
 
-                            in 2..Int.MAX_VALUE -> {
-                                type = "*/*"
-                                putExtra(EXTRA_MIME_TYPES, mimeTypes.toTypedArray())
-                            }
-
-                            else -> type = "*/*"
+                        in 2..Int.MAX_VALUE -> {
+                            type = "*/*"
+                            putExtra(EXTRA_MIME_TYPES, mimeTypes.toTypedArray())
                         }
+
+                        else -> type = "*/*"
                     }
-                    `package` = systemPickerPackage
                 }
-            } else {
-                Intent(this@CaelispectActivity, TvFilePicker::class.java)
             }
 
             try {
                 startActivityForResult(intent, OPEN_FILE_ACTION_CODE, ActivityResultHandler(
                     onAny = {
-                        if (isOnTv() && it?.hasExtra("activityNotFound") == true) {
-                            showNoFileBrowserAlertDialog()
-                        }
                         val uri = it?.data?.let { u ->
                             if (u.scheme == "content") {
                                 try { grantUriPermission(packageName, u, Intent.FLAG_GRANT_READ_URI_PERMISSION) } catch (_: Exception) {}
@@ -837,7 +787,7 @@ class CaelispectActivity : QtActivity() {
 
     private fun showNoFileBrowserAlertDialog() {
         AlertDialog.Builder(this)
-            .setMessage(R.string.tvNoFileBrowser)
+            .setMessage(R.string.noFileBrowser)
             .setCancelable(false)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 try {
@@ -895,9 +845,6 @@ class CaelispectActivity : QtActivity() {
     @Suppress("unused")
     @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
     fun isCameraPresent(): Boolean = applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
-
-    @Suppress("unused")
-    fun isOnTv(): Boolean = applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
 
     @Suppress("unused")
     fun isEdgeToEdgeEnabled(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE

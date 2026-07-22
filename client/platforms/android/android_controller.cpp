@@ -201,11 +201,6 @@ bool AndroidController::isCameraPresent()
     return callActivityMethod<jboolean>("isCameraPresent", "()Z");
 }
 
-bool AndroidController::isOnTv()
-{
-    return callActivityMethod<jboolean>("isOnTv", "()Z");
-}
-
 bool AndroidController::isEdgeToEdgeEnabled()
 {
     return callActivityMethod<jboolean>("isEdgeToEdgeEnabled", "()Z");

@@ -46,14 +46,6 @@ Each component is distributed under its own license as linked below.
 
 ---
 
-## Qt Gamepad
-
-- Source: https://github.com/qt/qtgamepad
-- License: GNU General Public License v3.0 (GPL-3.0)
-- License Text: https://www.gnu.org/licenses/gpl-3.0.en.html
-
----
-
 ## AmneziaWG Apple (WireGuard)
 
 - Source: https://github.com/amnezia-vpn/amneziawg-apple

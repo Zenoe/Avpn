@@ -339,12 +339,3 @@ void SettingsUiController::toggleDevGatewayEnv(bool enabled)
     emit gatewayEndpointChanged(m_settingsController->getGatewayEndpoint());
     emit devGatewayEnvChanged(enabled);
 }
-
-bool SettingsUiController::isOnTv()
-{
-#ifdef Q_OS_ANDROID
-    return AndroidController::instance()->isOnTv();
-#else
-    return false;
-#endif
-}

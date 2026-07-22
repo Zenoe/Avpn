@@ -100,11 +100,6 @@ Window  {
         }
     }
 
-    Loader {
-        active: Qt.platform.os === "android"
-        source: Qt.platform.os === "android" ? "Components/GamepadLoader.qml" : ""
-    }
-
     Connections {
         objectName: "pageControllerConnections"
 
