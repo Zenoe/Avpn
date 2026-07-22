@@ -558,6 +558,18 @@ void VpnConnection::disconnectFromVpn()
     m_vpnProtocol = nullptr;
 }
 
+void VpnConnection::shutdown()
+{
+    disconnectSlots();
+    disconnectFromVpn();
+
+#ifdef CAELISPECT_DESKTOP
+    // IpcClient owns QLocalSocket instances.  Tear them down here, while this
+    // object's thread still owns and services them.
+    IpcClient::deinit();
+#endif
+}
+
 void VpnConnection::setConnectionState(Vpn::ConnectionState state) {
     onConnectionStateChanged(state);
 

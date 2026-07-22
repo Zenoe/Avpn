@@ -62,11 +62,20 @@ CaelispectApplication::~CaelispectApplication()
 {
 #ifdef CAELISPECT_DESKTOP
     if (m_vpnConnection && m_vpnConnectionThread.isRunning()) {
-        QMetaObject::invokeMethod(m_vpnConnection.get(), "disconnectSlots", Qt::BlockingQueuedConnection);
-        
-        QMetaObject::invokeMethod(m_vpnConnection.get(), "disconnectFromVpn", Qt::BlockingQueuedConnection);
+        QMetaObject::invokeMethod(m_vpnConnection.get(), "shutdown", Qt::BlockingQueuedConnection);
     }
 #endif
+
+    if (m_engine) {
+        delete m_engine;
+        m_engine = nullptr;
+    }
+
+#ifdef CAELISPECT_DESKTOP
+    m_spaUiController.reset();
+#endif
+    m_coreController.reset();
+    m_vpnConnection.reset();
 
     m_vpnConnectionThread.requestInterruption();
     m_vpnConnectionThread.quit();
@@ -76,9 +85,6 @@ CaelispectApplication::~CaelispectApplication()
         m_vpnConnectionThread.wait(500);
     }
 
-    if (m_engine) {
-        delete m_engine;
-    }
 }
 
 #ifdef Q_OS_ANDROID
@@ -140,11 +146,12 @@ void CaelispectApplication::init()
     m_engine->rootContext()->setContextProperty("IsMacOsNeBuild", false);
 #endif
 
-    m_vpnConnection.reset(new VpnConnection(nullptr, nullptr));
+    m_vpnConnection = QSharedPointer<VpnConnection>(new VpnConnection(nullptr, nullptr),
+                                                     [](VpnConnection *connection) { connection->deleteLater(); });
+    m_coreController.reset(new CoreController(m_vpnConnection, m_settings, m_engine));
+
     m_vpnConnection->moveToThread(&m_vpnConnectionThread);
     m_vpnConnectionThread.start();
-
-    m_coreController.reset(new CoreController(m_vpnConnection, m_settings, m_engine));
 
 #ifdef CAELISPECT_DESKTOP
     m_spaUiController.reset(new spa::UiController(QStringLiteral(APP_VERSION), this));

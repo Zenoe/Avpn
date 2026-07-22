@@ -14,6 +14,9 @@ public:
     explicit IpcClient(QObject *parent = nullptr);
 
     static IpcClient& Instance();
+    // Destroys the IPC objects in the current thread while its event loop is
+    // still running. This is required for worker threads that use local IPC.
+    static void deinit();
 
     static QSharedPointer<IpcInterfaceReplica> Interface();
     static QSharedPointer<IpcProcessInterfaceReplica> CreatePrivilegedProcess();

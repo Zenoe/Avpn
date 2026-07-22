@@ -3,6 +3,12 @@
 #include <QRemoteObjectNode>
 #include <QtNetwork/qlocalsocket.h>
 
+#include <memory>
+
+namespace {
+thread_local std::unique_ptr<IpcClient> ipcClient;
+}
+
 IpcClient::IpcClient(QObject *parent) : QObject(parent)
 {
     m_node.connectToNode(QUrl("local:" + caelispect::getIpcServiceUrl()));
@@ -11,8 +17,15 @@ IpcClient::IpcClient(QObject *parent) : QObject(parent)
 
 IpcClient& IpcClient::Instance()
 {
-    thread_local IpcClient ipcClient;
-    return ipcClient;
+    if (!ipcClient) {
+        ipcClient = std::make_unique<IpcClient>();
+    }
+    return *ipcClient;
+}
+
+void IpcClient::deinit()
+{
+    ipcClient.reset();
 }
 
 QSharedPointer<IpcInterfaceReplica> IpcClient::Interface()
