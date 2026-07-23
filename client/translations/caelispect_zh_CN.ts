@@ -595,39 +595,6 @@ Can&apos;t be disabled for current server</source>
     </message>
 </context>
 <context>
-    <name>PageSettingsApiAvailableCountries</name>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="147"/>
-        <source>Subscription expired</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="147"/>
-        <source>Subscription expiring soon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="166"/>
-        <source>Renew subscription</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="180"/>
-        <source>Location for connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="209"/>
-        <source>Unable change server location while trying to make an active connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/qml/Pages2/PageSettingsApiAvailableCountries.qml" line="213"/>
-        <source>Unable change server location while there is an active connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PageSettingsApiDevices</name>
     <message>
         <location filename="../ui/qml/Pages2/PageSettingsApiDevices.qml" line="45"/>

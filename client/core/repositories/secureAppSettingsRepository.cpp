@@ -245,11 +245,8 @@ void SecureAppSettingsRepository::setAppsSplitTunnelingEnabled(bool enabled)
     emit appsSplitTunnelingEnabledChanged(enabled);
 }
 
-QString SecureAppSettingsRepository::getGatewayEndpoint(bool isTestPurchase) const
+QString SecureAppSettingsRepository::getGatewayEndpoint() const
 {
-    if (isTestPurchase) {
-        return QString(DEV_AGW_ENDPOINT);
-    }
     return m_gatewayEndpoint;
 }
 
@@ -271,9 +268,9 @@ void SecureAppSettingsRepository::setDevGatewayEndpoint()
     setValue("Conf/gatewayEndpoint", DEV_AGW_ENDPOINT);
 }
 
-bool SecureAppSettingsRepository::isDevGatewayEnv(bool isTestPurchase) const
+bool SecureAppSettingsRepository::isDevGatewayEnv() const
 {
-    return isTestPurchase ? true : value("Conf/devGatewayEnv", false).toBool();
+    return value("Conf/devGatewayEnv", false).toBool();
 }
 
 void SecureAppSettingsRepository::toggleDevGatewayEnv(bool enabled)

@@ -62,24 +62,7 @@ public:
     bool shareText(const QStringList &filesToSend);
     QString openFile();
 
-    void purchaseProduct(const QString &productId,
-                         std::function<void(bool success,
-                                            const QString &transactionId,
-                                            const QString &purchasedProductId,
-                                            const QString &originalTransactionId,
-                                            const QString &errorString)> &&callback);
-    void restorePurchases(std::function<void(bool success,
-                                             const QList<QVariantMap> &transactions,
-                                             const QString &errorString)> &&callback);
-
-    // Fetch product info for given product identifiers and return basic fields for logging
-    void fetchProducts(const QStringList &productIds,
-                       std::function<void(const QList<QVariantMap> &products,
-                                          const QStringList &invalidIds,
-                                          const QString &errorString)> &&callback);
-
     void requestInetAccess();
-    bool isTestFlight();
 signals:
     void connectionStateChanged(Vpn::ConnectionState state);
     void bytesChanged(quint64 receivedBytes, quint64 sentBytes);

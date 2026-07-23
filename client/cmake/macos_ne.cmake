@@ -14,7 +14,6 @@ set(LIBS ${LIBS} Qt6::ShaderTools Qt6::Widgets)
 find_library(FW_AUTHENTICATIONSERVICES AuthenticationServices)
 find_library(FW_AVFOUNDATION AVFoundation)
 find_library(FW_FOUNDATION Foundation)
-find_library(FW_STOREKIT StoreKit)
 find_library(FW_SERVICEMGMT ServiceManagement)
 find_library(FW_USERNOTIFICATIONS UserNotifications)
 find_library(FW_NETWORKEXTENSION NetworkExtension)
@@ -23,7 +22,6 @@ set(LIBS ${LIBS}
     ${FW_AUTHENTICATIONSERVICES}
     ${FW_AVFOUNDATION}
     ${FW_FOUNDATION}
-    ${FW_STOREKIT}
     ${FW_SERVICEMGMT}
     ${FW_USERNOTIFICATIONS}
     ${FW_NETWORKEXTENSION}
@@ -34,7 +32,6 @@ set(HEADERS ${HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/ios_controller.h
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/ios_controller_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/iosnotificationhandler.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/StoreKitController.h
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/QtAppDelegate.h
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/QtAppDelegate-C-Interface.h
 )
@@ -45,7 +42,6 @@ set(SOURCES ${SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/ios_controller.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/ios_controller_wrapper.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/iosnotificationhandler.mm
-    ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/StoreKitController.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/iosglue.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/QRCodeReaderBase.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/ios/QtAppDelegate.mm
@@ -130,7 +126,6 @@ target_sources(${PROJECT} PRIVATE
     ${CLIENT_ROOT_DIR}/platforms/ios/LogRecord.swift
     ${CLIENT_ROOT_DIR}/platforms/ios/ScreenProtection.swift
     ${CLIENT_ROOT_DIR}/platforms/ios/VPNCController.swift
-    ${CLIENT_ROOT_DIR}/platforms/ios/StoreKit2Helper.swift
 )
 
 target_sources(${PROJECT} PRIVATE

@@ -36,13 +36,9 @@ namespace
     constexpr QLatin1String updateRequestResponsePattern("client version update is required");
 
     constexpr int httpStatusCodeNotFound = 404;
-    constexpr int httpStatusCodeConflict = 409;
     constexpr int httpStatusCodeNotImplemented = 501;
-    constexpr int httpStatusCodePaymentRequired = 402;
     constexpr int httpStatusCodeRequestTimeout = 408;
     constexpr int httpStatusCodeUnprocessableEntity = 422;
-
-    constexpr QLatin1String unprocessableSubscriptionMessage("Failed to retrieve subscription information. Is it activated?");
 
     constexpr int proxyStorageRequestTimeoutMsecs = 3000;
 
@@ -473,13 +469,11 @@ bool GatewayController::shouldBypassProxy(const QNetworkReply::NetworkError &rep
     const QByteArray &responseBody = decryptedResponseBody;
 
     int apiHttpStatus = -1;
-    QString apiErrorMessage;
     if (isDecryptionSuccessful) {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(responseBody);
         if (jsonDoc.isObject()) {
             QJsonObject jsonObj = jsonDoc.object();
             apiHttpStatus = jsonObj.value("http_status").toInt(-1);
-            apiErrorMessage = jsonObj.value(QStringLiteral("message")).toString().trimmed();
         }
     } else {
         qDebug() << "failed to decrypt the data";
@@ -516,15 +510,9 @@ bool GatewayController::shouldBypassProxy(const QNetworkReply::NetworkError &rep
             return true;
         }
     } 
-    if (apiHttpStatus == httpStatusCodeConflict) {
-        return false;
-    } 
-    if (apiHttpStatus == httpStatusCodePaymentRequired) {
-        return false;
-    } 
     if (apiHttpStatus == httpStatusCodeUnprocessableEntity) {
-        return apiErrorMessage != unprocessableSubscriptionMessage;
-    } 
+        return true;
+    }
     if (replyError != QNetworkReply::NetworkError::NoError) {
         qDebug() << replyError;
         return true;

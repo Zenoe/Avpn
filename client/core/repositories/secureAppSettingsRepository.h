@@ -53,11 +53,11 @@ public:
     bool isAppsSplitTunnelingEnabled() const;
     void setAppsSplitTunnelingEnabled(bool enabled);
 
-    QString getGatewayEndpoint(bool isTestPurchase = false) const;
+    QString getGatewayEndpoint() const;
     void setGatewayEndpoint(const QString &endpoint);
     void resetGatewayEndpoint();
     void setDevGatewayEndpoint();
-    bool isDevGatewayEnv(bool isTestPurchase = false) const;
+    bool isDevGatewayEnv() const;
     void toggleDevGatewayEnv(bool enabled);
     QByteArray readGatewayProxyUrls(const QString &cacheKey) const;
     void writeGatewayProxyUrls(const QString &cacheKey, const QByteArray &proxyUrlsEncrypted);
