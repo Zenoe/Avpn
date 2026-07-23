@@ -9,16 +9,7 @@
 #include "core/protocols/protocolUtils.h"
 #include "core/utils/constants/configKeys.h"
 #include "core/utils/constants/protocolConstants.h"
-#include "core/utils/containerEnum.h"
-#include "core/utils/containers/containerUtils.h"
-#include "core/utils/protocolEnum.h"
-
 #include "core/models/protocols/wireGuardProtocolConfig.h"
-#include "core/models/protocols/sftpProtocolConfig.h"
-#include "core/models/protocols/socks5ProxyProtocolConfig.h"
-#include "core/models/protocols/dnsProtocolConfig.h"
-#include "core/models/protocols/mtProxyProtocolConfig.h"
-#include "core/models/protocols/telemtProtocolConfig.h"
 
 namespace caelispect
 {
@@ -26,14 +17,7 @@ namespace caelispect
 using Proto = ProtocolEnumNS::Proto;
 
 struct ProtocolConfig {
-    using Variant = std::variant<
-        WireGuardProtocolConfig,
-        SftpProtocolConfig,
-        Socks5ProxyProtocolConfig,
-        MtProxyProtocolConfig,
-        TelemtProtocolConfig,
-        DnsProtocolConfig
-    >;
+    using Variant = std::variant<WireGuardProtocolConfig>;
     
     Variant data;
     
@@ -60,13 +44,10 @@ struct ProtocolConfig {
     QString clientId() const;
     QJsonObject getClientConfigJson() const;
     void setClientConfigJson(const QJsonObject& json);
-    void clearClientConfig();
     
     QString nativeConfig() const;
     void setNativeConfig(const QString &config);
 
-    bool isThirdPartyConfig() const;
-    
     QJsonObject toJson() const;
     static ProtocolConfig fromJson(const QJsonObject& json, Proto type);
     

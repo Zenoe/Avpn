@@ -1,424 +1,65 @@
 #include "serversUiController.h"
 
-#include "core/utils/containerEnum.h"
-#include "core/utils/containers/containerUtils.h"
-#include "core/utils/protocolEnum.h"
-#include "core/models/protocolConfig.h"
-#include "core/models/containerConfig.h"
-
 using namespace caelispect;
 
-namespace {
-int rowForServerId(const QVector<ServerDescription> &list, const QString &serverId)
+namespace { const ServerDescription emptyDescription {}; }
+
+ServersUiController::ServersUiController(ServersController *serversController, SettingsController *settingsController,
+                                         ServersModel *serversModel, WireGuardConfigModel *wireGuardConfigModel, QObject *parent)
+    : QObject(parent), m_serversController(serversController), m_settingsController(settingsController),
+      m_serversModel(serversModel), m_wireGuardConfigModel(wireGuardConfigModel) {}
+
+void ServersUiController::removeServer(const QString &id) { if (!id.isEmpty()) { m_serversController->removeServer(id); updateModel(); } }
+void ServersUiController::removeServerAtIndex(int index) { removeServer(getServerId(index)); }
+void ServersUiController::editServerName(const QString &id, const QString &name)
 {
-    if (serverId.isEmpty()) {
-        return -1;
-    }
-    for (int i = 0; i < list.size(); ++i) {
-        if (list.at(i).serverId == serverId) {
-            return i;
-        }
-    }
-    return -1;
+    if (!m_serversController->renameServer(id, name)) emit errorOccurred(tr("Failed to update profile"));
+    else updateModel();
 }
-
-const ServerDescription &emptyServerDescription()
+void ServersUiController::setDefaultServer(const QString &id) { if (!id.isEmpty()) m_serversController->setDefaultServer(id); }
+void ServersUiController::setDefaultServerAtIndex(int index) { setDefaultServer(getServerId(index)); }
+void ServersUiController::openClientProtocolSettings(const QString &id)
 {
-    static const ServerDescription s_emptyDescription;
-    return s_emptyDescription;
+    if (const auto profile = m_serversController->wireGuardProfile(id)) m_wireGuardConfigModel->updateModel(profile->config);
 }
-} // namespace
-ServersUiController::ServersUiController(ServersController* serversController,
-                                         SettingsController* settingsController,
-                                         ServersModel* serversModel,
-                                         ContainersModel* containersModel,
-                                         ContainersModel* defaultServerContainersModel,
-                                         ProtocolsModel* protocolsModel,
-                                         WireGuardConfigModel* wireGuardConfigModel,
-                                         QObject *parent)
-    : QObject(parent),
-      m_serversController(serversController),
-      m_settingsController(settingsController),
-      m_serversModel(serversModel),
-      m_containersModel(containersModel),
-      m_defaultServerContainersModel(defaultServerContainersModel),
-      m_protocolsModel(protocolsModel),
-      m_wireGuardConfigModel(wireGuardConfigModel)
+void ServersUiController::saveClientProtocolSettings(const QString &id)
 {
+    auto profile = m_serversController->wireGuardProfile(id);
+    if (!profile) { emit errorOccurred(tr("Failed to update profile")); return; }
+    profile->config = m_wireGuardConfigModel->getConfig();
+    if (m_serversController->updateWireGuardProfile(id, *profile) == ErrorCode::NoError) emit finished(tr("Settings updated successfully"));
+    else emit errorOccurred(tr("Failed to update profile"));
 }
-
-void ServersUiController::removeServer(const QString &serverId)
+void ServersUiController::onDefaultServerChanged(const QString &id) { m_serversModel->setDefaultServerId(id); emit defaultServerIdChanged(id); }
+bool ServersUiController::isDefaultServerCurrentlyProcessed() const { return getDefaultServerId() == m_processedServerId; }
+void ServersUiController::setProcessedServerId(const QString &id)
 {
-    if (serverId.isEmpty()) {
-        return;
-    }
-    m_serversController->removeServer(serverId);
-    updateModel();
+    const QString next = getServerIndexById(id) >= 0 ? id : QString();
+    if (m_processedServerId != next) { m_processedServerId = next; emit processedServerIdChanged(next); }
 }
-
-void ServersUiController::removeServerAtIndex(int index)
-{
-    const QString serverId = getServerId(index);
-    if (!serverId.isEmpty()) {
-        removeServer(serverId);
-    }
-}
-
-void ServersUiController::openClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex)
-{
-    const DockerContainer container = static_cast<DockerContainer>(containerIndex);
-    ContainerConfig config = m_serversController->getContainerConfig(serverId, container);
-    config.container = container;
-    m_protocolsModel->updateModel(config);
-
-    switch (static_cast<Proto>(protocolIndex)) {
-    case Proto::WireGuard:
-        if (auto *protocol = config.getWireGuardProtocolConfig()) m_wireGuardConfigModel->updateModel(container, *protocol);
-        break;
-    default: break;
-    }
-}
-
-void ServersUiController::saveClientProtocolSettings(const QString &serverId, int containerIndex, int protocolIndex)
-{
-    const DockerContainer container = static_cast<DockerContainer>(containerIndex);
-    ContainerConfig config;
-    config.container = container;
-    switch (static_cast<Proto>(protocolIndex)) {
-    case Proto::WireGuard: config.protocolConfig = m_wireGuardConfigModel->getProtocolConfig(); break;
-    default: return;
-    }
-
-    if (m_serversController->updateClientConfig(serverId, container, config) == ErrorCode::NoError) {
-        m_protocolsModel->updateModel(config);
-        emit finished(tr("Settings updated successfully"));
-    } else {
-        emit errorOccurred(tr("Failed to update settings"));
-    }
-}
-
-void ServersUiController::setDefaultServerAtIndex(int index)
-{
-    const QString serverId = getServerId(index);
-    if (!serverId.isEmpty()) {
-        setDefaultServer(serverId);
-    }
-}
-
-void ServersUiController::setDefaultContainerAtIndex(int index, int containerIndex)
-{
-    const QString serverId = getServerId(index);
-    if (!serverId.isEmpty()) {
-        setDefaultContainer(serverId, containerIndex);
-    }
-}
-
-void ServersUiController::editServerName(const QString &serverId, const QString &name)
-{
-    if (serverId.isEmpty()) {
-        return;
-    }
-
-    if (!m_serversController->renameServer(serverId, name)) {
-        emit errorOccurred(tr("Legacy API v1 configs are no longer supported. Remove this server to continue."));
-        emit finished(tr("Use the remove action to delete this legacy config."));
-        return;
-    }
-    updateModel();
-}
-
-void ServersUiController::setDefaultServer(const QString &serverId)
-{
-    if (serverId.isEmpty()) {
-        return;
-    }
-    m_serversController->setDefaultServer(serverId);
-}
-
-void ServersUiController::setDefaultContainer(const QString &serverId, int containerIndex)
-{
-    if (serverId.isEmpty()) {
-        return;
-    }
-    auto container = static_cast<DockerContainer>(containerIndex);
-    m_serversController->setDefaultContainer(serverId, container);
-    updateModel();
-}
-
-void ServersUiController::toggleCaelispectDns(bool enabled)
-{
-    m_settingsController->toggleCaelispectDns(enabled);
-    updateModel();
-}
-
-void ServersUiController::onDefaultServerChanged(const QString &defaultServerId)
-{
-    m_serversModel->setDefaultServerId(defaultServerId);
-    updateDefaultServerContainersModel();
-
-    emit defaultServerIdChanged(defaultServerId);
-}
-
 void ServersUiController::updateModel()
 {
-    QVector<ServerDescription> descriptions =
-        m_serversController->buildServerDescriptions(m_settingsController->isCaelispectDnsEnabled());
-
-    const QString defaultServerId = m_serversController->getDefaultServerId();
-    m_orderedServerDescriptions = descriptions;
-
-    if (m_orderedServerDescriptions.isEmpty()) {
-        if (!m_processedServerId.isEmpty()) {
-            setProcessedServerId(QString());
-        }
-    } else if (!m_processedServerId.isEmpty()) {
-        const int row = rowForServerId(m_orderedServerDescriptions, m_processedServerId);
-        if (row < 0) {
-            setProcessedServerId(QString());
-        }
-    }
-
-    m_serversModel->updateModel(m_orderedServerDescriptions, defaultServerId);
-
-    if (!m_processedServerId.isEmpty()) {
-        updateContainersModel();
-    }
-    updateDefaultServerContainersModel();
-
-    emit defaultServerIdChanged(defaultServerId);
+    m_descriptions = m_serversController->buildServerDescriptions(false);
+    const QString id = m_serversController->getDefaultServerId();
+    m_serversModel->updateModel(m_descriptions, id);
+    if (getServerIndexById(m_processedServerId) < 0) setProcessedServerId({});
+    emit defaultServerIdChanged(id);
 }
-
-QString ServersUiController::getDefaultServerId() const
-{
-    return m_serversController->getDefaultServerId();
-}
-
-QString ServersUiController::getDefaultServerName() const
-{
-    return serverName(getDefaultServerId());
-}
-
-QString ServersUiController::getDefaultServerDefaultContainerName() const
-{
-    const auto &description = serverDescriptionById(getDefaultServerId());
-    if (description.serverId.isEmpty()) {
-        return QString();
-    }
-    return ContainerUtils::containerHumanNames().value(description.defaultContainer);
-}
-
-QString ServersUiController::getDefaultServerDescriptionCollapsed() const
-{
-    return serverDescriptionById(getDefaultServerId()).collapsedServerDescription;
-}
-
-QString ServersUiController::getDefaultServerImagePathCollapsed() const
-{
-    return "";
-}
-
-QString ServersUiController::getDefaultServerDescriptionExpanded() const
-{
-    return serverDescriptionById(getDefaultServerId()).expandedServerDescription;
-}
-
+QString ServersUiController::getDefaultServerId() const { return m_serversController->getDefaultServerId(); }
+QString ServersUiController::getDefaultServerName() const { return description(getDefaultServerId()).serverName; }
+QString ServersUiController::getDefaultServerDefaultContainerName() const { return QStringLiteral("WireGuard"); }
+QString ServersUiController::getDefaultServerDescriptionCollapsed() const { return description(getDefaultServerId()).collapsedServerDescription; }
+QString ServersUiController::getDefaultServerImagePathCollapsed() const { return {}; }
+QString ServersUiController::getDefaultServerDescriptionExpanded() const { return description(getDefaultServerId()).expandedServerDescription; }
 bool ServersUiController::isDefaultServerDefaultContainerHasSplitTunneling() const
 {
-    const QString defaultServerId = m_serversController->getDefaultServerId();
-    const DockerContainer defaultContainer = m_serversController->getDefaultContainer(defaultServerId);
-    const ContainerConfig containerConfig = m_serversController->getContainerConfig(defaultServerId, defaultContainer);
-    
-    if (defaultContainer == DockerContainer::WireGuard) {
-        auto hasSplitTunnelingFromAllowedIps = [](const QStringList& allowedIps, const QString& nativeConfig) -> bool {
-            bool hasSplitTunneling = !allowedIps.isEmpty() && !allowedIps.contains("0.0.0.0/0");
-            if (!hasSplitTunneling && !nativeConfig.isEmpty()) {
-                hasSplitTunneling = nativeConfig.contains("AllowedIPs") 
-                    && !nativeConfig.contains("AllowedIPs = 0.0.0.0/0, ::/0");
-            }
-            return hasSplitTunneling;
-        };
-        
-        if (defaultContainer == DockerContainer::WireGuard) {
-            if (const auto* wgConfig = containerConfig.getWireGuardProtocolConfig()) {
-                if (wgConfig->hasClientConfig()) {
-                    return hasSplitTunnelingFromAllowedIps(
-                        wgConfig->clientConfig->allowedIps,
-                        wgConfig->clientConfig->nativeConfig
-                    );
-                }
-            }
-        }
-        return false;
-    }
-    return false;
+    const auto profile = m_serversController->wireGuardProfile(getDefaultServerId());
+    return profile && !profile->config.allowedIps.contains(QStringLiteral("0.0.0.0/0"));
 }
-
-bool ServersUiController::hasServerWithWriteAccess() const
-{
-    for (const auto &description : m_orderedServerDescriptions) {
-        if (description.hasWriteAccess) {
-            return true;
-        }
-    }
-    return false;
-}
-
-QString ServersUiController::serverName(const QString &serverId) const
-{
-    return serverDescriptionById(serverId).serverName;
-}
-
-QString ServersUiController::serverHostName(const QString &serverId) const
-{
-    return serverDescriptionById(serverId).hostName;
-}
-
-int ServersUiController::serverDefaultContainer(const QString &serverId) const
-{
-    const auto &description = serverDescriptionById(serverId);
-    return description.serverId.isEmpty() ? -1 : static_cast<int>(description.defaultContainer);
-}
-
-bool ServersUiController::isServerHasWriteAccess(const QString &serverId) const
-{
-    return serverDescriptionById(serverId).hasWriteAccess;
-}
-
-bool ServersUiController::serverHasInstalledContainers(const QString &serverId) const
-{
-    return serverDescriptionById(serverId).hasInstalledVpnContainers;
-}
-
-int ServersUiController::getProcessedContainerIndex() const
-{
-    return m_processedContainerIndex;
-}
-
-void ServersUiController::setProcessedContainerIndex(int index)
-{
-    if (m_processedContainerIndex != index) {
-        m_processedContainerIndex = index;
-        m_containersModel->setProcessedContainerIndex(index);
-        emit processedContainerIndexChanged(m_processedContainerIndex);
-    }
-}
-
-QString ServersUiController::getProcessedServerId() const
-{
-    return m_processedServerId;
-}
-
-void ServersUiController::setProcessedServerId(const QString &serverId)
-{
-    const int newIndex = serverId.isEmpty() ? -1 : serverIndexForId(serverId);
-    const QString normalizedServerId = newIndex >= 0 ? serverId : QString();
-    const bool serverChanged = m_processedServerId != normalizedServerId;
-
-    if (serverChanged) {
-        m_processedServerId = normalizedServerId;
-    }
-
-    if (newIndex >= 0) {
-        // The settings page can be reopened for the same server after another
-        // model used ContainersModel. Always reload the complete protocol list.
-        updateContainersModel();
-    }
-
-    if (serverChanged) {
-        emit processedServerIdChanged(m_processedServerId);
-    }
-}
-
-bool ServersUiController::isDefaultServerCurrentlyProcessed() const
-{
-    return m_serversController->getDefaultServerId() == m_processedServerId;
-}
-
-bool ServersUiController::isProcessedServerHasWriteAccess() const
-{
-    return isServerHasWriteAccess(m_processedServerId);
-}
-
-const ServerDescription &ServersUiController::processedServerDescription() const
-{
-    return serverDescriptionById(m_processedServerId);
-}
-
-const ServerDescription &ServersUiController::serverDescriptionById(const QString &serverId) const
-{
-    for (const auto &description : m_orderedServerDescriptions) {
-        if (description.serverId == serverId) {
-            return description;
-        }
-    }
-    return emptyServerDescription();
-}
-
-QString ServersUiController::getServerId(int index) const
-{
-    if (index < 0 || index >= m_orderedServerDescriptions.size()) {
-        return QString();
-    }
-    return m_orderedServerDescriptions.at(index).serverId;
-}
-
-int ServersUiController::getServerIndexById(const QString &serverId) const
-{
-    return rowForServerId(m_orderedServerDescriptions, serverId);
-}
-int ServersUiController::getServersCount() const
-{
-    return m_orderedServerDescriptions.size();
-}
-
-void ServersUiController::updateContainersModel()
-{
-    if (m_processedServerId.isEmpty()) {
-        return;
-    }
-    const QMap<DockerContainer, ContainerConfig> containers =
-            m_serversController->getServerContainersMap(m_processedServerId);
-    m_containersModel->updateModel(containers);
-}
-
-void ServersUiController::updateDefaultServerContainersModel()
-{
-    const QString defaultServerId = m_serversController->getDefaultServerId();
-    if (defaultServerId.isEmpty()) {
-        return;
-    }
-    const QMap<DockerContainer, ContainerConfig> containers =
-            m_serversController->getServerContainersMap(defaultServerId);
-    m_defaultServerContainersModel->updateModel(containers);
-}
-
-QStringList ServersUiController::getAllInstalledServicesName(int serverIndex) const
-{
-    QStringList servicesName;
-    const QString serverId = getServerId(serverIndex);
-    const QMap<DockerContainer, ContainerConfig> containers = m_serversController->getServerContainersMap(serverId);
-
-    for (auto it = containers.begin(); it != containers.end(); ++it) {
-        DockerContainer container = it.key();
-        if (ContainerUtils::containerService(container) == ServiceType::Other) {
-            if (container == DockerContainer::Dns) {
-                servicesName.append("DNS");
-            } else if (container == DockerContainer::Sftp) {
-                servicesName.append("SFTP");
-            } else if (container == DockerContainer::Socks5Proxy) {
-                servicesName.append("SOCKS5");
-            } else if (container == DockerContainer::MtProxy) {
-                servicesName.append("MTProxy");
-            } else if (container == DockerContainer::Telemt) {
-                servicesName.append("Telemt");
-            }
-        }
-    }
-    servicesName.sort();
-    return servicesName;
-}
-
-int ServersUiController::serverIndexForId(const QString &serverId) const
-{
-    return rowForServerId(m_orderedServerDescriptions, serverId);
-}
+QString ServersUiController::serverName(const QString &id) const { return description(id).serverName; }
+QString ServersUiController::serverHostName(const QString &id) const { return description(id).hostName; }
+QString ServersUiController::getProcessedServerId() const { return m_processedServerId; }
+QString ServersUiController::getServerId(int index) const { return index >= 0 && index < m_descriptions.size() ? m_descriptions.at(index).serverId : QString(); }
+int ServersUiController::getServerIndexById(const QString &id) const { for (int i = 0; i < m_descriptions.size(); ++i) if (m_descriptions.at(i).serverId == id) return i; return -1; }
+int ServersUiController::getServersCount() const { return m_descriptions.size(); }
+const ServerDescription &ServersUiController::description(const QString &id) const { for (const auto &item : m_descriptions) if (item.serverId == id) return item; return emptyDescription; }

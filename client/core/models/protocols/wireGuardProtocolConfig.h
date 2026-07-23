@@ -15,12 +15,10 @@ struct WireGuardServerConfig {
     QString subnetAddress;
     QString subnetMask;
     QString subnetCidr;
-    bool isThirdPartyConfig = false;
     
     QJsonObject toJson() const;
     static WireGuardServerConfig fromJson(const QJsonObject& json);
     
-    bool hasEqualServerSettings(const WireGuardServerConfig& other) const;
 };
 
 struct WireGuardClientConfig {
@@ -50,7 +48,6 @@ struct WireGuardProtocolConfig {
     
     bool hasClientConfig() const;
     void setClientConfig(const WireGuardClientConfig& config);
-    void clearClientConfig();
 };
 
 } // namespace caelispect

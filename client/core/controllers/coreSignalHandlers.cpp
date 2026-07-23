@@ -26,8 +26,6 @@
 #include "core/controllers/appSplitTunnelingController.h"
 #include "core/controllers/settingsController.h"
 #include "core/controllers/connectionController.h"
-#include "ui/models/containersModel.h"
-#include "core/utils/containerEnum.h"
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     #include "ui/utils/notificationHandler.h"

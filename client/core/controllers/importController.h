@@ -1,37 +1,26 @@
 #ifndef IMPORTCONTROLLER_H
 #define IMPORTCONTROLLER_H
 
-#include <QObject>
-#include <QJsonObject>
 #include <QByteArray>
+#include <QJsonObject>
 #include <QMap>
+#include <QObject>
 
-#include "core/repositories/secureServersRepository.h"
 #include "core/repositories/secureAppSettingsRepository.h"
+#include "core/repositories/secureServersRepository.h"
 #include "core/utils/errorCodes.h"
-#include "core/utils/routeModes.h"
-#include "core/utils/commonStructs.h"
 
 namespace
 {
-    enum class ConfigTypes {
-        Caelispect,
-        WireGuard,
-        Backup,
-        Invalid
-    };
+enum class ConfigTypes { WireGuard, Invalid };
 }
-
-using namespace caelispect;
 
 class ImportController : public QObject
 {
     Q_OBJECT
-
 public:
-    struct ImportResult
-    {
-        ErrorCode errorCode = ErrorCode::NoError;
+    struct ImportResult {
+        caelispect::ErrorCode errorCode = caelispect::ErrorCode::NoError;
         QJsonObject config;
         QString configFileName;
         QString maliciousWarningText;
@@ -39,9 +28,8 @@ public:
         bool isNativeWireGuardConfig = false;
     };
 
-    explicit ImportController(SecureServersRepository* serversRepository,
-                              SecureAppSettingsRepository* appSettingsRepository,
-                              QObject *parent = nullptr);
+    explicit ImportController(SecureServersRepository *serversRepository,
+                              SecureAppSettingsRepository *appSettingsRepository, QObject *parent = nullptr);
 
     struct QrParseResult {
         bool success = false;
@@ -52,28 +40,23 @@ public:
 
     ImportResult extractConfigFromData(const QString &data, const QString &configFileName = "");
     ImportResult extractConfigFromQr(const QByteArray &data);
-
     void startDecodingQr();
     QrParseResult parseQrCodeChunk(const QString &code);
     bool isQrDecodingActive() const;
     int qrChunksReceived() const;
     int qrChunksTotal() const;
-
     void importConfig(const QJsonObject &config);
 
 signals:
     void importFinished();
-    void importErrorOccurred(ErrorCode errorCode, bool goToPageHome);
-    void restoreAppConfig(const QByteArray &data);
+    void importErrorOccurred(caelispect::ErrorCode errorCode, bool goToPageHome);
 
 private:
-    ConfigTypes checkConfigFormat(const QString &config) const;
-    QJsonObject extractWireGuardConfig(const QString &data, ConfigTypes &configType) const;
-    void processCaelispectConfig(QJsonObject &config) const;
+    static ConfigTypes checkConfigFormat(const QString &config);
+    QJsonObject extractWireGuardConfig(const QString &data) const;
 
-    SecureServersRepository* m_serversRepository;
-    SecureAppSettingsRepository* m_appSettingsRepository;
-
+    SecureServersRepository *m_serversRepository;
+    SecureAppSettingsRepository *m_appSettingsRepository;
     QMap<int, QByteArray> m_qrCodeChunks;
     bool m_isQrCodeProcessed = false;
     int m_totalQrCodeChunksCount = 0;

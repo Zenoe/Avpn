@@ -3,9 +3,6 @@
 
 #include <QAbstractListModel>
 
-#include "core/utils/containerEnum.h"
-#include "core/utils/containers/containerUtils.h"
-#include "core/utils/protocolEnum.h"
 #include "core/models/protocols/wireGuardProtocolConfig.h"
 
 class WireGuardConfigModel : public QAbstractListModel
@@ -27,21 +24,15 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 public slots:
-    void updateModel(caelispect::DockerContainer container, const caelispect::WireGuardProtocolConfig &protocolConfig);
-    caelispect::WireGuardProtocolConfig getProtocolConfig();
-
-    bool isServerSettingsEqual();
+    void updateModel(const caelispect::WireGuardClientConfig &config);
+    caelispect::WireGuardClientConfig getConfig() const;
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    caelispect::DockerContainer m_container;
-    caelispect::WireGuardProtocolConfig m_protocolConfig;
-    caelispect::WireGuardProtocolConfig m_originalProtocolConfig;
-    
-    void applyDefaultsToServerConfig(caelispect::WireGuardServerConfig& config);
-    void applyDefaultsToClientConfig(caelispect::WireGuardClientConfig& config);
+    caelispect::WireGuardClientConfig m_config;
+    void applyDefaults(caelispect::WireGuardClientConfig &config);
 };
 
 #endif // WIREGUARDCONFIGMODEL_H

@@ -23,7 +23,6 @@ namespace PageLoader
         PageSettingsServerProtocols,
         PageSettingsServerData,
         PageProtocolWireGuardClientSettings,
-        PageProtocolAwgClientSettings,
         PageSettingsConnection,
         PageSettingsDns,
         PageSettingsApplication,

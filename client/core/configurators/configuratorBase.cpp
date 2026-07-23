@@ -12,7 +12,7 @@ ConfiguratorBase::ConfiguratorBase(QObject *parent)
 QScopedPointer<ConfiguratorBase> ConfiguratorBase::create(Proto protocol)
 {
     switch (protocol) {
-    case Proto::WireGuard: return QScopedPointer<ConfiguratorBase>(new WireguardConfigurator(false));
+    case Proto::WireGuard: return QScopedPointer<ConfiguratorBase>(new WireguardConfigurator);
     default: return QScopedPointer<ConfiguratorBase>();
     }
 }

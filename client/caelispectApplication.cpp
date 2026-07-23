@@ -21,7 +21,6 @@
 #include "logger.h"
 #include "ui/controllers/qml/pageController.h"
 #include "ui/models/installedAppsModel.h"
-#include "ui/utils/mtProxyPublicHostInput.h"
 #include "version.h"
 
 #include "platforms/ios/QRCodeReaderBase.h"
@@ -213,27 +212,16 @@ void CaelispectApplication::registerTypes()
 {
     qRegisterMetaType<ServerCredentials>("ServerCredentials");
 
-    qRegisterMetaType<DockerContainer>("DockerContainer");
     using namespace caelispect::ProtocolEnumNS;
     qRegisterMetaType<TransportProto>("TransportProto");
     qRegisterMetaType<Proto>("Proto");
-    qRegisterMetaType<ServiceType>("ServiceType");
 
     qmlRegisterType<QRCodeReader>("QRCodeReader", 1, 0, "QRCodeReader");
-
-    m_containerProps.reset(new ContainerProps());
-    qmlRegisterSingletonInstance("ContainerProps", 1, 0, "ContainerProps", m_containerProps.get());
 
     m_protocolProps.reset(new ProtocolProps());
     qmlRegisterSingletonInstance("ProtocolProps", 1, 0, "ProtocolProps", m_protocolProps.get());
 
-    qmlRegisterSingletonType(QUrl("qrc:/ui/qml/Filters/ContainersModelFilters.qml"), "ContainersModelFilters", 1, 0,
-                             "ContainersModelFilters");
-
     qmlRegisterType<InstalledAppsModel>("InstalledAppsModel", 1, 0, "InstalledAppsModel");
-
-    qmlRegisterType<PublicHostInputValidator>("MtProxyConfig", 1, 0, "PublicHostInputValidator");
-    qmlRegisterType<PublicHostInputValidator>("TelemtConfig", 1, 0, "PublicHostInputValidator");
 
     caelispect::declareQmlProtocolEnum();
     Vpn::declareQmlVpnConnectionStateEnum();

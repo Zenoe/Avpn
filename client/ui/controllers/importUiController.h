@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "core/controllers/selfhosted/importController.h"
+#include "core/controllers/importController.h"
 
 class ImportUiController : public QObject
 {

@@ -100,16 +100,13 @@ QString VpnProtocol::vpnLocalAddress() const
     return m_vpnLocalAddress;
 }
 
-VpnProtocol *VpnProtocol::factory(DockerContainer container, const QJsonObject &configuration)
+VpnProtocol *VpnProtocol::factory(const QJsonObject &configuration)
 {
-    switch (container) {
 #if defined(Q_OS_WINDOWS) || defined(Q_OS_MACX) and !defined MACOS_NE || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
-    case DockerContainer::WireGuard: return new WireguardProtocol(configuration);
+    return new WireguardProtocol(configuration);
 #endif
-    default: return nullptr;
-    }
+    return nullptr;
 }
-
 QString VpnProtocol::routeGateway() const
 {
     return m_routeGateway;

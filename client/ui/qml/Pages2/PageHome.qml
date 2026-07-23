@@ -6,8 +6,6 @@ import Qt5Compat.GraphicalEffects
 import SortFilterProxyModel 0.2
 
 import PageEnum 1.0
-import ContainerProps 1.0
-import ContainersModelFilters 1.0
 import Style 1.0
 
 import "./"
@@ -18,8 +16,6 @@ import "../Components"
 
 PageType {
     id: root
-
-    property var containersDropDownRef: null
 
     Connections {
         target: Qt.application
@@ -43,9 +39,6 @@ PageType {
 
         function onRestorePageHomeState(isContainerInstalled) {
             drawer.openTriggered()
-            if (isContainerInstalled && root.containersDropDownRef) {
-                root.containersDropDownRef.rootButtonClickedFunction()
-            }
         }
     }
 
@@ -361,65 +354,9 @@ PageType {
                     spacing: 8
 
 
-                    DropDownType {
-                        id: containersDropDown
-                        objectName: "containersDropDown"
-
-                        Component.onCompleted: root.containersDropDownRef = containersDropDown
-
-                        rootButtonImageColor: CaelispectStyle.color.midnightBlack
-                        rootButtonBackgroundColor: CaelispectStyle.color.paleGray
-                        rootButtonBackgroundHoveredColor: CaelispectStyle.color.mistyGray
-                        rootButtonBackgroundPressedColor: CaelispectStyle.color.cloudyGray
-                        rootButtonHoveredBorderColor: CaelispectStyle.color.transparent
-                        rootButtonDefaultBorderColor: CaelispectStyle.color.transparent
-                        rootButtonTextTopMargin: 8
-                        rootButtonTextBottomMargin: 8
-
-                        enabled: drawer.isOpened
-
-                        text: ServersUiController.defaultServerDefaultContainerName
-                        textColor: CaelispectStyle.color.midnightBlack
-                        headerText: qsTr("VPN protocol")
-                        headerBackButtonImage: "qrc:/images/controls/arrow-left.svg"
-
-                        rootButtonClickedFunction: function() {
-                            containersDropDown.openTriggered()
-                        }
-
-                        drawerParent: root
-
-                        listView: HomeContainersListView {
-                            id: containersListView
-                            objectName: "containersListView"
-
-                            rootWidth: root.width
-
-                            Connections {
-                                objectName: "rowLayoutConnections"
-
-                                target: ServersUiController
-
-                                function onDefaultServerIdChanged() {
-                                    updateContainersModelFilters()
-                                }
-                            }
-
-                            function updateContainersModelFilters() {
-                                proxyDefaultServerContainersModel.filters = ContainersModelFilters.getReadAccessProtocolsListFilters()
-                            }
-
-                            model: SortFilterProxyModel {
-                                id: proxyDefaultServerContainersModel
-                                sourceModel: DefaultServerContainersModel
-
-                                sorters: [
-                                    RoleSorter { roleName: "isInstalled"; sortOrder: Qt.DescendingOrder }
-                                ]
-                            }
-
-                            Component.onCompleted: updateContainersModelFilters()
-                        }
+                    LabelTextType {
+                        text: "WireGuard"
+                        color: CaelispectStyle.color.midnightBlack
                     }
                 }
 

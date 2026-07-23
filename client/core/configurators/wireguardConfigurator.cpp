@@ -7,8 +7,8 @@
 
 using namespace caelispect;
 
-WireguardConfigurator::WireguardConfigurator(bool isAwg, QObject *parent)
-    : ConfiguratorBase(parent), m_isAwg(isAwg)
+WireguardConfigurator::WireguardConfigurator(QObject *parent)
+    : ConfiguratorBase(parent)
 {
 }
 

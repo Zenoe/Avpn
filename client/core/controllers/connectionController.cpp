@@ -1,33 +1,20 @@
 #include "connectionController.h"
 
-#include <QJsonDocument>
-
 #include "core/configurators/configuratorBase.h"
-#include "core/utils/protocolEnum.h"
-#include "core/protocols/protocolUtils.h"
 #include "core/utils/constants/configKeys.h"
+#include "core/utils/constants/protocolConstants.h"
 #include "core/utils/utilities.h"
-#include "core/utils/serverConfigUtils.h"
 #include "version.h"
-#include "core/utils/containerEnum.h"
-#include "core/utils/containers/containerUtils.h"
-#include "core/utils/protocolEnum.h"
-#include "core/models/containerConfig.h"
-#include "core/models/protocolConfig.h"
 
 using namespace caelispect;
-using namespace ProtocolUtils;
 
-ConnectionController::ConnectionController(SecureServersRepository* serversRepository,
-                                         SecureAppSettingsRepository* appSettingsRepository,
-                                         VpnConnection* vpnConnection,
-                                         QObject* parent)
-    : QObject(parent),
-      m_serversRepository(serversRepository),
-      m_appSettingsRepository(appSettingsRepository),
-      m_vpnConnection(vpnConnection)
+ConnectionController::ConnectionController(SecureServersRepository *serversRepository,
+                                           SecureAppSettingsRepository *appSettingsRepository,
+                                           VpnConnection *vpnConnection, QObject *parent)
+    : QObject(parent), m_serversRepository(serversRepository), m_appSettingsRepository(appSettingsRepository), m_vpnConnection(vpnConnection)
 {
-    connect(m_vpnConnection, &VpnConnection::connectionStateChanged, this, &ConnectionController::connectionStateChanged);
+    connect(m_vpnConnection, &VpnConnection::connectionStateChanged,
+            this, &ConnectionController::connectionStateChanged);
     connect(this, &ConnectionController::openConnectionRequested, m_vpnConnection, &VpnConnection::connectToVpn, Qt::QueuedConnection);
     connect(this, &ConnectionController::closeConnectionRequested, m_vpnConnection, &VpnConnection::disconnectFromVpn, Qt::QueuedConnection);
     connect(this, &ConnectionController::setConnectionStateRequested, m_vpnConnection, &VpnConnection::setConnectionState, Qt::QueuedConnection);
@@ -37,229 +24,53 @@ ConnectionController::ConnectionController(SecureServersRepository* serversRepos
 #endif
 }
 
-bool ConnectionController::isConnected() const
-{
-    return m_vpnConnection && m_vpnConnection->connectionState() == Vpn::ConnectionState::Connected;
-}
-
-void ConnectionController::setConnectionState(Vpn::ConnectionState state)
-{
-    if (m_vpnConnection) {
-        emit setConnectionStateRequested(state);
-    }
-}
-
-ErrorCode ConnectionController::defaultContainerForServer(const QString &serverId, DockerContainer &container) const
-{
-    const auto kind = m_serversRepository->serverKind(serverId);
-    switch (kind) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        const auto cfg = m_serversRepository->selfHostedAdminConfig(serverId);
-        if (!cfg.has_value()) {
-            return ErrorCode::InternalError;
-        }
-        container = cfg->defaultContainer;
-        return ErrorCode::NoError;
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        const auto cfg = m_serversRepository->selfHostedUserConfig(serverId);
-        if (!cfg.has_value()) {
-            return ErrorCode::InternalError;
-        }
-        container = cfg->defaultContainer;
-        return ErrorCode::NoError;
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        const auto cfg = m_serversRepository->nativeConfig(serverId);
-        if (!cfg.has_value()) {
-            return ErrorCode::InternalError;
-        }
-        container = cfg->defaultContainer;
-        return ErrorCode::NoError;
-    }
-    case serverConfigUtils::ConfigType::Invalid:
-    default:
-        return ErrorCode::InternalError;
-    }
-}
-
 ErrorCode ConnectionController::isConnectionSupported(const QString &serverId) const
 {
-    if (serverId.isEmpty()) {
-        return ErrorCode::InternalError;
-    }
-
-    if (!isServiceReady()) {
-        return ErrorCode::CaelispectServiceNotRunning;
-    }
-
-    const serverConfigUtils::ConfigType kind = m_serversRepository->serverKind(serverId);
-    DockerContainer container = DockerContainer::None;
-    const ErrorCode errorCode = defaultContainerForServer(serverId, container);
-    if (errorCode != ErrorCode::NoError) {
-        return errorCode;
-    }
-
-    if (container == DockerContainer::None) {
-        return ErrorCode::NoInstalledContainersError;
-    }
-
-    if (ContainerUtils::isUnsupportedContainer(container)) {
-        return ErrorCode::LegacyContainerNotSupportedError;
-    }
-
-    if (!isContainerSupported(container)) {
-        return ErrorCode::NotSupportedOnThisPlatform;
-    }
-
-    return ErrorCode::NoError;
+    if (serverId.isEmpty() || !m_serversRepository->wireGuardProfile(serverId)) return ErrorCode::InternalError;
+    return isServiceReady() ? ErrorCode::NoError : ErrorCode::CaelispectServiceNotRunning;
 }
 
-ErrorCode ConnectionController::prepareConnection(const QString &serverId,
-                                                 QJsonObject& vpnConfiguration,
-                                                 DockerContainer& container)
+ErrorCode ConnectionController::prepareConnection(const QString &serverId, QJsonObject &vpnConfiguration)
 {
-    ContainerConfig containerConfigModel;
-    QPair<QString, QString> dns;
-    QString hostName;
-    QString description;
-    int configVersion = 0;
-
-    const auto kind = m_serversRepository->serverKind(serverId);
-    const QString primaryDns = m_appSettingsRepository->primaryDns();
-    const QString secondaryDns = m_appSettingsRepository->secondaryDns();
-    switch (kind) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        const auto cfg = m_serversRepository->selfHostedAdminConfig(serverId);
-        if (!cfg.has_value()) return ErrorCode::InternalError;
-        container = cfg->defaultContainer;
-        containerConfigModel = cfg->containerConfig(container);
-        dns = cfg->getDnsPair(m_appSettingsRepository->useCaelispectDns(), primaryDns, secondaryDns);
-        hostName = cfg->hostName;
-        description = cfg->description;
-        break;
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        const auto cfg = m_serversRepository->selfHostedUserConfig(serverId);
-        if (!cfg.has_value()) return ErrorCode::InternalError;
-        container = cfg->defaultContainer;
-        containerConfigModel = cfg->containerConfig(container);
-        dns = cfg->getDnsPair(primaryDns, secondaryDns);
-        hostName = cfg->hostName;
-        description = cfg->description;
-        break;
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        const auto cfg = m_serversRepository->nativeConfig(serverId);
-        if (!cfg.has_value()) return ErrorCode::InternalError;
-        container = cfg->defaultContainer;
-        containerConfigModel = cfg->containerConfig(container);
-        dns = cfg->getDnsPair(primaryDns, secondaryDns);
-        hostName = cfg->hostName;
-        description = cfg->description;
-        break;
-    }
-    case serverConfigUtils::ConfigType::Invalid:
-    default:
-        return ErrorCode::InternalError;
-    }
-
-    vpnConfiguration = createConnectionConfiguration(dns, hostName, description, configVersion,
-                                                     containerConfigModel, container);
-
+    const auto profile = m_serversRepository->wireGuardProfile(serverId);
+    if (!profile) return ErrorCode::InternalError;
+    const auto dns = profile->dnsPair(m_appSettingsRepository->primaryDns(), m_appSettingsRepository->secondaryDns());
+    WireGuardProtocolConfig protocol;
+    protocol.serverConfig.port = QString::number(profile->config.port);
+    protocol.serverConfig.transportProto = QStringLiteral("udp");
+    protocol.clientConfig = profile->config;
+    ConnectionSettings settings = { { dns.first, dns.second }, false,
+                                    { m_appSettingsRepository->isSitesSplitTunnelingEnabled(), m_appSettingsRepository->routeMode() } };
+    const ProtocolConfig processed = ConfiguratorBase::create(Proto::WireGuard)->processConfigWithLocalSettings(settings, protocol);
+    QJsonObject config = processed.getClientConfigJson();
+    if (config.value(configKey::mtu).toString().isEmpty()) config[configKey::mtu] = protocols::wireguard::defaultMtu;
+    vpnConfiguration[ProtocolUtils::key_proto_config_data(Proto::WireGuard)] = config;
+    vpnConfiguration[configKey::vpnProto] = ProtocolUtils::protoToString(Proto::WireGuard);
+    vpnConfiguration[configKey::dns1] = dns.first;
+    vpnConfiguration[configKey::dns2] = dns.second;
+    vpnConfiguration[configKey::hostName] = profile->hostName;
+    vpnConfiguration[configKey::description] = profile->displayName();
     return ErrorCode::NoError;
 }
 
 ErrorCode ConnectionController::openConnection(const QString &serverId)
 {
-    QJsonObject vpnConfiguration;
-    DockerContainer container;
-
-    ErrorCode errorCode = prepareConnection(serverId, vpnConfiguration, container);
-    if (errorCode != ErrorCode::NoError) {
-        return errorCode;
-    }
-
-    emit openConnectionRequested(serverId, container, vpnConfiguration);
-    return ErrorCode::NoError;
+    const ErrorCode supported = isConnectionSupported(serverId);
+    if (supported != ErrorCode::NoError) return supported;
+    QJsonObject config;
+    const ErrorCode result = prepareConnection(serverId, config);
+    if (result == ErrorCode::NoError) emit openConnectionRequested(serverId, config);
+    return result;
 }
 
-void ConnectionController::closeConnection()
-{
-    if (m_vpnConnection) {
-        emit closeConnectionRequested();
-    }
-}
-
+void ConnectionController::closeConnection() { emit closeConnectionRequested(); }
 #ifdef Q_OS_ANDROID
-void ConnectionController::restoreConnection()
-{
-    if (m_vpnConnection) {
-        emit restoreConnectionRequested();
-    }
-}
+void ConnectionController::restoreConnection() { emit restoreConnectionRequested(); }
 #endif
-
-void ConnectionController::onKillSwitchModeChanged(bool enabled)
-{
-    if (m_vpnConnection) {
-        emit killSwitchModeChangedRequested(enabled);
-    }
-}
-
-ErrorCode ConnectionController::lastConnectionError() const
-{
-    return m_vpnConnection->lastError();
-}
-
-QJsonObject ConnectionController::createConnectionConfiguration(const QPair<QString, QString> &dns,
-                                                              const QString &hostName,
-                                                              const QString &description,
-                                                              int configVersion,
-                                                              const ContainerConfig &containerConfig,
-                                                              DockerContainer container)
-{
-    QJsonObject vpnConfiguration {};
-
-    if (ContainerUtils::containerService(container) == ServiceType::Other) {
-        return vpnConfiguration;
-    }
-
-    Proto proto = ContainerUtils::defaultProtocol(container);
-
-    ConnectionSettings connectionSettings = {
-        { dns.first, dns.second },
-        false,
-        {
-            m_appSettingsRepository->isSitesSplitTunnelingEnabled(),
-            m_appSettingsRepository->routeMode()
-        }
-    };
-
-    auto configurator = ConfiguratorBase::create(proto);
-    ProtocolConfig processedConfig = configurator->processConfigWithLocalSettings(connectionSettings,
-                                                                                  containerConfig.protocolConfig);
-
-    QJsonObject vpnConfigData = processedConfig.getClientConfigJson();
-    if (container == DockerContainer::WireGuard) {
-        if (vpnConfigData[configKey::mtu].toString().isEmpty()) {
-            vpnConfigData[configKey::mtu] = protocols::wireguard::defaultMtu;
-        }
-    }
-
-    vpnConfiguration.insert(ProtocolUtils::key_proto_config_data(proto), vpnConfigData);
-    vpnConfiguration[configKey::vpnProto] = ProtocolUtils::protoToString(proto);
-
-    vpnConfiguration[configKey::dns1] = dns.first;
-    vpnConfiguration[configKey::dns2] = dns.second;
-
-    vpnConfiguration[configKey::hostName] = hostName;
-    vpnConfiguration[configKey::description] = description;
-    vpnConfiguration[configKey::configVersion] = configVersion;
-
-    return vpnConfiguration;
-}
-
+void ConnectionController::onKillSwitchModeChanged(bool enabled) { emit killSwitchModeChangedRequested(enabled); }
+ErrorCode ConnectionController::lastConnectionError() const { return m_vpnConnection->lastError(); }
+bool ConnectionController::isConnected() const { return m_vpnConnection->connectionState() == Vpn::ConnectionState::Connected; }
+void ConnectionController::setConnectionState(Vpn::ConnectionState state) { emit setConnectionStateRequested(state); }
 bool ConnectionController::isServiceReady() const
 {
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(MACOS_NE)
@@ -267,9 +78,4 @@ bool ConnectionController::isServiceReady() const
 #else
     return true;
 #endif
-}
-
-bool ConnectionController::isContainerSupported(DockerContainer container) const
-{
-    return ContainerUtils::isSupportedByCurrentPlatform(container);
 }

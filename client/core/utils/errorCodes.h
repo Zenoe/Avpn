@@ -19,68 +19,22 @@ namespace caelispect
         CaelispectServiceNotRunning = 103,
         NotSupportedOnThisPlatform = 104,
 
-        // Server errors
-        ServerCheckFailed = 200,
-        ServerPortAlreadyAllocatedError = 201,
-        ServerContainerMissingError = 202,
-        ServerDockerFailedError = 203,
-        ServerCancelInstallation = 204,
-        ServerUserNotInSudo = 205,
-        ServerPacketManagerError = 206,
-        ServerSudoPackageIsNotPreinstalled = 207,
-        ServerUserDirectoryNotAccessible = 208,
-        ServerUserNotAllowedInSudoers = 209,
-        ServerUserPasswordRequired = 210,
-        ServerDockerOnCgroupsV2 = 211,
-        ServerCgroupMountpoint = 212,
-        DockerPullRateLimit = 213,
-        ServerLinuxKernelTooOld = 214,
-        ServerContainerRuntimeNotSupported = 218,
-        ContainerRuntimeServiceNotRunning = 219,
-
-        // Ssh connection errors
-        SshRequestDeniedError = 300,
-        SshInterruptedError = 301,
-        SshInternalError = 302,
-        SshPrivateKeyError = 303,
-        SshPrivateKeyFormatError = 304,
-        SshTimeoutError = 305,
-
-        // Ssh scp errors
-        SshScpFailureError = 400,
-
-        // Distro errors
-        CaelispectServiceConnectionFailed = 603,
-        ExecutableMissing = 604,
-
-        // VPN errors
-        AddressPoolError = 703,
-
-        // 3rd party utils errors
-        OpenSslFailed = 800,
-
-        // import and install errors
+        // Import errors
         ImportInvalidConfigError = 900,
         ImportOpenConfigError = 901,
-        NoInstalledContainersError = 902,
         ImportBackupFileUseRestoreInstead = 903,
         RestoreBackupInvalidError = 904,
-        LegacyContainerNotSupportedError = 906,
 
         // Android errors
         AndroidError = 1000,
 
         // Api errors
         ApiConfigDownloadError = 1100,
-        ApiConfigAlreadyAdded = 1101,
-        ApiConfigEmptyError = 1102,
         ApiConfigTimeoutError = 1103,
         ApiConfigSslError = 1104,
         ApiMissingAgwPublicKey = 1105,
         ApiConfigDecryptionError = 1106,
-        ApiServicesMissingError = 1107,
         ApiNotFoundError = 1109,
-        ApiMigrationError = 1110,
         ApiUpdateRequestError = 1111,
         ApiRateLimitError = 1120,
 

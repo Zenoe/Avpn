@@ -6,9 +6,7 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/utils/errorCodes.h
     ${CLIENT_ROOT_DIR}/core/utils/routeModes.h
     ${CLIENT_ROOT_DIR}/core/utils/commonStructs.h
-    ${CLIENT_ROOT_DIR}/core/utils/containerEnum.h
     ${CLIENT_ROOT_DIR}/core/utils/protocolEnum.h
-    ${CLIENT_ROOT_DIR}/core/utils/containers/containerUtils.h
     ${CLIENT_ROOT_DIR}/core/protocols/protocolUtils.h
     ${CLIENT_ROOT_DIR}/core/utils/constants/configKeys.h
     ${CLIENT_ROOT_DIR}/core/utils/constants/protocolConstants.h
@@ -20,7 +18,7 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/controllers/coreSignalHandlers.h
     ${CLIENT_ROOT_DIR}/core/controllers/gatewayController.h
     ${CLIENT_ROOT_DIR}/core/controllers/serversController.h
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/importController.h
+    ${CLIENT_ROOT_DIR}/core/controllers/importController.h
     ${CLIENT_ROOT_DIR}/core/controllers/appSplitTunnelingController.h
     ${CLIENT_ROOT_DIR}/core/controllers/ipSplitTunnelingController.h
     ${CLIENT_ROOT_DIR}/core/controllers/allowedDnsController.h
@@ -30,9 +28,7 @@ set(HEADERS ${HEADERS}
     ${CLIENT_ROOT_DIR}/core/repositories/secureServersRepository.h
     ${CLIENT_ROOT_DIR}/core/repositories/secureAppSettingsRepository.h
     ${CLIENT_ROOT_DIR}/core/protocols/qmlRegisterProtocols.h
-    ${CLIENT_ROOT_DIR}/ui/utils/pages.h
     ${CLIENT_ROOT_DIR}/ui/utils/qAutoStart.h
-    ${CLIENT_ROOT_DIR}/ui/utils/mtProxyPublicHostInput.h
     ${CLIENT_ROOT_DIR}/core/protocols/vpnProtocol.h
     ${CMAKE_CURRENT_BINARY_DIR}/version.h
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.h
@@ -69,14 +65,13 @@ endif()
 set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/caelispectApplication.cpp
     ${CLIENT_ROOT_DIR}/core/utils/errorStrings.cpp
-    ${CLIENT_ROOT_DIR}/core/utils/containers/containerUtils.cpp
     ${CLIENT_ROOT_DIR}/core/protocols/protocolUtils.cpp
     ${CLIENT_ROOT_DIR}/core/utils/qrCodeUtils.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/coreController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/coreSignalHandlers.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/gatewayController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/serversController.cpp
-    ${CLIENT_ROOT_DIR}/core/controllers/selfhosted/importController.cpp
+    ${CLIENT_ROOT_DIR}/core/controllers/importController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/appSplitTunnelingController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/ipSplitTunnelingController.cpp
     ${CLIENT_ROOT_DIR}/core/controllers/allowedDnsController.cpp
@@ -86,7 +81,6 @@ set(SOURCES ${SOURCES}
     ${CLIENT_ROOT_DIR}/core/repositories/secureServersRepository.cpp
     ${CLIENT_ROOT_DIR}/core/repositories/secureAppSettingsRepository.cpp
     ${CLIENT_ROOT_DIR}/ui/utils/qAutoStart.cpp
-    ${CLIENT_ROOT_DIR}/ui/utils/mtProxyPublicHostInput.cpp
     ${CLIENT_ROOT_DIR}/core/protocols/vpnProtocol.cpp
     ${CLIENT_ROOT_DIR}/core/utils/networkUtilities.cpp
     ${CLIENT_ROOT_DIR}/../common/logger/logger.cpp

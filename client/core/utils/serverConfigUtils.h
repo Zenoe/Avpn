@@ -6,12 +6,7 @@
 namespace serverConfigUtils
 {
 
-enum ConfigType {
-    SelfHostedAdmin = 0,
-    SelfHostedUser,
-    Native,
-    Invalid
-};
+enum ConfigType { WireGuardProfile = 0, Invalid };
 
 ConfigType configTypeFromJson(const QJsonObject &serverConfigObject);
 

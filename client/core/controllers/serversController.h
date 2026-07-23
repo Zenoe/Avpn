@@ -1,69 +1,39 @@
 #ifndef SERVERSCONTROLLER_H
 #define SERVERSCONTROLLER_H
 
-#include <optional>
-
 #include <QObject>
 #include <QVector>
-#include <QMap>
+#include <optional>
 
-#include <QPair>
-
-#include "core/utils/containerEnum.h"
-#include "core/utils/containers/containerUtils.h"
-#include "core/utils/protocolEnum.h"
-#include "core/utils/errorCodes.h"
-#include "core/utils/routeModes.h"
-#include "core/utils/commonStructs.h"
-#include "core/repositories/secureServersRepository.h"
-#include "core/repositories/secureAppSettingsRepository.h"
-#include "core/models/containerConfig.h"
 #include "core/models/serverDescription.h"
-
-using namespace caelispect;
+#include "core/utils/errorCodes.h"
+#include "core/repositories/secureAppSettingsRepository.h"
+#include "core/repositories/secureServersRepository.h"
 
 class ServersController : public QObject
 {
     Q_OBJECT
-
 public:
-    explicit ServersController(SecureServersRepository* serversRepository, 
-                              SecureAppSettingsRepository* appSettingsRepository = nullptr,
-                              QObject *parent = nullptr);
-    ~ServersController() = default;
+    explicit ServersController(SecureServersRepository *serversRepository,
+                               SecureAppSettingsRepository *appSettingsRepository = nullptr, QObject *parent = nullptr);
 
-    // Server management
     bool renameServer(const QString &serverId, const QString &name);
     void removeServer(const QString &serverId);
     void setDefaultServer(const QString &serverId);
-
-    // Container management
-    void setDefaultContainer(const QString &serverId, DockerContainer container);
-
-    // Getters
-    QVector<ServerDescription> buildServerDescriptions(bool isCaelispectDnsEnabled) const;
+    QVector<caelispect::ServerDescription> buildServerDescriptions(bool) const;
     int getDefaultServerIndex() const;
     QString getDefaultServerId() const;
     int getServersCount() const;
     QString getServerId(int serverIndex) const;
     int indexOfServerId(const QString &serverId) const;
     QString notificationDisplayName(const QString &serverId) const;
-    std::optional<SelfHostedAdminServerConfig> selfHostedAdminConfig(const QString &serverId) const;
-    ServerCredentials getServerCredentials(const QString &serverId) const;
-    QMap<DockerContainer, ContainerConfig> getServerContainersMap(const QString &serverId) const;
-    DockerContainer getDefaultContainer(const QString &serverId) const;
-    ContainerConfig getContainerConfig(const QString &serverId, DockerContainer container) const;
-    ErrorCode updateClientConfig(const QString &serverId, DockerContainer container, const ContainerConfig &config);
-
-    // Validation
-    bool hasInstalledContainers(const QString &serverId) const;
+    std::optional<caelispect::WireGuardProfile> wireGuardProfile(const QString &serverId) const;
+    caelispect::ErrorCode updateWireGuardProfile(const QString &serverId, const caelispect::WireGuardProfile &profile);
 
 private:
     void ensureDefaultServerValid();
-
-    SecureServersRepository* m_serversRepository;
-    SecureAppSettingsRepository* m_appSettingsRepository;
+    SecureServersRepository *m_serversRepository;
+    SecureAppSettingsRepository *m_appSettingsRepository;
 };
 
 #endif // SERVERSCONTROLLER_H
-

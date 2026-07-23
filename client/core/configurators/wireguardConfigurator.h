@@ -14,7 +14,7 @@ class WireguardConfigurator : public ConfiguratorBase
 {
     Q_OBJECT
 public:
-    WireguardConfigurator(bool isAwg, QObject *parent = nullptr);
+    explicit WireguardConfigurator(QObject *parent = nullptr);
 
     struct ConnectionData
     {
@@ -34,8 +34,6 @@ public:
 
     static ConnectionData genClientKeys();
 
-private:
-    bool m_isAwg;
 };
 
 #endif // WIREGUARD_CONFIGURATOR_H

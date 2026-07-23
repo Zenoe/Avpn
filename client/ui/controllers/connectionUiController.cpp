@@ -1,5 +1,4 @@
 #include "connectionUiController.h"
-
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(MACOS_NE)
     #include <QGuiApplication>
 #else
@@ -8,8 +7,6 @@
 
 #include "caelispectApplication.h"
 #include "core/controllers/serversController.h"
-#include "core/models/containerConfig.h"
-#include "core/utils/containerEnum.h"
 
 ConnectionUiController::ConnectionUiController(ConnectionController* connectionController,
                                                 ServersController* serversController,
@@ -149,11 +146,6 @@ void ConnectionUiController::toggleConnection()
 
 void ConnectionUiController::notifyConnectionBlocked(ErrorCode errorCode)
 {
-    if (errorCode == ErrorCode::NoInstalledContainersError) {
-        emit noInstalledContainers();
-        return;
-    }
-
     emit connectionErrorOccurred(errorCode);
 }
 
@@ -165,33 +157,4 @@ bool ConnectionUiController::isConnectionInProgress() const
 bool ConnectionUiController::isConnected() const
 {
     return m_isConnected;
-}
-
-bool ConnectionUiController::isRevokeBlockedDuringActiveConnection(const QString &serverId, int containerIndex,
-                                                                   const QString &clientId) const
-{
-    if (clientId.isEmpty() || (!isConnected() && !isConnectionInProgress())) {
-        return false;
-    }
-
-    if (m_serversController->getDefaultServerId() != serverId) {
-        return false;
-    }
-
-    if (static_cast<int>(m_serversController->getDefaultContainer(serverId)) != containerIndex) {
-        return false;
-    }
-
-    const auto adminConfig = m_serversController->selfHostedAdminConfig(serverId);
-    if (!adminConfig.has_value()) {
-        return false;
-    }
-
-    const QString connectionClientId =
-            adminConfig->containerConfig(static_cast<DockerContainer>(containerIndex)).protocolConfig.clientId();
-    if (connectionClientId.isEmpty()) {
-        return false;
-    }
-
-    return connectionClientId == clientId || connectionClientId.contains(clientId);
 }

@@ -127,7 +127,7 @@ void Autostart::setAutostart(bool autostart) {
             stream << "Exec=" << appPath() << Qt::endl;
             stream << "Type=Application" << Qt::endl;
             stream << "Name=Caelispect" << Qt::endl;
-            stream << "Comment=Client of your self-hosted VPN" << Qt::endl;
+            stream << "Comment=WireGuard profile client" << Qt::endl;
             stream << "Icon=/usr/share/pixmaps/Caelispect.png" << Qt::endl;
             stream << "Categories=Network;Qt;Security;" << Qt::endl;
             stream << "Terminal=false" << Qt::endl;

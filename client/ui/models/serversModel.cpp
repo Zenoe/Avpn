@@ -3,17 +3,6 @@
 #include "core/models/serverDescription.h"
 
 #include <QHash>
-#include <QSet>
-#include <QJsonDocument>
-
-#include "core/utils/serverConfigUtils.h"
-#include "core/utils/networkUtilities.h"
-
-#if defined(Q_OS_IOS) || defined(MACOS_NE)
-    #include <Caelispect-Swift.h>
-#endif
-
-
 using namespace caelispect;
 
 namespace {
@@ -59,16 +48,8 @@ QVariant ServersModel::data(const QModelIndex &index, int role) const
         return row.hostName;
     case ServerIdRole:
         return row.serverId;
-    case CredentialsLoginRole:
-        return serverCredentials(index.row()).userName;
     case IsDefaultRole:
         return row.serverId == m_defaultServerId;
-    case HasWriteAccessRole:
-        return row.hasWriteAccess;
-    case DefaultContainerRole:
-        return QVariant::fromValue(row.defaultContainer);
-    case HasInstalledContainers:
-        return row.hasInstalledVpnContainers;
     }
 
     return QVariant();
@@ -118,22 +99,7 @@ QHash<int, QByteArray> ServersModel::roleNames() const
     roles[HostNameRole] = "hostName";
     roles[ServerIdRole] = "serverId";
 
-    roles[CredentialsLoginRole] = "credentialsLogin";
-
     roles[IsDefaultRole] = "isDefault";
-    roles[HasWriteAccessRole] = "hasWriteAccess";
-
-    roles[DefaultContainerRole] = "defaultContainer";
-    roles[HasInstalledContainers] = "hasInstalledContainers";
-
     return roles;
-}
-
-ServerCredentials ServersModel::serverCredentials(int index) const
-{
-    if (index < 0 || index >= m_descriptions.size()) {
-        return ServerCredentials();
-    }
-    return m_descriptions.at(index).selfHostedSshCredentials;
 }
 

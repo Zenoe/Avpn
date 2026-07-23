@@ -1,19 +1,9 @@
 #include "serversController.h"
-#include "core/utils/serverConfigUtils.h"
-#include "core/utils/protocolEnum.h"
-#include "core/protocols/protocolUtils.h"
-#include "core/utils/constants/configKeys.h"
-#include "core/models/containerConfig.h"
 
-#include "core/models/serverDescription.h"
-
-#if defined(Q_OS_IOS) || defined(MACOS_NE)
-    #include <Caelispect-Swift.h>
-#endif
-
+using namespace caelispect;
 
 ServersController::ServersController(SecureServersRepository *serversRepository,
-                                      SecureAppSettingsRepository *appSettingsRepository, QObject *parent)
+                                     SecureAppSettingsRepository *appSettingsRepository, QObject *parent)
     : QObject(parent), m_serversRepository(serversRepository), m_appSettingsRepository(appSettingsRepository)
 {
     ensureDefaultServerValid();
@@ -21,312 +11,55 @@ ServersController::ServersController(SecureServersRepository *serversRepository,
 
 void ServersController::ensureDefaultServerValid()
 {
-    if (!getServersCount()) {
-        return;
-    }
-
-    const QString defaultId = getDefaultServerId();
-    if (!defaultId.isEmpty() && indexOfServerId(defaultId) >= 0) {
-        return;
-    }
-
-    const QString firstId = getServerId(0);
-    if (!firstId.isEmpty()) {
-        setDefaultServer(firstId);
-    }
+    if (m_serversRepository->serversCount() && m_serversRepository->defaultServerId().isEmpty())
+        m_serversRepository->setDefaultServer(m_serversRepository->serverIdAt(0));
 }
 
 bool ServersController::renameServer(const QString &serverId, const QString &name)
 {
-    const serverConfigUtils::ConfigType kind = m_serversRepository->serverKind(serverId);
-    switch (kind) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        auto cfg = m_serversRepository->selfHostedAdminConfig(serverId);
-        if (!cfg.has_value()) return false;
-        cfg->description = name;
-        cfg->displayName = name;
-        m_serversRepository->editServer(serverId, cfg->toJson(), kind);
-        return true;
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        auto cfg = m_serversRepository->selfHostedUserConfig(serverId);
-        if (!cfg.has_value()) return false;
-        cfg->description = name;
-        cfg->displayName = name;
-        m_serversRepository->editServer(serverId, cfg->toJson(), kind);
-        return true;
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        auto cfg = m_serversRepository->nativeConfig(serverId);
-        if (!cfg.has_value()) return false;
-        cfg->description = name;
-        cfg->displayName = name;
-        m_serversRepository->editServer(serverId, cfg->toJson(), kind);
-        return true;
-    }
-    case serverConfigUtils::ConfigType::Invalid:
-    default:
-        return false;
-    }
+    auto profile = wireGuardProfile(serverId);
+    if (!profile) return false;
+    profile->description = name.trimmed();
+    m_serversRepository->editServer(serverId, profile->toJson(), serverConfigUtils::ConfigType::WireGuardProfile);
+    return true;
 }
 
-void ServersController::removeServer(const QString &serverId)
+void ServersController::removeServer(const QString &serverId) { m_serversRepository->removeServer(serverId); }
+void ServersController::setDefaultServer(const QString &serverId) { m_serversRepository->setDefaultServer(serverId); }
+
+QVector<ServerDescription> ServersController::buildServerDescriptions(bool) const
 {
-    m_serversRepository->removeServer(serverId);
+    QVector<ServerDescription> result;
+    for (const QString &id : m_serversRepository->orderedServerIds()) {
+        const auto profile = wireGuardProfile(id);
+        if (!profile) continue;
+        ServerDescription description = buildServerDescription(*profile);
+        description.serverId = id;
+        result.append(description);
+    }
+    return result;
 }
 
-void ServersController::setDefaultServer(const QString &serverId)
-{
-    m_serversRepository->setDefaultServer(serverId);
-}
-
-void ServersController::setDefaultContainer(const QString &serverId, DockerContainer container)
-{
-    const serverConfigUtils::ConfigType kind = m_serversRepository->serverKind(serverId);
-    switch (kind) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        auto cfg = m_serversRepository->selfHostedAdminConfig(serverId);
-        if (!cfg.has_value()) return;
-        cfg->defaultContainer = container;
-        m_serversRepository->editServer(serverId, cfg->toJson(), kind);
-        return;
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        auto cfg = m_serversRepository->selfHostedUserConfig(serverId);
-        if (!cfg.has_value()) return;
-        cfg->defaultContainer = container;
-        m_serversRepository->editServer(serverId, cfg->toJson(), kind);
-        return;
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        auto cfg = m_serversRepository->nativeConfig(serverId);
-        if (!cfg.has_value()) return;
-        cfg->defaultContainer = container;
-        m_serversRepository->editServer(serverId, cfg->toJson(), kind);
-        return;
-    }
-    case serverConfigUtils::ConfigType::Invalid:
-    default:
-        return;
-    }
-}
-
-QVector<ServerDescription> ServersController::buildServerDescriptions(bool isCaelispectDnsEnabled) const
-{
-    QVector<ServerDescription> out;
-    const QVector<QString> ids = m_serversRepository->orderedServerIds();
-    out.reserve(ids.size());
-
-    for (const QString &id : ids) {
-        ServerDescription d;
-        using Kind = serverConfigUtils::ConfigType;
-        const Kind kind = m_serversRepository->serverKind(id);
-        switch (kind) {
-        case Kind::SelfHostedAdmin: {
-            const auto cfg = m_serversRepository->selfHostedAdminConfig(id);
-            if (!cfg) {
-                continue;
-            }
-            d = buildServerDescription(*cfg, isCaelispectDnsEnabled);
-            break;
-        }
-        case Kind::SelfHostedUser: {
-            const auto cfg = m_serversRepository->selfHostedUserConfig(id);
-            if (!cfg) {
-                continue;
-            }
-            d = buildServerDescription(*cfg, isCaelispectDnsEnabled);
-            break;
-        }
-        case Kind::Native: {
-            const auto cfg = m_serversRepository->nativeConfig(id);
-            if (!cfg) {
-                continue;
-            }
-            d = buildServerDescription(*cfg, isCaelispectDnsEnabled);
-            break;
-        }
-        case Kind::Invalid:
-        default:
-            continue;
-        }
-
-        d.serverId = id;
-        out.append(d);
-    }
-    return out;
-}
-
-QMap<DockerContainer, ContainerConfig> ServersController::getServerContainersMap(const QString &serverId) const
-{
-    switch (m_serversRepository->serverKind(serverId)) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        const auto cfg = m_serversRepository->selfHostedAdminConfig(serverId);
-        return cfg.has_value() ? cfg->containers : QMap<DockerContainer, ContainerConfig>{};
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        const auto cfg = m_serversRepository->selfHostedUserConfig(serverId);
-        return cfg.has_value() ? cfg->containers : QMap<DockerContainer, ContainerConfig>{};
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        const auto cfg = m_serversRepository->nativeConfig(serverId);
-        return cfg.has_value() ? cfg->containers : QMap<DockerContainer, ContainerConfig>{};
-    }
-    case serverConfigUtils::ConfigType::Invalid:
-    default:
-        return {};
-    }
-}
-
-DockerContainer ServersController::getDefaultContainer(const QString &serverId) const
-{
-    switch (m_serversRepository->serverKind(serverId)) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        const auto cfg = m_serversRepository->selfHostedAdminConfig(serverId);
-        return cfg.has_value() ? cfg->defaultContainer : DockerContainer::None;
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        const auto cfg = m_serversRepository->selfHostedUserConfig(serverId);
-        return cfg.has_value() ? cfg->defaultContainer : DockerContainer::None;
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        const auto cfg = m_serversRepository->nativeConfig(serverId);
-        return cfg.has_value() ? cfg->defaultContainer : DockerContainer::None;
-    }
-    case serverConfigUtils::ConfigType::Invalid:
-    default:
-        return DockerContainer::None;
-    }
-}
-
-ContainerConfig ServersController::getContainerConfig(const QString &serverId, DockerContainer container) const
-{
-    return getServerContainersMap(serverId).value(container);
-}
-
-int ServersController::getDefaultServerIndex() const
-{
-    return m_serversRepository->defaultServerIndex();
-}
-
-QString ServersController::getDefaultServerId() const
-{
-    return m_serversRepository->defaultServerId();
-}
-
-int ServersController::getServersCount() const
-{
-    return m_serversRepository->serversCount();
-}
-
-QString ServersController::getServerId(int serverIndex) const
-{
-    return m_serversRepository->serverIdAt(serverIndex);
-}
-
-int ServersController::indexOfServerId(const QString &serverId) const
-{
-    return m_serversRepository->indexOfServerId(serverId);
-}
+int ServersController::getDefaultServerIndex() const { return m_serversRepository->defaultServerIndex(); }
+QString ServersController::getDefaultServerId() const { return m_serversRepository->defaultServerId(); }
+int ServersController::getServersCount() const { return m_serversRepository->serversCount(); }
+QString ServersController::getServerId(int index) const { return m_serversRepository->serverIdAt(index); }
+int ServersController::indexOfServerId(const QString &id) const { return m_serversRepository->indexOfServerId(id); }
 
 QString ServersController::notificationDisplayName(const QString &serverId) const
 {
-    if (serverId.isEmpty()) {
-        return {};
-    }
-
-    using Kind = serverConfigUtils::ConfigType;
-    switch (m_serversRepository->serverKind(serverId)) {
-    case Kind::SelfHostedAdmin: {
-        if (const auto cfg = m_serversRepository->selfHostedAdminConfig(serverId)) {
-            if (!cfg->displayName.isEmpty()) {
-                return cfg->displayName;
-            }
-        }
-        break;
-    }
-    case Kind::SelfHostedUser: {
-        if (const auto cfg = m_serversRepository->selfHostedUserConfig(serverId)) {
-            if (!cfg->displayName.isEmpty()) {
-                return cfg->displayName;
-            }
-        }
-        break;
-    }
-    case Kind::Native: {
-        if (const auto cfg = m_serversRepository->nativeConfig(serverId)) {
-            if (!cfg->displayName.isEmpty()) {
-                return cfg->displayName;
-            }
-        }
-        break;
-    }
-    default:
-        break;
-    }
-
-    const int idx = indexOfServerId(serverId);
-    if (idx >= 0) {
-        return QString::number(idx + 1);
-    }
-    return serverId;
+    const auto profile = wireGuardProfile(serverId);
+    return profile ? profile->displayName() : QString();
 }
 
-std::optional<SelfHostedAdminServerConfig> ServersController::selfHostedAdminConfig(const QString &serverId) const
+std::optional<WireGuardProfile> ServersController::wireGuardProfile(const QString &serverId) const
 {
-    return m_serversRepository->selfHostedAdminConfig(serverId);
+    return m_serversRepository->wireGuardProfile(serverId);
 }
 
-ServerCredentials ServersController::getServerCredentials(const QString &serverId) const
+ErrorCode ServersController::updateWireGuardProfile(const QString &serverId, const WireGuardProfile &profile)
 {
-    const auto cfg = m_serversRepository->selfHostedAdminConfig(serverId);
-    if (cfg.has_value()) {
-        const ServerCredentials creds = cfg->credentials();
-        if (creds.isValid()) {
-            return creds;
-        }
-    }
-    return ServerCredentials {};
-}
-
-ErrorCode ServersController::updateClientConfig(const QString &serverId, DockerContainer container,
-                                                const ContainerConfig &newConfig)
-{
-    switch (m_serversRepository->serverKind(serverId)) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        auto config = m_serversRepository->selfHostedAdminConfig(serverId);
-        if (!config) return ErrorCode::InternalError;
-        config->updateContainerConfig(container, newConfig);
-        m_serversRepository->editServer(serverId, config->toJson(), serverConfigUtils::ConfigType::SelfHostedAdmin);
-        return ErrorCode::NoError;
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        auto config = m_serversRepository->selfHostedUserConfig(serverId);
-        if (!config) return ErrorCode::InternalError;
-        config->updateContainerConfig(container, newConfig);
-        m_serversRepository->editServer(serverId, config->toJson(), serverConfigUtils::ConfigType::SelfHostedUser);
-        return ErrorCode::NoError;
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        auto config = m_serversRepository->nativeConfig(serverId);
-        if (!config) return ErrorCode::InternalError;
-        config->updateContainerConfig(container, newConfig);
-        m_serversRepository->editServer(serverId, config->toJson(), serverConfigUtils::ConfigType::Native);
-        return ErrorCode::NoError;
-    }
-    default: return ErrorCode::InternalError;
-    }
-}
-
-bool ServersController::hasInstalledContainers(const QString &serverId) const
-{
-    const QMap<DockerContainer, ContainerConfig> containers = getServerContainersMap(serverId);
-
-    for (auto it = containers.begin(); it != containers.end(); ++it) {
-        DockerContainer container = it.key();
-        if (ContainerUtils::containerService(container) == ServiceType::Vpn) {
-            return true;
-        }
-    }
-    return false;
+    if (!wireGuardProfile(serverId)) return ErrorCode::InternalError;
+    m_serversRepository->editServer(serverId, profile.toJson(), serverConfigUtils::ConfigType::WireGuardProfile);
+    return ErrorCode::NoError;
 }

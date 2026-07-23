@@ -4,7 +4,6 @@
 #include <QAbstractListModel>
 #include <QVector>
 
-#include "core/utils/commonStructs.h"
 #include "core/models/serverDescription.h"
 
 class ServersModel : public QAbstractListModel
@@ -17,15 +16,7 @@ public:
         HostNameRole,
         ServerIdRole,
 
-        CredentialsLoginRole,
-
         IsDefaultRole,
-
-        HasWriteAccessRole,
-
-        DefaultContainerRole,
-
-        HasInstalledContainers,
 
     };
 
@@ -44,8 +35,6 @@ protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    caelispect::ServerCredentials serverCredentials(int index) const;
-
     QVector<caelispect::ServerDescription> m_descriptions;
 
     QString m_defaultServerId;

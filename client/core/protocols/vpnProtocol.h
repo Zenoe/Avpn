@@ -9,8 +9,6 @@
 #include "core/utils/errorCodes.h"
 #include "core/utils/routeModes.h"
 #include "core/utils/commonStructs.h"
-#include "core/utils/containerEnum.h"
-#include "core/utils/containers/containerUtils.h"
 #include "core/utils/protocolEnum.h"
 
 using namespace caelispect;
@@ -70,7 +68,7 @@ public:
     QString vpnGateway() const;
     QString vpnLocalAddress() const;
 
-    static VpnProtocol* factory(caelispect::DockerContainer container, const QJsonObject &configuration);
+    static VpnProtocol* factory(const QJsonObject &configuration);
 
 signals:
     void bytesChanged(quint64 receivedBytes, quint64 sentBytes);

@@ -29,7 +29,6 @@
 #endif
 
 #include "core/utils/networkUtilities.h"
-#include "core/utils/serverConfigUtils.h"
 #include "vpnConnection.h"
 
 using namespace ProtocolUtils;
@@ -74,35 +73,6 @@ void VpnConnection::onConnectionStateChanged(Vpn::ConnectionState state)
         return;
     }
 
-    const QString defaultServerId = m_serversRepository->defaultServerId();
-    DockerContainer container = DockerContainer::None;
-    switch (m_serversRepository->serverKind(defaultServerId)) {
-    case serverConfigUtils::ConfigType::SelfHostedAdmin: {
-        const auto cfg = m_serversRepository->selfHostedAdminConfig(defaultServerId);
-        if (cfg.has_value()) {
-            container = cfg->defaultContainer;
-        }
-        break;
-    }
-    case serverConfigUtils::ConfigType::SelfHostedUser: {
-        const auto cfg = m_serversRepository->selfHostedUserConfig(defaultServerId);
-        if (cfg.has_value()) {
-            container = cfg->defaultContainer;
-        }
-        break;
-    }
-    case serverConfigUtils::ConfigType::Native: {
-        const auto cfg = m_serversRepository->nativeConfig(defaultServerId);
-        if (cfg.has_value()) {
-            container = cfg->defaultContainer;
-        }
-        break;
-    }
-    case serverConfigUtils::ConfigType::Invalid:
-    default:
-        break;
-    }
-
     IpcClient::withInterface([&](QSharedPointer<IpcInterfaceReplica> iface) {
         switch (state) {
             case Vpn::ConnectionState::Connected: {
@@ -114,36 +84,6 @@ void VpnConnection::onConnectionStateChanged(Vpn::ConnectionState state)
                 else
                     qWarning() << "VpnConnection::onConnectionStateChanged: Failed to flush DNS";
 
-                if (container != DockerContainer::WireGuard) {
-                    QString dns1 = m_vpnConfiguration.value(configKey::dns1).toString();
-                    QString dns2 = m_vpnConfiguration.value(configKey::dns2).toString();
-
-#ifdef Q_OS_MACOS
-                    if (!m_appSettingsRepository->isSitesSplitTunnelingEnabled() || m_appSettingsRepository->routeMode() != caelispect::RouteMode::VpnAllExceptSites) {
-                        iface->routeAddList(m_vpnProtocol->vpnGateway(), QStringList() << dns1 << dns2);
-                    }
-#else
-                    iface->routeAddList(m_vpnProtocol->vpnGateway(), QStringList() << dns1 << dns2);
-#endif
-
-                    if (m_appSettingsRepository->isSitesSplitTunnelingEnabled()) {
-                        iface->routeDeleteList(m_vpnProtocol->vpnGateway(), QStringList() << "0.0.0.0");
-                        RouteMode routeMode = m_appSettingsRepository->routeMode();
-                        if (routeMode == caelispect::RouteMode::VpnOnlyForwardSites) {
-                            QTimer::singleShot(1000, m_vpnProtocol.data(),
-                                               [this, routeMode]() { addSitesRoutes(m_vpnProtocol->vpnGateway(), routeMode); });
-                        } else if (routeMode == caelispect::RouteMode::VpnAllExceptSites) {
-                            iface->routeAddList(m_vpnProtocol->vpnGateway(), QStringList() << "0.0.0.0/1");
-                            iface->routeAddList(m_vpnProtocol->vpnGateway(), QStringList() << "128.0.0.0/1");
-
-                            iface->routeAddList(m_vpnProtocol->routeGateway(), QStringList() << remoteAddress());
-#ifdef Q_OS_MACOS
-                            iface->routeAddList(m_vpnProtocol->routeGateway(), QStringList() << dns1 << dns2);
-#endif
-                            addSitesRoutes(m_vpnProtocol->routeGateway(), routeMode);
-                        }
-                    }
-                }
             } break;
             case Vpn::ConnectionState::Disconnected:
             case Vpn::ConnectionState::Error: {
@@ -176,71 +116,10 @@ void VpnConnection::onConnectionStateChanged(Vpn::ConnectionState state)
 #endif
 }
 
-const QString &VpnConnection::remoteAddress() const
-{
-    return m_remoteAddress;
-}
-
 void VpnConnection::setRepositories(SecureServersRepository* serversRepository, SecureAppSettingsRepository* appSettingsRepository)
 {
     m_serversRepository = serversRepository;
     m_appSettingsRepository = appSettingsRepository;
-}
-
-void VpnConnection::addSitesRoutes(const QString &gw, caelispect::RouteMode mode)
-{
-#ifdef CAELISPECT_DESKTOP
-    if (!m_appSettingsRepository) {
-        qCritical() << "VpnConnection::addSitesRoutes: repositories not initialized";
-        return;
-    }
-
-    QStringList ips;
-    QStringList sites;
-    const QVariantMap &m = m_appSettingsRepository->vpnSites(mode);
-    for (auto i = m.constBegin(); i != m.constEnd(); ++i) {
-        if (NetworkUtilities::checkIpSubnetFormat(i.key())) {
-            ips.append(i.key());
-        } else {
-            if (NetworkUtilities::checkIpSubnetFormat(i.value().toString())) {
-                ips.append(i.value().toString());
-            }
-            sites.append(i.key());
-        }
-    }
-    ips.removeDuplicates();
-
-    IpcClient::withInterface([&](QSharedPointer<IpcInterfaceReplica> iface) {
-        iface->routeAddList(gw, ips);
-    });
-
-    // re-resolve domains
-    for (const QString &site : sites) {
-        const auto &cbResolv = [this, site, gw, mode, ips](const QHostInfo &hostInfo) {
-            const QList<QHostAddress> &addresses = hostInfo.addresses();
-            QString ipv4Addr;
-            for (const QHostAddress &addr : hostInfo.addresses()) {
-                if (addr.protocol() == QAbstractSocket::NetworkLayerProtocol::IPv4Protocol) {
-                    const QString &ip = addr.toString();
-                    // qDebug() << "VpnConnection::addSitesRoutes updating site" << site << ip;
-                    if (!ips.contains(ip)) {
-                        IpcClient::withInterface([&gw, &ip](QSharedPointer<IpcInterfaceReplica> iface) {
-                            iface->routeAddList(gw, QStringList() << ip);
-                        });
-                        m_appSettingsRepository->addVpnSite(mode, site, ip);
-                    }
-                    IpcClient::withInterface([](QSharedPointer<IpcInterfaceReplica> iface) {
-                        auto reply = iface->flushDns();
-                        if (reply.waitForFinished() || !reply.returnValue())
-                            qWarning() << "VpnConnection::addSitesRoutes: Failed to flush DNS";
-                    });
-                    break;
-                }
-            }
-        };
-        QHostInfo::lookupHost(site, this, cbResolv);
-    }
-#endif
 }
 
 QSharedPointer<VpnProtocol> VpnConnection::vpnProtocol() const
@@ -273,7 +152,7 @@ Vpn::ConnectionState VpnConnection::connectionState() const
     return m_connectionState;
 }
 
-void VpnConnection::connectToVpn(const QString &serverId, DockerContainer container, const QJsonObject &vpnConfiguration)
+void VpnConnection::connectToVpn(const QString &serverId, const QJsonObject &vpnConfiguration)
 {
     if (!m_appSettingsRepository || !m_serversRepository) {
         qCritical() << "VpnConnection::connectToVpn: repositories not initialized";
@@ -281,12 +160,10 @@ void VpnConnection::connectToVpn(const QString &serverId, DockerContainer contai
         return;
     }
 
-    qDebug() << QString("Trying to connect to VPN, server id is %1, container is %2, route mode is")
+    qDebug() << QString("Trying to connect to WireGuard profile, server id is %1, route mode is")
                         .arg(serverId)
-                        .arg(ContainerUtils::containerToString(container))
              << m_appSettingsRepository->routeMode();
 
-    m_remoteAddress = NetworkUtilities::getIPAddress(vpnConfiguration.value(configKey::hostName).toString());
     setConnectionState(Vpn::ConnectionState::Connecting);
 
     m_vpnConfiguration = vpnConfiguration;
@@ -303,7 +180,7 @@ void VpnConnection::connectToVpn(const QString &serverId, DockerContainer contai
     appendSplitTunnelingConfig();
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(MACOS_NE)
-    m_vpnProtocol.reset(VpnProtocol::factory(container, m_vpnConfiguration));
+    m_vpnProtocol.reset(VpnProtocol::factory(m_vpnConfiguration));
     if (!m_vpnProtocol) {
         setConnectionState(Vpn::ConnectionState::Error);
         return;
@@ -315,8 +192,7 @@ void VpnConnection::connectToVpn(const QString &serverId, DockerContainer contai
 
     m_vpnProtocol.reset(androidVpnProtocol);
 #elif defined Q_OS_IOS || defined(MACOS_NE)
-    Proto proto = ContainerUtils::defaultProtocol(container);
-    IosController::Instance()->connectVpn(proto, m_vpnConfiguration);
+    IosController::Instance()->connectVpn(Proto::WireGuard, m_vpnConfiguration);
     connect(&m_checkTimer, &QTimer::timeout, IosController::Instance(), &IosController::checkStatus);
     return;
 #endif
@@ -361,55 +237,11 @@ void VpnConnection::appendSplitTunnelingConfig()
         return;
     }
 
-    bool allowSiteBasedSplitTunneling = true;
-
-    // this block is for old native configs and for old self-hosted configs
-    auto protocolName = m_vpnConfiguration.value(configKey::vpnProto).toString();
-    if (protocolName == ProtocolUtils::protoToString(Proto::WireGuard)) {
-        allowSiteBasedSplitTunneling = false;
-        auto configData = m_vpnConfiguration.value(protocolName + "_config_data").toObject();
-        if (configData.value(configKey::allowedIps).isString()) {
-            QJsonArray allowedIpsJsonArray = QJsonArray::fromStringList(configData.value(configKey::allowedIps).toString().split(", "));
-            configData.insert(configKey::allowedIps, allowedIpsJsonArray);
-            m_vpnConfiguration.insert(protocolName + "_config_data", configData);
-        } else if (configData.value(configKey::allowedIps).isUndefined()) {
-            auto nativeConfig = configData.value(configKey::config).toString();
-            auto nativeConfigLines = nativeConfig.split("\n");
-            for (auto &line : nativeConfigLines) {
-                if (line.contains("AllowedIPs")) {
-                    auto allowedIpsString = line.split(" = ");
-                    if (allowedIpsString.size() < 1) {
-                        break;
-                    }
-                    QJsonArray allowedIpsJsonArray = QJsonArray::fromStringList(allowedIpsString.at(1).split(", "));
-                    configData.insert(configKey::allowedIps, allowedIpsJsonArray);
-                    m_vpnConfiguration.insert(protocolName + "_config_data", configData);
-                    break;
-                }
-            }
-        }
-
-        if (configData.value(configKey::persistentKeepAlive).isUndefined()) {
-            auto nativeConfig = configData.value(configKey::config).toString();
-            auto nativeConfigLines = nativeConfig.split("\n");
-            for (auto &line : nativeConfigLines) {
-                if (line.contains("PersistentKeepalive")) {
-                    auto persistentKeepaliveString = line.split(" = ");
-                    if (persistentKeepaliveString.size() < 1) {
-                        break;
-                    }
-                    configData.insert(configKey::persistentKeepAlive, persistentKeepaliveString.at(1));
-                    m_vpnConfiguration.insert(protocolName + "_config_data", configData);
-                    break;
-                }
-            }
-        }
-
-        QJsonArray allowedIpsJsonArray = configData.value(configKey::allowedIps).toArray();
-        if (allowedIpsJsonArray.contains("0.0.0.0/0") && allowedIpsJsonArray.contains("::/0")) {
-            allowSiteBasedSplitTunneling = true;
-        }
-    }
+    const QString protocolName = ProtocolUtils::protoToString(Proto::WireGuard);
+    const QJsonObject configData = m_vpnConfiguration.value(protocolName + "_config_data").toObject();
+    const QJsonArray allowedIps = configData.value(configKey::allowedIps).toArray();
+    const bool allowSiteBasedSplitTunneling = allowedIps.contains(QStringLiteral("0.0.0.0/0"))
+            && allowedIps.contains(QStringLiteral("::/0"));
 
     caelispect::RouteMode routeMode = caelispect::RouteMode::VpnAllSites;
     QJsonArray sitesJsonArray;
@@ -570,12 +402,17 @@ void VpnConnection::shutdown()
 #endif
 }
 
-void VpnConnection::setConnectionState(Vpn::ConnectionState state) {
-    onConnectionStateChanged(state);
-
-    if (state == Vpn::Disconnected && m_connectionState == Vpn::Reconnecting)
+void VpnConnection::setConnectionState(Vpn::ConnectionState state)
+{
+    if (state == Vpn::ConnectionState::Disconnected
+        && m_connectionState == Vpn::ConnectionState::Reconnecting) {
         return;
+    }
+    if (state == m_connectionState) {
+        return;
+    }
 
     m_connectionState = state;
+    onConnectionStateChanged(state);
     emit connectionStateChanged(state);
 }

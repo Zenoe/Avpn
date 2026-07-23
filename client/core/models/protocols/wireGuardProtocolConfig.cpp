@@ -33,10 +33,6 @@ QJsonObject WireGuardServerConfig::toJson() const
         obj[configKey::subnetCidr] = subnetCidr;
     }
     
-    if (isThirdPartyConfig) {
-        obj[configKey::isThirdPartyConfig] = isThirdPartyConfig;
-    }
-    
     return obj;
 }
 
@@ -50,14 +46,7 @@ WireGuardServerConfig WireGuardServerConfig::fromJson(const QJsonObject& json)
     config.subnetMask = json.value(configKey::subnetMask).toString();
     config.subnetCidr = json.value(configKey::subnetCidr).toString();
     
-    config.isThirdPartyConfig = json.value(configKey::isThirdPartyConfig).toBool(false);
-    
     return config;
-}
-
-bool WireGuardServerConfig::hasEqualServerSettings(const WireGuardServerConfig& other) const
-{
-    return subnetAddress == other.subnetAddress && port == other.port;
 }
 
 QJsonObject WireGuardClientConfig::toJson() const
@@ -135,30 +124,14 @@ WireGuardClientConfig WireGuardClientConfig::fromJson(const QJsonObject& json)
 
 QJsonObject WireGuardProtocolConfig::toJson() const
 {
-    QJsonObject obj = serverConfig.toJson();
-    
-    if (clientConfig.has_value()) {
-        QJsonObject clientJson = clientConfig->toJson();
-        obj[configKey::lastConfig] = QString::fromUtf8(QJsonDocument(clientJson).toJson(QJsonDocument::Compact));
-    }
-    
-    return obj;
+    return clientConfig ? clientConfig->toJson() : QJsonObject();
 }
 
 WireGuardProtocolConfig WireGuardProtocolConfig::fromJson(const QJsonObject& json)
 {
     WireGuardProtocolConfig config;
     
-    config.serverConfig = WireGuardServerConfig::fromJson(json);
-    
-    QString lastConfigStr = json.value(configKey::lastConfig).toString();
-    if (!lastConfigStr.isEmpty()) {
-        QJsonDocument doc = QJsonDocument::fromJson(lastConfigStr.toUtf8());
-        if (doc.isObject()) {
-            config.clientConfig = WireGuardClientConfig::fromJson(doc.object());
-        }
-    }
-    
+    config.clientConfig = WireGuardClientConfig::fromJson(json);
     return config;
 }
 
@@ -170,11 +143,6 @@ bool WireGuardProtocolConfig::hasClientConfig() const
 void WireGuardProtocolConfig::setClientConfig(const WireGuardClientConfig& config)
 {
     clientConfig = config;
-}
-
-void WireGuardProtocolConfig::clearClientConfig()
-{
-    clientConfig.reset();
 }
 
 } // namespace caelispect

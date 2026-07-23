@@ -14,7 +14,7 @@
 #include "ui/controllers/connectionUiController.h"
 #include "ui/controllers/qml/focusController.h"
 #include "ui/controllers/importUiController.h"
-#include "core/controllers/selfhosted/importController.h"
+#include "core/controllers/importController.h"
 #include "ui/controllers/qml/pageController.h"
 #include "ui/controllers/settingsUiController.h"
 #include "ui/controllers/serversUiController.h"
@@ -37,16 +37,10 @@
 #include "secureQSettings.h"
 
 #include "ui/models/allowedDnsModel.h"
-#include "ui/models/containersModel.h"
 #include "ui/models/languageModel.h"
 #include "ui/models/appSplitTunnelingModel.h"
 #include "ui/models/protocols/wireguardConfigModel.h"
-#include "ui/models/protocolsModel.h"
 #include "ui/models/serversModel.h"
-#include "ui/models/services/sftpConfigModel.h"
-#include "ui/models/services/socks5ProxyConfigModel.h"
-#include "ui/models/services/mtProxyConfigModel.h"
-#include "ui/models/services/telemtConfigModel.h"
 
 #include "ui/models/ipSplitTunnelingModel.h"
 
@@ -76,7 +70,6 @@ protected:
     SecureServersRepository* serversRepositoryProtected() const { return m_serversRepository; }
     SecureAppSettingsRepository* appSettingsRepositoryProtected() const { return m_appSettingsRepository; }
     ServersModel* serversModelProtected() const { return m_serversModel; }
-    ContainersModel* containersModelProtected() const { return m_containersModel; }
     AllowedDnsModel* allowedDnsModelProtected() const { return m_allowedDnsModel; }
     AppSplitTunnelingModel* appSplitTunnelingModelProtected() const { return m_appSplitTunnelingModel; }
     IpSplitTunnelingModel* ipSplitTunnelingModelProtected() const { return m_ipSplitTunnelingModel; }
@@ -145,21 +138,14 @@ private:
     ConnectionController* m_connectionController;
     SettingsController* m_settingsController;
 
-    ContainersModel* m_containersModel;
-    ContainersModel* m_defaultServerContainersModel;
     ServersModel* m_serversModel;
     LanguageModel* m_languageModel;
-    ProtocolsModel* m_protocolsModel;
     IpSplitTunnelingModel* m_ipSplitTunnelingModel;
     AllowedDnsModel* m_allowedDnsModel;
     AppSplitTunnelingModel* m_appSplitTunnelingModel;
 
 
     WireGuardConfigModel* m_wireGuardConfigModel;
-    SftpConfigModel* m_sftpConfigModel;
-    Socks5ProxyConfigModel* m_socks5ConfigModel;
-    MtProxyConfigModel* m_mtProxyConfigModel;
-    TelemtConfigModel* m_telemtConfigModel;
 
     CoreSignalHandlers* m_signalHandlers;
 };

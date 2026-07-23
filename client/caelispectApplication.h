@@ -16,7 +16,6 @@
 #include "core/controllers/coreController.h"
 #include "secureQSettings.h"
 #include "vpnConnection.h"
-#include "ui/models/containerProps.h"
 #include "ui/models/protocolProps.h"
 
 #ifdef CAELISPECT_DESKTOP
@@ -65,7 +64,6 @@ private:
     QScopedPointer<spa::UiController> m_spaUiController;
 #endif
 
-    QSharedPointer<ContainerProps> m_containerProps;
     QSharedPointer<ProtocolProps> m_protocolProps;
 
     QCommandLineParser m_parser;

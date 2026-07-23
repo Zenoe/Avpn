@@ -5,7 +5,6 @@ import QtQuick.Layouts
 import SortFilterProxyModel 0.2
 
 import PageEnum 1.0
-import ProtocolEnum 1.0
 
 import "./"
 import "../Controls2"
@@ -123,12 +122,12 @@ PageType {
                     var noButtonText = qsTr("Cancel")
 
                     var yesButtonFunction = function() {
-                        if (ConnectionController.isConnected && ServersUiController.serverDefaultContainer(ServersUiController.defaultServerId) === ServersUiController.processedContainerIndex) {
+                        if (ConnectionController.isConnected && ServersUiController.defaultServerId === ServersUiController.processedServerId) {
                             PageController.showNotificationMessage(qsTr("Unable change settings while there is an active connection"))
                             return
                         }
 
-                            ServersUiController.saveClientProtocolSettings(ServersUiController.processedServerId, ServersUiController.processedContainerIndex, ProtocolEnum.WireGuard)
+                            ServersUiController.saveClientProtocolSettings(ServersUiController.processedServerId)
                     }
                     var noButtonFunction = function() {}
                     showQuestionDrawer(headerText, descriptionText, yesButtonText, noButtonText, yesButtonFunction, noButtonFunction)

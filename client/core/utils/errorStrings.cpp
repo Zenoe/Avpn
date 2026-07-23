@@ -14,64 +14,21 @@ QString errorString(ErrorCode code) {
     case(ErrorCode::CaelispectServiceNotRunning): errorMessage = QObject::tr("Background service is not running"); break;
     case(ErrorCode::NotSupportedOnThisPlatform): errorMessage = QObject::tr("The selected protocol is not supported on the current platform"); break;
 
-    // Server errors
-    case(ErrorCode::ServerCheckFailed): errorMessage = QObject::tr("Server check failed"); break;
-    case(ErrorCode::ServerPortAlreadyAllocatedError): errorMessage = QObject::tr("Server port already used. Check for another software"); break;
-    case(ErrorCode::ServerContainerMissingError): errorMessage = QObject::tr("Server error: Docker container missing"); break;
-    case(ErrorCode::ServerDockerFailedError): errorMessage = QObject::tr("Server error: Docker failed"); break;
-    case(ErrorCode::ServerCancelInstallation): errorMessage = QObject::tr("Installation canceled by user"); break;
-    case(ErrorCode::ServerUserNotInSudo): errorMessage = QObject::tr("The user is not a member of the sudo group"); break;
-    case(ErrorCode::ServerPacketManagerError): errorMessage = QObject::tr("Server error: Package manager error"); break;
-    case(ErrorCode::ServerSudoPackageIsNotPreinstalled): errorMessage = QObject::tr("The sudo package is not pre-installed on the server"); break;
-    case(ErrorCode::ServerUserDirectoryNotAccessible): errorMessage = QObject::tr("The server user's home directory is not accessible"); break;
-    case(ErrorCode::ServerUserNotAllowedInSudoers): errorMessage = QObject::tr("Action not allowed in sudoers"); break;
-    case(ErrorCode::ServerUserPasswordRequired): errorMessage = QObject::tr("The user's password is required"); break;
-    case(ErrorCode::ServerDockerOnCgroupsV2): errorMessage = QObject::tr("Docker error: runc doesn't work on cgroups v2"); break;
-    case(ErrorCode::ServerCgroupMountpoint): errorMessage = QObject::tr("Server error: cgroup mountpoint does not exist"); break;
-    case(ErrorCode::DockerPullRateLimit): errorMessage = QObject::tr("Docker error: The pull rate limit has been reached"); break;
-    case(ErrorCode::ServerLinuxKernelTooOld): errorMessage = QObject::tr("Server error: Linux kernel is too old"); break;
-    case(ErrorCode::ServerContainerRuntimeNotSupported): errorMessage = QObject::tr("Server error: The default container runtime available for installation on this server is not supported.\n Install Docker Engine on the server manually and try again."); break;
-    case(ErrorCode::ContainerRuntimeServiceNotRunning): errorMessage = QObject::tr("Container runtime error: The container runtime service is not running.\n Check the container runtime service on the server, or wait about a minute and try again."); break;
-
-    // Libssh errors
-    case(ErrorCode::SshRequestDeniedError): errorMessage = QObject::tr("SSH request was denied"); break;
-    case(ErrorCode::SshInterruptedError): errorMessage = QObject::tr("SSH request was interrupted"); break;
-    case(ErrorCode::SshInternalError): errorMessage = QObject::tr("SSH internal error"); break;
-    case(ErrorCode::SshPrivateKeyError): errorMessage = QObject::tr("Invalid private key or invalid passphrase entered"); break;
-    case(ErrorCode::SshPrivateKeyFormatError): errorMessage = QObject::tr("The selected private key format is not supported, use openssh ED25519 key types or PEM key types"); break;
-    case(ErrorCode::SshTimeoutError): errorMessage = QObject::tr("Timeout connecting to server"); break;
-
-    // Ssh scp errors
-    case(ErrorCode::SshScpFailureError): errorMessage = QObject::tr("SCP error: Generic failure"); break;
-
-    // Distro errors
-    case (ErrorCode::CaelispectServiceConnectionFailed): errorMessage = QObject::tr("Caelispect helper service error"); break;
-    case (ErrorCode::OpenSslFailed): errorMessage = QObject::tr("OpenSSL failed"); break;
-
-    // VPN errors
-    case (ErrorCode::AddressPoolError): errorMessage = QObject::tr("VPN pool error: no available addresses"); break;
-
-    case (ErrorCode::ImportInvalidConfigError): errorMessage = QObject::tr("The config does not contain any containers and credentials for connecting to the server"); break;
+    case (ErrorCode::ImportInvalidConfigError): errorMessage = QObject::tr("The file is not a valid WireGuard configuration"); break;
     case (ErrorCode::ImportBackupFileUseRestoreInstead): errorMessage = QObject::tr("Backup files cannot be imported here. Use 'Restore from backup' instead."); break;
     case (ErrorCode::RestoreBackupInvalidError): errorMessage = QObject::tr("Backup file is corrupted or has invalid format"); break;
-    case (ErrorCode::LegacyContainerNotSupportedError): errorMessage = QObject::tr("This protocol is no longer supported. Please select another protocol or remove this container from the server settings."); break;
     case (ErrorCode::ImportOpenConfigError): errorMessage = QObject::tr("Unable to open config file"); break;
-    case (ErrorCode::NoInstalledContainersError): errorMessage = QObject::tr("VPN Protocols is not installed.\n Please install VPN container at first"); break;
 
     // Android errors
     case (ErrorCode::AndroidError): errorMessage = QObject::tr("VPN connection error"); break;
 
     // Api errors
     case (ErrorCode::ApiConfigDownloadError): errorMessage = QObject::tr("Error when retrieving configuration from API"); break;
-    case (ErrorCode::ApiConfigAlreadyAdded): errorMessage = QObject::tr("This config has already been added to the application"); break;
-    case (ErrorCode::ApiConfigEmptyError): errorMessage = QObject::tr("In the response from the server, an empty config was received"); break;
     case (ErrorCode::ApiConfigSslError): errorMessage = QObject::tr("SSL error occurred"); break;
     case (ErrorCode::ApiConfigTimeoutError): errorMessage = QObject::tr("Server response timeout on api request"); break;
     case (ErrorCode::ApiMissingAgwPublicKey): errorMessage = QObject::tr("Missing AGW public key"); break;
     case (ErrorCode::ApiConfigDecryptionError): errorMessage = QObject::tr("Failed to decrypt response payload"); break;
-    case (ErrorCode::ApiServicesMissingError): errorMessage = QObject::tr("Missing list of available services"); break;
     case (ErrorCode::ApiNotFoundError): errorMessage = QObject::tr("Error when retrieving configuration from API"); break;
-    case (ErrorCode::ApiMigrationError): errorMessage = QObject::tr("A migration error has occurred. Please contact our technical support"); break;
     case (ErrorCode::ApiUpdateRequestError): errorMessage = QObject::tr("Please update the application to use this feature"); break;
     case (ErrorCode::ApiRateLimitError): errorMessage = QObject::tr("Too many requests. Please try again later"); break;
 

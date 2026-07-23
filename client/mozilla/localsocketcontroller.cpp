@@ -170,9 +170,10 @@ void LocalSocketController::activate(const QJsonObject &rawConfig) {
   QJsonArray jsAllowedIPAddesses;
 
   QJsonArray plainAllowedIP = wgConfig.value(caelispect::configKey::allowedIps).toArray();
-  QJsonArray defaultAllowedIP = { "0.0.0.0/0", "::/0" };
+  const bool isDefaultAllowedIP = plainAllowedIP.contains(QStringLiteral("0.0.0.0/0"))
+      && plainAllowedIP.contains(QStringLiteral("::/0"));
 
-  if (plainAllowedIP != defaultAllowedIP && !plainAllowedIP.isEmpty()) {
+  if (!isDefaultAllowedIP && !plainAllowedIP.isEmpty()) {
     // Use AllowedIP list from WG config because of higher priority
     for (auto v : plainAllowedIP) {
       QString ipRange = v.toString();

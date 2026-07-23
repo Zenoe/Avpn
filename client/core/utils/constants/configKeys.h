@@ -26,10 +26,6 @@ namespace caelispect
         constexpr QLatin1String configVersion("config_version");
 
 
-        constexpr QLatin1String containers("containers");
-        constexpr QLatin1String container("container");
-        constexpr QLatin1String defaultContainer("defaultContainer");
-
         constexpr QLatin1String vpnProto("protocol");
         constexpr QLatin1String protocol("protocol");
         constexpr QLatin1String protocols("protocols");
@@ -62,14 +58,7 @@ namespace caelispect
         constexpr QLatin1String additionalClientConfig("additional_client_config");
         constexpr QLatin1String additionalServerConfig("additional_server_config");
 
-        constexpr QLatin1String lastConfig("last_config");
-
-        constexpr QLatin1String isThirdPartyConfig("isThirdPartyConfig");
         constexpr QLatin1String wireguard("wireguard");
-        constexpr QLatin1String sftp("sftp");
-        constexpr QLatin1String socks5proxy("socks5proxy");
-        constexpr QLatin1String mtproxy("mtproxy");
-        constexpr QLatin1String telemt("telemt");
 
         constexpr QLatin1String splitTunnelSites("splitTunnelSites");
         constexpr QLatin1String splitTunnelType("splitTunnelType");
@@ -86,8 +75,6 @@ namespace caelispect
         constexpr QLatin1String clientId("clientId");
 
         constexpr QLatin1String nameOverriddenByUser("nameOverriddenByUser");
-
-        constexpr QLatin1String caelispectWireguard("caelispect-wireguard");
 
         constexpr QLatin1String clientName("clientName");
         constexpr QLatin1String userData("userData");

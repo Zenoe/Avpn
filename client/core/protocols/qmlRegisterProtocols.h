@@ -28,13 +28,6 @@ void declareQmlProtocolEnum() {
         "Error: only enums"
         );
 
-    qmlRegisterUncreatableMetaObject(
-        ProtocolEnumNS::staticMetaObject,
-        "ProtocolEnum",
-        1, 0,
-        "ServiceType",
-        "Error: only enums"
-        );
 }
 
 } // namespace caelispect

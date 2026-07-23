@@ -4,7 +4,7 @@
 #include <QTranslator>
 #include <QTimer>
 
-#include "core/controllers/selfhosted/importController.h"
+#include "core/controllers/importController.h"
 #include "core/controllers/coreSignalHandlers.h"
 #include "logger.h"
 #include "secureQSettings.h"
@@ -51,12 +51,6 @@ void CoreController::setQmlContextProperty(const QString &name, QObject *value)
 
 void CoreController::initModels()
 {
-    m_containersModel = new ContainersModel(this);
-    setQmlContextProperty("ContainersModel", m_containersModel);
-
-    m_defaultServerContainersModel = new ContainersModel(this);
-    setQmlContextProperty("DefaultServerContainersModel", m_defaultServerContainersModel);
-
     m_serversModel = new ServersModel(this);
     setQmlContextProperty("ServersModel", m_serversModel);
 
@@ -72,23 +66,8 @@ void CoreController::initModels()
     m_appSplitTunnelingModel = new AppSplitTunnelingModel(this);
     setQmlContextProperty("AppSplitTunnelingModel", m_appSplitTunnelingModel);
 
-    m_protocolsModel = new ProtocolsModel(this);
-    setQmlContextProperty("ProtocolsModel", m_protocolsModel);
-
     m_wireGuardConfigModel = new WireGuardConfigModel(this);
     setQmlContextProperty("WireGuardConfigModel", m_wireGuardConfigModel);
-
-    m_sftpConfigModel = new SftpConfigModel(this);
-    setQmlContextProperty("SftpConfigModel", m_sftpConfigModel);
-
-    m_socks5ConfigModel = new Socks5ProxyConfigModel(this);
-    setQmlContextProperty("Socks5ProxyConfigModel", m_socks5ConfigModel);
-
-    m_mtProxyConfigModel = new MtProxyConfigModel(this);
-    setQmlContextProperty("MtProxyConfigModel", m_mtProxyConfigModel);
-
-    m_telemtConfigModel = new TelemtConfigModel(this);
-    setQmlContextProperty("TelemtConfigModel", m_telemtConfigModel);
 
 }
 
@@ -137,8 +116,7 @@ void CoreController::initControllers()
     m_pageController = new PageController(m_serversController, m_settingsController, this);
     setQmlContextProperty("PageController", m_pageController);
 
-    m_serversUiController = new ServersUiController(m_serversController, m_settingsController, m_serversModel, m_containersModel,
-                                                    m_defaultServerContainersModel, m_protocolsModel,
+    m_serversUiController = new ServersUiController(m_serversController, m_settingsController, m_serversModel,
                                                     m_wireGuardConfigModel, this);
     setQmlContextProperty("ServersUiController", m_serversUiController);
 

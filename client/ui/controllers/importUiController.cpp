@@ -28,7 +28,6 @@ ImportUiController::ImportUiController(ImportController* importController, QObje
 
     connect(m_importController, &ImportController::importFinished, this, &ImportUiController::importFinished);
     connect(m_importController, &ImportController::importErrorOccurred, this, &ImportUiController::importErrorOccurred);
-    connect(m_importController, &ImportController::restoreAppConfig, this, &ImportUiController::restoreAppConfig);
 }
 
 bool ImportUiController::extractConfigFromFile(const QString &fileName)

@@ -2,7 +2,6 @@
     <qresource prefix="/ui/qml">
         <file>Components/ConnectButton.qml</file>
         <file>Components/ConnectionTypeSelectionDrawer.qml</file>
-        <file>Components/HomeContainersListView.qml</file>
         <file>Components/HomeSplitTunnelingDrawer.qml</file>
         <file>Components/InstalledAppsDrawer.qml</file>
         <file>Components/ChangelogDrawer.qml</file>
@@ -57,7 +56,6 @@
         <file>Controls2/TopCloseButtonType.qml</file>
         <file>Controls2/VerticalRadioButton.qml</file>
         <file>Controls2/WarningType.qml</file>
-        <file>Filters/ContainersModelFilters.qml</file>
         <file>main2.qml</file>
         <file>Modules/Style/CaelispectStyle.qml</file>
         <file>Modules/Style/qmldir</file>

@@ -40,16 +40,13 @@ public:
 
     QSharedPointer<VpnProtocol> vpnProtocol() const;
 
-    const QString &remoteAddress() const;
-    void addSitesRoutes(const QString &gw, caelispect::RouteMode mode);
-
 #ifdef Q_OS_ANDROID
     void restoreConnection();
 #endif
 
 public slots:
     void setRepositories(SecureServersRepository* serversRepository, SecureAppSettingsRepository* appSettingsRepository);
-    void connectToVpn(const QString &serverId, DockerContainer container, const QJsonObject &vpnConfiguration);
+    void connectToVpn(const QString &serverId, const QJsonObject &vpnConfiguration);
     void reconnectToVpn();
     void disconnectFromVpn();
     void shutdown();
@@ -78,9 +75,6 @@ private:
     SecureAppSettingsRepository* m_appSettingsRepository;
 
     QJsonObject m_vpnConfiguration;
-    QJsonObject m_routeMode;
-    QString m_remoteAddress;
-
     // Only for iOS for now, check counters
     QTimer m_checkTimer;
 
@@ -91,7 +85,7 @@ private:
    void createAndroidConnections();
 #endif
 
-   Vpn::ConnectionState m_connectionState;
+   Vpn::ConnectionState m_connectionState = Vpn::ConnectionState::Disconnected;
 
    void createProtocolConnections();
 

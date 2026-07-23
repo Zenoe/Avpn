@@ -5,7 +5,6 @@ import QtQuick.Layouts
 import SortFilterProxyModel 0.2
 
 import PageEnum 1.0
-import ContainerProps 1.0
 import Style 1.0
 
 import "./"
@@ -70,15 +69,7 @@ PageType {
 
                     text: name
 
-                    descriptionText: {
-                        var servicesNameString = ""
-                        var servicesName = ServersUiController.getAllInstalledServicesName(index)
-                        for (var i = 0; i < servicesName.length; i++) {
-                            servicesNameString += servicesName[i] + " · "
-                        }
-
-                        return servicesNameString + hostName
-                    }
+                    descriptionText: "WireGuard · " + hostName
                     rightImageSource: "qrc:/images/controls/chevron-right.svg"
 
                     clickedFunction: function() {
