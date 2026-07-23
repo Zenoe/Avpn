@@ -54,12 +54,12 @@ Window  {
     }
 
     visible: !GC.isDesktop()
-    width: GC.screenWidth
-    height: GC.screenHeight
-    minimumWidth: GC.isDesktop() ? 360 : 0
+    width: GC.isDesktop() ? Math.min(GC.screenWidth, 1440) : GC.screenWidth
+    height: GC.isDesktop() ? Math.min(GC.screenHeight, 900) : GC.screenHeight
+    minimumWidth: GC.isDesktop() ? 960 : 0
     minimumHeight: GC.isDesktop() ? 640 : 0
-    maximumWidth: 600
-    maximumHeight: 800
+    maximumWidth: GC.isDesktop() ? 16777215 : 600
+    maximumHeight: GC.isDesktop() ? 16777215 : 800
 
     color: CaelispectStyle.color.midnightBlack
 
@@ -158,7 +158,7 @@ Window  {
     Loader {
         anchors.fill: parent
         // Temporary startup page: return desktop to the original server connection flow.
-        active: true
+        active: false
         sourceComponent: PageStart {
             objectName: "pageStart"
         }
@@ -167,7 +167,7 @@ Window  {
     Loader {
         anchors.fill: parent
         // Re-enable this Loader when SPA becomes the default desktop startup page.
-        active: false
+        active: true
         source: "Pages2/PageSpa.qml"
     }
 

@@ -63,6 +63,12 @@
         <file>tray/default.png</file>
         <file>tray/error.png</file>
         <file>controls/monitor.svg</file>
+        <file>spa/地址_(1) 1.png</file>
+        <file>spa/链路.png</file>
+        <file>spa/认证.png</file>
+        <file>spa/暂时图标.png</file>
+        <file>spa/Group_367.png</file>
+        <file>spa/Mask_group.png</file>
     </qresource>
 </RCC>
 
