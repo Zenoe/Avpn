@@ -38,6 +38,7 @@ endif()
 find_package(Qt6 REQUIRED COMPONENTS ${PACKAGES})
 
 if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
+    add_subdirectory(authentication)
     add_subdirectory(spa)
 endif()
 
@@ -53,6 +54,7 @@ if(WIN32 OR (APPLE AND NOT IOS) OR (LINUX AND NOT ANDROID))
 endif()
 
 if(WIN32 OR (APPLE AND NOT IOS AND NOT MACOS_NE) OR (LINUX AND NOT ANDROID))
+    list(APPEND LIBS Caelispect::Authentication)
     list(APPEND LIBS Caelispect::Spa)
 endif()
 

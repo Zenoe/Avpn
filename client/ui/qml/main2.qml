@@ -54,10 +54,10 @@ Window  {
     }
 
     visible: !GC.isDesktop()
-    width: GC.isDesktop() ? Math.min(GC.screenWidth, 1440) : GC.screenWidth
-    height: GC.isDesktop() ? Math.min(GC.screenHeight, 900) : GC.screenHeight
-    minimumWidth: GC.isDesktop() ? 960 : 0
-    minimumHeight: GC.isDesktop() ? 640 : 0
+    width: GC.isDesktop() ? 1440 : GC.screenWidth
+    height: GC.isDesktop() ? 1091 : GC.screenHeight
+    minimumWidth: GC.isDesktop() ? 1334 : 0
+    minimumHeight: GC.isDesktop() ? 900 : 0
     maximumWidth: GC.isDesktop() ? 16777215 : 600
     maximumHeight: GC.isDesktop() ? 16777215 : 800
 
@@ -157,8 +157,7 @@ Window  {
 
     Loader {
         anchors.fill: parent
-        // Temporary startup page: return desktop to the original server connection flow.
-        active: false
+        active: !GC.isDesktop()
         sourceComponent: PageStart {
             objectName: "pageStart"
         }
@@ -166,9 +165,14 @@ Window  {
 
     Loader {
         anchors.fill: parent
-        // Re-enable this Loader when SPA becomes the default desktop startup page.
-        active: true
+        active: GC.isDesktop() && !AuthController.active
         source: "Pages2/PageSpa.qml"
+    }
+
+    Loader {
+        anchors.fill: parent
+        active: GC.isDesktop() && AuthController.active
+        source: "Pages2/PageAuthentication.qml"
     }
 
     Item {

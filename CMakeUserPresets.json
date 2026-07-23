@@ -8,6 +8,15 @@
       "binaryDir": "${sourceDir}/out/build/debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": ""
+      }
+    },
+    {
+      "hidden": false,
+      "name": "Qt-QmlDebug",
+      "inherits": "Qt-Debug",
+      "binaryDir": "${sourceDir}/out/build/qml-debug",
+      "cacheVariables": {
         "CMAKE_CXX_FLAGS": "-DQT_QML_DEBUG"
       },
       "environment": {

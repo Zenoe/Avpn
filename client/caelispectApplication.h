@@ -19,6 +19,7 @@
 #include "ui/models/protocolProps.h"
 
 #ifdef CAELISPECT_DESKTOP
+  #include "authentication/authenticationController.h"
   #include "spa/spaUiController.h"
 #endif
 
@@ -61,6 +62,7 @@ private:
     QScopedPointer<CoreController> m_coreController;
 
 #ifdef CAELISPECT_DESKTOP
+    QScopedPointer<authentication::Controller> m_authenticationController;
     QScopedPointer<spa::UiController> m_spaUiController;
 #endif
 

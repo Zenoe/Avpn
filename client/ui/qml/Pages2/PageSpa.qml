@@ -169,6 +169,7 @@ Item {
                                 anchors.rightMargin: 16
                                 enabled: !SpaController.busy
                                 color: root.primaryText
+                                text: "192.168.1.122"
                                 placeholderText: qsTr("请输入地址")
                                 placeholderTextColor: "#a5a9b2"
                                 font.pixelSize: 15

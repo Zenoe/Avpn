@@ -69,6 +69,17 @@
         <file>spa/暂时图标.png</file>
         <file>spa/Group_367.png</file>
         <file>spa/Mask_group.png</file>
+        <file>login/架构.png</file>
+        <file>login/链路.png</file>
+        <file>login/密码.png</file>
+        <file>login/确定.png</file>
+        <file>login/人员.png</file>
+        <file>login/认证.png</file>
+        <file>login/手机.png</file>
+        <file>login/选中.png</file>
+        <file>login/验证码.png</file>
+        <file>login/icon.png</file>
+        <file>login/Mask_group.png</file>
     </qresource>
 </RCC>
 

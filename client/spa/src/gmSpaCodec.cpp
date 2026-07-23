@@ -5,6 +5,7 @@
 
 #ifdef SPA_DEBUG_LOGGING
   #include <QDebug>
+  #include <QStringList>
 #endif
 
 #include <array>
@@ -480,61 +481,23 @@ QString rejectedMessage(const QJsonObject &object)
 #ifdef SPA_DEBUG_LOGGING
 QString indentedJsonForLog(QJsonObject object)
 {
-    if (object.contains(QLatin1String("spaTicket"))) {
-        const qsizetype length = object.value(QLatin1String("spaTicket")).toString().size();
-        object.insert(QLatin1String("spaTicket"), QStringLiteral("<redacted:%1-chars>").arg(length));
-    }
-    if (object.contains(QLatin1String("authProof"))) {
-        object.insert(QLatin1String("authProof"), QStringLiteral("<redacted>"));
+    static const QStringList sensitiveFields {
+        QStringLiteral("spaTicket"),
+        QStringLiteral("authProof"),
+        QStringLiteral("credentialId"),
+        QStringLiteral("installationId"),
+        QStringLiteral("deviceId"),
+        QStringLiteral("nonce")
+    };
+    for (const QString &field : sensitiveFields) {
+        if (object.contains(field)) {
+            object.insert(field, QStringLiteral("<redacted>"));
+        }
     }
     return QString::fromUtf8(QJsonDocument(object).toJson(QJsonDocument::Indented)).trimmed();
 }
 
-QString requestFieldForLog(const QJsonObject &payload, const QString &name)
-{
-    if (!payload.contains(name) || payload.value(name).isNull() || payload.value(name).isUndefined()) {
-        return QStringLiteral("<not-sent>");
-    }
-
-    const QJsonValue value = payload.value(name);
-    if (value.isString()) {
-        return value.toString();
-    }
-    if (value.isDouble()) {
-        return QString::number(value.toVariant().toLongLong());
-    }
-    return QString::fromUtf8(QJsonDocument(QJsonObject { { name, value } })
-                                     .toJson(QJsonDocument::Compact));
-}
-
-QString readableRequestFields(const QJsonObject &payload)
-{
-    return QStringLiteral("  requestId=%1\n"
-                          "  clientTime=%2\n"
-                          "  nonce=%3\n"
-                          "  requestedService=%4\n"
-                          "  installationId=%5\n"
-                          "  platform=%6\n"
-                          "  appVersion=%7\n"
-                          "  authMode=%8\n"
-                          "  credentialId=%9\n"
-                          "  authProof=%10\n"
-                          "  deviceId=%11")
-            .arg(requestFieldForLog(payload, QStringLiteral("requestId")))
-            .arg(requestFieldForLog(payload, QStringLiteral("clientTime")))
-            .arg(requestFieldForLog(payload, QStringLiteral("nonce")))
-            .arg(requestFieldForLog(payload, QStringLiteral("requestedService")))
-            .arg(requestFieldForLog(payload, QStringLiteral("installationId")))
-            .arg(requestFieldForLog(payload, QStringLiteral("platform")))
-            .arg(requestFieldForLog(payload, QStringLiteral("appVersion")))
-            .arg(requestFieldForLog(payload, QStringLiteral("authMode")))
-            .arg(requestFieldForLog(payload, QStringLiteral("credentialId")))
-            .arg(requestFieldForLog(payload, QStringLiteral("authProof")))
-            .arg(requestFieldForLog(payload, QStringLiteral("deviceId")));
-}
-
 void logRequestPacket(quint8 version, const QByteArray &requestId, quint16 encryptionKeyId,
-                      const QByteArray &clientPublicKey, const QByteArray &gcmNonce,
                       const QByteArray &plainText, const QByteArray &encryptedPayload,
                       const QByteArray &datagram, const QJsonObject &payload)
 {
@@ -542,61 +505,39 @@ void logRequestPacket(quint8 version, const QByteArray &requestId, quint16 encry
             << QStringLiteral("[SPA][PACKET][TX]\n"
                               "  magic=ASPA version=%1 messageType=REQUEST\n"
                               "  encryptionKeyId=%2 requestId=%3\n"
-                              "  clientEphemeralPublicKey=%4\n"
-                              "  gcmNonce=%5 plaintextLength=%6 ciphertextLength=%7 packetLength=%8\n"
-                              "  requestPayload=\n%9\n"
-                              "  plaintextJson=\n%10\n"
-                              // "  plaintextHex=%11\n"
-                              // "  ciphertextAndGcmTagHex=%12\n"
-                              "  udpDatagramHex=%13")
+                              "  plaintextLength=%4 ciphertextLength=%5 packetLength=%6\n"
+                              "  requestPayload=\n%7")
                        .arg(static_cast<unsigned int>(version))
                        .arg(encryptionKeyId)
                        .arg(QString::fromLatin1(base64Url(requestId)))
-                       .arg(QString::fromLatin1(clientPublicKey.toHex()))
-                       .arg(QString::fromLatin1(gcmNonce.toHex()))
                        .arg(plainText.size())
                        .arg(encryptedPayload.size())
                        .arg(datagram.size())
-                       .arg(readableRequestFields(payload))
-                       .arg(indentedJsonForLog(payload))
-                       // .arg(QString::fromLatin1(plainText.toHex()))
-                       // .arg(QString::fromLatin1(encryptedPayload.toHex()))
-                       .arg(QString::fromLatin1(datagram.toHex()));
+                       .arg(indentedJsonForLog(payload));
 }
 
 void logResponseHeader(const QByteArray &requestId, quint8 version,
                        quint16 encryptionKeyId, quint16 signingKeyId,
-                       const QByteArray &gcmNonce, quint16 ciphertextLength,
-                       quint16 signatureLength, const QByteArray &cipherText,
-                       const QByteArray &signature, const QByteArray &datagram)
+                       quint16 ciphertextLength, quint16 signatureLength,
+                       qsizetype packetLength)
 {
     qDebug().noquote()
             << QStringLiteral("[SPA][PACKET][RX]\n"
                               "  magic=ASPA version=%1 messageType=RESPONSE\n"
                               "  encryptionKeyId=%2 signingKeyId=%3 requestId=%4\n"
-                              "  gcmNonce=%5 ciphertextLength=%6 signatureLength=%7 packetLength=%8\n"
-                              "  ciphertextAndGcmTagHex=%9\n"
-                              "  sm2DerSignatureHex=%10\n"
-                              "  udpDatagramHex=%11")
+                              "  ciphertextLength=%5 signatureLength=%6 packetLength=%7")
                        .arg(static_cast<unsigned int>(version))
                        .arg(encryptionKeyId)
                        .arg(signingKeyId)
                        .arg(QString::fromLatin1(base64Url(requestId)))
-                       .arg(QString::fromLatin1(gcmNonce.toHex()))
                        .arg(ciphertextLength)
                        .arg(signatureLength)
-                       .arg(datagram.size())
-                       .arg(QString::fromLatin1(cipherText.toHex()))
-                       .arg(QString::fromLatin1(signature.toHex()))
-                       .arg(QString::fromLatin1(datagram.toHex()));
+                       .arg(packetLength);
 }
 
-void logResponsePayload(const QByteArray &plainText, const QJsonObject &payload)
+void logResponsePayload(const QJsonObject &payload)
 {
-    qDebug().noquote() << QStringLiteral("[SPA][PACKET][RX]\n"
-                                          "  plaintextHex=%1\n"
-                                          "  plaintextJson=\n%2")
-                                 .arg(QString::fromLatin1(plainText.toHex()))
+    qDebug().noquote() << QStringLiteral("[SPA][PACKET][RX] responsePayload=\n%1")
                                  .arg(indentedJsonForLog(payload));
 }
 #endif
@@ -751,8 +692,7 @@ EncodeResult GmSpaCodec::encodeRequest(const Request &request)
 #ifdef SPA_DEBUG_LOGGING
     logRequestPacket(m_protocolConfig.version, request.requestId,
                      m_protocolConfig.encryptionKey.keyId,
-                     clientPublicKey, gcmNonce, plainText, encryptedPayload,
-                     result.datagram, payload);
+                     plainText, encryptedPayload, result.datagram, payload);
 #endif
     m_activeRequestId = request.requestId;
     return result;
@@ -799,8 +739,7 @@ DecodeResult GmSpaCodec::decodeResponse(const QByteArray &datagram, const Reques
 #ifdef SPA_DEBUG_LOGGING
     logResponseHeader(request.requestId, static_cast<quint8>(datagram.at(4)),
                       encryptionKeyId, signingKeyId,
-                      datagram.mid(kResponseGcmNonceOffset, kGcmNonceSize),
-                      cipherTextLength, signatureLength, cipherText, signature, datagram);
+                      cipherTextLength, signatureLength, datagram.size());
 #endif
     QString errorMessage;
     if (!verifySm2Signature(m_protocolConfig.signingKey.publicKey, m_protocolConfig.sm2Id,
@@ -826,7 +765,7 @@ DecodeResult GmSpaCodec::decodeResponse(const QByteArray &datagram, const Reques
 
     const QJsonObject object = document.object();
 #ifdef SPA_DEBUG_LOGGING
-    logResponsePayload(plainText, object);
+    logResponsePayload(object);
 #endif
     plainText.fill('\0');
     if (object.value(QLatin1String("requestId")).toString().toLatin1() != base64Url(request.requestId)) {

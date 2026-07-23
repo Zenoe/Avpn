@@ -238,11 +238,10 @@ void Client::handleReadyRead()
         datagram.resize(bytesRead);
 
 #ifdef SPA_DEBUG_LOGGING
-        qDebug().noquote() << QStringLiteral("[SPA][UDP][RX] gateway=%1:%2 bytes=%3 rawUdpDatagramHex=%4")
+        qDebug().noquote() << QStringLiteral("[SPA][UDP][RX] gateway=%1:%2 bytes=%3 rawUdpDatagram=<redacted>")
                                      .arg(m_config.gatewayHost)
                                      .arg(m_config.gatewayPort)
-                                     .arg(bytesRead)
-                                     .arg(QString::fromLatin1(datagram.toHex()));
+                                     .arg(bytesRead);
 #endif
 
         const DecodeResult decoded = m_codec->decodeResponse(datagram, m_request);
@@ -308,13 +307,12 @@ void Client::sendAttempt()
     emit attemptStarted(m_attempt, m_config.maximumAttempts);
 
 #ifdef SPA_DEBUG_LOGGING
-    qDebug().noquote() << QStringLiteral("[SPA][UDP][TX] gateway=%1:%2 attempt=%3/%4 bytes=%5 rawUdpDatagramHex=%6")
+    qDebug().noquote() << QStringLiteral("[SPA][UDP][TX] gateway=%1:%2 attempt=%3/%4 bytes=%5 rawUdpDatagram=<redacted>")
                                  .arg(m_config.gatewayHost)
                                  .arg(m_config.gatewayPort)
                                  .arg(m_attempt)
                                  .arg(m_config.maximumAttempts)
-                                 .arg(m_requestDatagram.size())
-                                 .arg(QString::fromLatin1(m_requestDatagram.toHex()));
+                                 .arg(m_requestDatagram.size());
 #endif
 
     const qint64 bytesWritten = m_socket.write(m_requestDatagram);

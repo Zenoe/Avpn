@@ -153,7 +153,13 @@ void CaelispectApplication::init()
     m_vpnConnectionThread.start();
 
 #ifdef CAELISPECT_DESKTOP
+    m_authenticationController.reset(new authentication::Controller(this));
     m_spaUiController.reset(new spa::UiController(QStringLiteral(APP_VERSION), this));
+    connect(m_spaUiController.get(), &spa::UiController::spaSucceeded, this, [this]() {
+        const spa::LoginEndpoint endpoint = m_spaUiController->loginEndpoint();
+        m_authenticationController->configureGateway(endpoint.url(), endpoint.ticket);
+    });
+    m_engine->rootContext()->setContextProperty("AuthController", m_authenticationController.get());
     m_engine->rootContext()->setContextProperty("SpaController", m_spaUiController.get());
 #endif
 
